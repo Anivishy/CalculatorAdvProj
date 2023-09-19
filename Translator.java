@@ -1,39 +1,41 @@
 import java.util.ArrayList;
 
+// Translator is responsible for breaking down the expression into its components and using PEMDAS to decide the next sub-expression to evaluate
+
 public class Translator {
 
-    private ArrayList<String> calculations;
-    private String currentExpression;
+    private ArrayList<String> _calculations;
+    private String _currentExpression;
 
 
     public Translator(String userInput) {
         
         // Assign values to private fields
 
-        this.calculations=new ArrayList<String>();
-        this.currentExpression=userInput;
+        this._calculations=new ArrayList<String>();
+        this._currentExpression=userInput;
         
     }
 
-    // Initializing getter methods for future debugging
+    // Getter methods to access private fields
 
     public ArrayList<String> getCalculations() {
 
         // Returns the current list of calculations to eventually be sent to formatter in main Calculator class
 
-        return this.calculations;
+        return this._calculations;
     }
 
     public String getCurrentExpression() {
 
         // Gets current expression in order to access the private field from the outside Calculator object
 
-        return this.currentExpression;
+        return this._currentExpression;
     }
 
-    public ArrayList<String> parser(){
+    public ArrayList<String> parse(){
 
-        // Parser will convert expression string into list of components
+        // parse will convert expression string into list of components
 
         ArrayList<String> components= new ArrayList<String>();
         

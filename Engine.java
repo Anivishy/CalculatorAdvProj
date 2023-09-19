@@ -1,0 +1,65 @@
+// Engine is responsible for computing all the sub-expressions
+
+public class Engine {
+
+    private String _operator;
+    private double _num1;
+    private double _num2;
+
+    public Engine(String operator, double num1, double num2) {
+
+        // Assign values to private fields
+
+        this._operator=operator;
+        this._num1=num1;
+        this._num2=num2;
+    }
+
+    // Getter methods to access private fields
+
+    public String getOperator() {
+        return this._operator;
+    }
+
+    public double getNum1() {
+        return this._num1;
+    }
+
+    public double getNum2() {
+        return this._num2;
+    }
+
+    public double compute() {
+
+        // Compute will call the appropriate method based on the operation and return the result
+
+        double result=0.0;
+
+        // Insert compute logic here
+
+        return result;
+    }
+
+    // Methods for computing basic operations
+
+    public double addNums() {
+        return getNum1() + getNum2();
+    }
+
+    public double subtractNums() {
+        return getNum1() - getNum2();
+    }
+
+    public double multiplyNums() {
+        return getNum1() * getNum2();
+    }
+
+    public double divideNums() {
+        return getNum1() / getNum2();
+    }
+
+    public double powerNums() {
+        return Math.pow(getNum1(), getNum2());
+    }
+
+}
