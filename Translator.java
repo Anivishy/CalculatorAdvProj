@@ -42,7 +42,9 @@ public class Translator {
         ArrayList<String> components= new ArrayList<String>();
         
         // Method stuff goes here
+        Pair<Boolean, String> paranthesis = checkParanthesis();
         
+
 
         return components;
     }
