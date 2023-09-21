@@ -1,20 +1,18 @@
-import java.util.ArrayList;
-
 // Engine is responsible for computing all the sub-expressions
 
 public class Engine {
 
     private String _operator;
-    private ArrayList<Double> _nums;
-    
+    private double _num1;
+    private double _num2;
 
-    public Engine(String operator, ArrayList<Double> nums) {
+    public Engine(String operator, double num1, double num2) {
 
         // Assign values to private fields
 
         this._operator=operator;
-        this._nums=nums;
-     
+        this._num1=num1;
+        this._num2=num2;
     }
 
     // Getter methods to access private fields
@@ -23,10 +21,13 @@ public class Engine {
         return this._operator;
     }
 
-    public ArrayList<Double> getNums() {
-        return this._nums;
+    public double getNum1() {
+        return this._num1;
     }
 
+    public double getNum2() {
+        return this._num2;
+    }
 
     public double compute() {
 
@@ -42,39 +43,23 @@ public class Engine {
     // Methods for computing basic operations
 
     public double addNums() {
-        double result=0;
-        for (double i:getNums()) {
-            result+=i;
-        }
-        return result;
+        return getNum1() + getNum2();
     }
 
     public double subtractNums() {
-        double result=getNums().get(0);
-        for (int i=1; i<getNums().size(); i++) {
-            result-=i;
-        }
-        return result;
+        return getNum1() - getNum2();
     }
 
     public double multiplyNums() {
-        double result=1;
-        for (double i:getNums()) {
-            result*=i;
-        }
-        return result;
+        return getNum1() * getNum2();
     }
 
     public double divideNums() {
-        double result=getNums().get(0);
-        for (int i=1; i<getNums().size(); i++) {
-            result/=i;
-        }
-        return result;
+        return getNum1() / getNum2();
     }
 
     public double powerNums() {
-        return Math.pow(getNums().get(0), getNums().get(1));
+        return Math.pow(getNum1(), getNum2());
     }
 
 }
