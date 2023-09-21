@@ -33,8 +33,7 @@ public class Formatter {
     public void addToHistory(String expression) {
 
         // addToHistory will add an expression to the history stack
-
         // Implement addToHistory here
-
+        this._history.push(expression);
     }
 }
