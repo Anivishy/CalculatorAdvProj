@@ -19,18 +19,21 @@ public class Formatter {
         return this._history;
     }
     
-    public void formatAndDisplay(String[] steps) {
-        
+    public void formatAndDisplay(String[] steps) {        
         // formatAndDisplay will run through the steps and display them on the screen
-
         // Implement format here
+        System.out.println("Input: " + steps[0]);
+        for (int i = 1; i < steps.length - 2; i++){
+            System.out.println("Step #" + i + ": " + steps[i]);
+        } 
+        System.out.println("Answer: " + steps[steps.length - 1]);
+
     }
 
     public void addToHistory(String expression) {
 
         // addToHistory will add an expression to the history stack
-
         // Implement addToHistory here
-
+        this._history.push(expression);
     }
 }
