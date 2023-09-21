@@ -54,9 +54,13 @@ public class Translator {
 
         Object[] result = new Object[2];
 
-        //  Check for parenthesis here
+        if (!getCurrentExpression().contains("(")) {
+            return [False, ""];
+        }
+        String chunk=getCurrentExpression();
+        chunk=chunk.substring(chunk.lastIndexOf("("), chunk.indexOf(")"));
 
-        return result;
+        return [];
 
     }
 
