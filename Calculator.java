@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Calculator {
 
@@ -13,6 +14,9 @@ public class Calculator {
         String expression=scanner.nextLine();
 
         Translator translator = new Translator(expression);
+        
+        ArrayList<Object> checkPar = translator.checkParanthesis();
+        System.out.println(checkPar.toString());
         
 
     }

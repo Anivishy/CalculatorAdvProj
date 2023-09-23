@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javafx.util.Pair;
-
 // Translator is responsible for breaking down the expression into its components and using PEMDAS to decide the next sub-expression to evaluate
 
 public class Translator {
@@ -42,40 +40,43 @@ public class Translator {
         ArrayList<String> components= new ArrayList<String>();
         
         // Method stuff goes here
-        Pair<Boolean, String> paranthesis = checkParanthesis();
         
-
 
         return components;
     }
 
     // PEMDAS Stuff
 
-    public Pair<Boolean, String> checkParanthesis() {
+    public ArrayList<Object> checkParanthesis() {
 
         // checkParanthesis will check for paranthesis in the current expression and return an array with a boolean and string (result)
         // If there is a paranthesis, the result will return [True, <the portion of the expression containing the paranthesis>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
         if (!getCurrentExpression().contains("(")) {
-            return [False, ""];
+            return result;
         }
-        String chunk=getCurrentExpression();
-        chunk=chunk.substring(chunk.lastIndexOf("("), chunk.indexOf(")"));
-
-        return [];
-
+        else {
+            String chunk=getCurrentExpression();
+            chunk=chunk.substring(chunk.lastIndexOf("("), chunk.indexOf(")")+1);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
+        
     }
 
-    public Pair<Boolean, String> checkExponents() {
+    public ArrayList<Object> checkExponents() {
 
         // checkExponents will check for exponents in the current expression and return an array with a boolean and string (result)
         // If there is an exponent, the result will return [True, <the portion of the expression containing the exponent>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
 
         //  Check for exponents here
 
@@ -83,13 +84,13 @@ public class Translator {
 
     }
 
-    public Pair<Boolean, String> checkMultiplication() {
+    public ArrayList<Object> checkMultiplication() {
 
         // checkMultiplication will check for multiplication in the current expression and return an array with a boolean and string (result)
         // If there is multiplication, the result will return [True, <the portion of the expression containing the multiplication>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
 
         //  Check for multiplication here
 
@@ -97,13 +98,13 @@ public class Translator {
 
     }
 
-    public Pair<Boolean, String> checkDivision() {
+    public ArrayList<Object> checkDivision() {
 
         // checkDivision will check for division in the current expression and return an array with a boolean and string (result)
         // If there is division, the result will return [True, <the portion of the expression containing the division>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
 
         //  Check for division here
 
@@ -111,13 +112,13 @@ public class Translator {
 
     }
 
-    public Pair<Boolean, String> checkAddition() {
+    public ArrayList<Object> checkAddition() {
 
         // checkAddition will check for addition in the current expression and return an array with a boolean and string (result)
         // If there is addition, the result will return [True, <the portion of the expression containing the addition>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
 
         //  Check for addition here
 
@@ -125,13 +126,13 @@ public class Translator {
 
     }
 
-    public Pair<Boolean, String> checkSubtraction() {
+    public ArrayList<Object> checkSubtraction() {
 
         // checkSubtraction will check for subtraction in the current expression and return an array with a boolean and string (result)
         // If there is subtraction, the result will return [True, <the portion of the expression containing the subtraction>]
         // If there isn't, the result will return [False, ""]
 
-        Pair<Boolean, String> result = new Pair<>(false, "");
+        ArrayList<Object> result = new ArrayList<Object>();
 
         //  Check for subtraction here
 
