@@ -13,7 +13,7 @@ public class Translator {
         // Assign values to private fields
 
         this._calculations=new ArrayList<String>();
-        this._currentExpression=userInput;
+        this._currentExpression=userInput.replace("\\s", "");
         
     }
 
@@ -33,16 +33,68 @@ public class Translator {
         return this._currentExpression;
     }
 
-    public ArrayList<String> parse(){
+    public Integer countOperators(String expression){
+        int count = 0;
+        for (int i = 0; i < expression.length(); i++){
+            if (expression.charAt(i) + "" == "+" || expression.charAt(i) + "" == "-" || expression.charAt(i) + "" == "*" || 
+            expression.charAt(i) + "" == "/" || expression.charAt(i) + "" == "^"){
+                count ++;
+            }
+        }
+
+        return count;
+    }
+
+    public ArrayList<String> parse(String cur_expression){
 
         // parse will convert expression string into list of components
+        while (true) {
+            // Check for parentheses
+            ArrayList<String> parenthesisResult = getParenthesis(cur_expression);
+            if (parenthesisResult.get(0).equals("true")) {
+                cur_expression = parenthesisResult.get(1);
+            }
 
-        ArrayList<String> components= new ArrayList<String>();
-        
-        // Method stuff goes here
-        
+            // Check for exponentiation
+            ArrayList<String> exponentResult = getExponent(cur_expression);
+            if (exponentResult.get(0).equals("true")) {
+                return exponentResult.get(1);
+            }
 
-        return components;
+            // Check for multiplication and division
+            ArrayList<String> multiplicationResult = getMultiplication(cur_expression);
+            ArrayList<String> divisionResult = getDivision(cur_expression);
+            
+            if (multiplicationResult.get(0).equals("true")) {
+                cur_expression = multiplicationResult.get(1);
+            } else if (divisionResult.get(0).equals("true")) {
+                cur_expression = divisionResult.get(1);
+            }
+
+            // Check for addition and subtraction
+            ArrayList<String> additionResult = getAddition(cur_expression);
+            ArrayList<String> subtractionResult = getSubtraction(cur_expression);
+
+            if (additionResult.get(0).equals("true")) {
+                cur_expression = additionResult.get(1);
+            } else if (subtractionResult.get(0).equals("true")) {
+                cur_expression = subtractionResult.get(1);
+            }
+
+            // No more operations to perform
+            if (!parenthesisResult.get(0).equals("true") &&
+                !exponentResult.get(0).equals("true") &&
+                !multiplicationResult.get(0).equals("true") &&
+                !divisionResult.get(0).equals("true") &&
+                !additionResult.get(0).equals("true") &&
+                !subtractionResult.get(0).equals("true")) {
+                break;
+            }
+        }
+
+        // If no operations were found, return an empty string
+        return "";
+    
     }
 
     // PEMDAS Stuff
