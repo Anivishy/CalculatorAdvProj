@@ -12,12 +12,18 @@ public class Calculator {
 
         System.out.println("Enter an expression to compute: ");
         String expression=scanner.nextLine();
-
         Translator translator = new Translator(expression);
         
-        ArrayList<Object> checkPar = translator.checkParanthesis();
-        System.out.println(checkPar.toString());
+        // Testing out Translator PEMDAS functions here
+
+        ArrayList<Object> checkPar = translator.checkParanthesis(expression);
+        System.out.println("Check Parenthesis: " + checkPar.toString() + "\n");
+
+        ArrayList<Object> checkExp = translator.checkExponents(expression);
+        System.out.println("Check Exponents: " + checkExp.toString() + "\n");
         
+        ArrayList<Object> checkMult = translator.checkMultiplication(expression);
+        System.out.println("Check Multiplication: " + checkMult.toString() + "\n");
 
     }
     

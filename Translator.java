@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // Translator is responsible for breaking down the expression into its components and using PEMDAS to decide the next sub-expression to evaluate
 
@@ -47,7 +49,7 @@ public class Translator {
 
     // PEMDAS Stuff
 
-    public ArrayList<Object> checkParanthesis() {
+    public ArrayList<Object> checkParanthesis(String currentExpresion) {
 
         // checkParanthesis will check for paranthesis in the current expression and return an array with a boolean and string (result)
         // If there is a paranthesis, the result will return [True, <the portion of the expression containing the paranthesis>]
@@ -57,12 +59,12 @@ public class Translator {
         result.add(false);
         result.add("");
 
-        if (!getCurrentExpression().contains("(")) {
+        if (!currentExpresion.contains("(")) {
             return result;
         }
         else {
-            String chunk=getCurrentExpression();
-            chunk=chunk.substring(chunk.lastIndexOf("("), chunk.indexOf(")")+1);
+            String chunk=currentExpresion;
+            chunk=chunk.substring(chunk.lastIndexOf("(")+1, chunk.indexOf(")"));
             result.set(0, true);
             result.set(1,chunk);
             return result;
@@ -70,45 +72,140 @@ public class Translator {
         
     }
 
-    public ArrayList<Object> checkExponents() {
+    public ArrayList<Object> checkExponents(String currentExpression) {
 
         // checkExponents will check for exponents in the current expression and return an array with a boolean and string (result)
         // If there is an exponent, the result will return [True, <the portion of the expression containing the exponent>]
         // If there isn't, the result will return [False, ""]
 
         ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
-        //  Check for exponents here
+        if (!currentExpression.contains("^")) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;
+            
+            String[] operations={"+", "-", "*", "/", "^", ")"};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
 
-        return result;
+            for (int i=chunk.indexOf("^")-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i) + "")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
+
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf("^")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("^")+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
 
     }
 
-    public ArrayList<Object> checkMultiplication() {
+    public ArrayList<Object> checkMultiplication(String currentExpression) {
 
         // checkMultiplication will check for multiplication in the current expression and return an array with a boolean and string (result)
         // If there is multiplication, the result will return [True, <the portion of the expression containing the multiplication>]
         // If there isn't, the result will return [False, ""]
 
         ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
-        //  Check for multiplication here
+        if (!currentExpression.contains("*")) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;
+            
+            String[] operations={"+", "-", "*", "/", "^", ")"};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
 
-        return result;
+            for (int i=chunk.indexOf("*")-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i)+"")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
 
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf("*")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("*")+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
     }
 
-    public ArrayList<Object> checkDivision() {
+    public ArrayList<Object> checkDivision(String currentExpression) {
 
         // checkDivision will check for division in the current expression and return an array with a boolean and string (result)
         // If there is division, the result will return [True, <the portion of the expression containing the division>]
         // If there isn't, the result will return [False, ""]
 
         ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
-        //  Check for division here
+        if (!currentExpression.contains("/")) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;
+            
+            String[] operations={"+", "-", "*", "/", "^", ")"};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
 
-        return result;
+            for (int i=chunk.indexOf("*")-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i)+"")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
+
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf("*")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("*")+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
 
     }
 
