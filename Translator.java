@@ -261,31 +261,95 @@ public class Translator {
 
     }
 
-    public ArrayList<Object> checkAddition() {
+    public ArrayList<Object> checkAddition(String currentExpression) {
 
         // checkAddition will check for addition in the current expression and return an array with a boolean and string (result)
         // If there is addition, the result will return [True, <the portion of the expression containing the addition>]
         // If there isn't, the result will return [False, ""]
 
         ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
-        //  Check for addition here
+        if (!currentExpression.contains("+")) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;
+            
+            String[] operations={"+", "-", "*", "/", "^", ")"};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
 
-        return result;
+            for (int i=chunk.indexOf("+")-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i)+"")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
+
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf("+")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("+")+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
 
     }
 
-    public ArrayList<Object> checkSubtraction() {
+    public ArrayList<Object> checkSubtraction(String currentExpression) {
 
         // checkSubtraction will check for subtraction in the current expression and return an array with a boolean and string (result)
         // If there is subtraction, the result will return [True, <the portion of the expression containing the subtraction>]
         // If there isn't, the result will return [False, ""]
 
         ArrayList<Object> result = new ArrayList<Object>();
+        result.add(false);
+        result.add("");
 
-        //  Check for subtraction here
+        if (!currentExpression.contains("-")) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;
+            
+            String[] operations={"+", "-", "*", "/", "^", ")"};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
 
-        return result;
+            for (int i=chunk.indexOf("-")-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i)+"")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
+
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf("-")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("-")+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, true);
+            result.set(1,chunk);
+            return result;
+        }
 
     }
 

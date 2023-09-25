@@ -25,6 +25,15 @@ public class Calculator {
         ArrayList<Object> checkMult = translator.checkMultiplication(expression);
         System.out.println("Check Multiplication: " + checkMult.toString() + "\n");
 
+        ArrayList<Object> checkDiv = translator.checkDivision(expression);
+        System.out.println("Check Division: " + checkDiv.toString() + "\n");
+
+        ArrayList<Object> checkAdd = translator.checkAddition(expression);
+        System.out.println("Check Addition: " + checkAdd.toString() + "\n");
+
+        ArrayList<Object> checkSub = translator.checkSubtraction(expression);
+        System.out.println("Check Subtraction: " + checkSub.toString() + "\n");
+
     }
     
     
