@@ -22,6 +22,7 @@ Special Features:
 3: Graphing Calculator
   -	Works with the GUI to display graphs
 o	Potential to implement graph analysis features such as finding intercepts, tracing values along the graph, and calculus-based calculations such as integrals and derivatives.
+
 Citations:
 
 
