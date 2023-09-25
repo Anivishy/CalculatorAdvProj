@@ -16,6 +16,7 @@ Project Overview:
 3.	Format: Responsible for processing the list of steps to perform the calculation and displaying the information to the console. Will also be responsible for displaying and rendering information to the GUI in future updates.
 
 4.	Calculator: Core calculator file. Will contain the user input loop when run as a console application and will the initialization of the GUI when updated
+   
 Special Features:
 
 1: Display steps for calculations
