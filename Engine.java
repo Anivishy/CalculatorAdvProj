@@ -35,7 +35,25 @@ public class Engine {
 
         double result=0.0;
 
-        // Insert compute logic here
+        if (getOperator().equals("+")) {
+            result=addNums();
+        }
+
+        else if (getOperator().equals("-")) {
+            result=subtractNums();
+        }
+
+        else if (getOperator().equals("*")) {
+            result=multiplyNums();
+        }
+
+        else if (getOperator().equals("/")) {
+            result=divideNums();
+        }
+
+        else if (getOperator().equals("^")) {
+            result=addNums();
+        }
 
         return result;
     }
