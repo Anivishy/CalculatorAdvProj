@@ -16,7 +16,7 @@ public class Calculator {
         
         // Testing out Translator PEMDAS functions here
 
-        ArrayList<Object> checkPar = translator.checkParanthesis(expression);
+        ArrayList<Object> checkPar = translator.checkParenthesis(expression);
         System.out.println("Check Parenthesis: " + checkPar.toString() + "\n");
 
         ArrayList<Object> checkExp = translator.checkExponents(expression);

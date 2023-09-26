@@ -101,7 +101,7 @@ public class Translator {
 
     // PEMDAS Stuff
 
-    public ArrayList<Object> checkParanthesis(String currentExpresion) {
+    public ArrayList<Object> checkParenthesis(String currentExpresion) {
 
         // checkParanthesis will check for paranthesis in the current expression and return an array with a boolean and string (result)
         // If there is a paranthesis, the result will return [True, <the portion of the expression containing the paranthesis>]
