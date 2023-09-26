@@ -52,20 +52,20 @@ public class Translator {
         // parse will convert expression string into list of components
         while (true) {
             // Check for parentheses
-            ArrayList<String> parenthesisResult = getParenthesis(cur_expression);
+            ArrayList<Object> parenthesisResult = checkParenthesis(cur_expression);
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = parenthesisResult.get(1);
             }
 
             // Check for exponentiation
-            ArrayList<String> exponentResult = getExponent(cur_expression);
+            ArrayList<Object> exponentResult = checkExponents(cur_expression);
             if (exponentResult.get(0).equals("true")) {
                 return exponentResult.get(1);
             }
 
             // Check for multiplication and division
-            ArrayList<String> multiplicationResult = getMultiplication(cur_expression);
-            ArrayList<String> divisionResult = getDivision(cur_expression);
+            ArrayList<Object> multiplicationResult = checkMultiplication(cur_expression);
+            ArrayList<Object> divisionResult = checkDivision(cur_expression);
             
             if (multiplicationResult.get(0).equals("true")) {
                 cur_expression = multiplicationResult.get(1);
@@ -74,8 +74,8 @@ public class Translator {
             }
 
             // Check for addition and subtraction
-            ArrayList<String> additionResult = getAddition(cur_expression);
-            ArrayList<String> subtractionResult = getSubtraction(cur_expression);
+            ArrayList<Object> additionResult = checkAddition(cur_expression);
+            ArrayList<Object> subtractionResult = checkSubtraction(cur_expression);
 
             if (additionResult.get(0).equals("true")) {
                 cur_expression = additionResult.get(1);
@@ -263,7 +263,7 @@ public class Translator {
 
     public ArrayList<Object> checkAddition(String currentExpression) {
 
-        // checkAddition will check for addition in the current expression and return an array with a boolean and string (result)
+        // checkAddition will check for addition in the current expression and   return an array with a boolean and string (result)
         // If there is addition, the result will return [True, <the portion of the expression containing the addition>]
         // If there isn't, the result will return [False, ""]
 
@@ -297,6 +297,7 @@ public class Translator {
             }
             if (backIndex==0) {
                 backIndex=chunk.length();
+
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
