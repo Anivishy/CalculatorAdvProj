@@ -6,14 +6,7 @@ public class Engine {
     private double _num1;
     private double _num2;
 
-    public Engine(String operator, double num1, double num2) {
 
-        // Assign values to private fields
-
-        this._operator=operator;
-        this._num1=num1;
-        this._num2=num2;
-    }
 
     // Getter methods to access private fields
 
@@ -27,6 +20,12 @@ public class Engine {
 
     public double getNum2() {
         return this._num2;
+    }
+
+    public void setExpression(String operator, double num1, double num2) {
+        this._operator=operator;
+        this._num1=num1;
+        this._num2=num2;
     }
 
     public double compute() {

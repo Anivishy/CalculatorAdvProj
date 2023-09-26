@@ -1,5 +1,5 @@
 import java.util.Stack;
-
+import java.util.ArrayList;
 // Formatter will format the result and steps, manage the history, and display everything to the screen/command-line
 
 public class Formatter {
@@ -19,21 +19,21 @@ public class Formatter {
         return this._history;
     }
     
-    public void formatAndDisplay(String[] steps) {        
+    public void formatAndDisplay(ArrayList<String> steps) {        
         // formatAndDisplay will run through the steps and display them on the screen
-        // Implement format here
-        System.out.println("Input: " + steps[0]);
-        for (int i = 1; i < steps.length - 2; i++){
-            System.out.println("Step #" + i + ": " + steps[i]);
+
+        System.out.println("Input: " + steps.get(0));
+        for (int i = 1; i < steps.size() - 2; i++){
+            System.out.println("Step #" + i + ": " + steps.get(i));
         } 
-        System.out.println("Answer: " + steps[steps.length - 1]);
+        System.out.println("Answer: " + steps.get(steps.size() - 1));
 
     }
 
     public void addToHistory(String expression) {
 
         // addToHistory will add an expression to the history stack
-        // Implement addToHistory here
+
         this._history.push(expression);
     }
 }
