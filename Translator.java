@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import Integer;
 
 // Translator is responsible for breaking down the expression into its components and using PEMDAS to decide the next sub-expression to evaluate
 
@@ -54,13 +55,23 @@ public class Translator {
             // Check for parentheses
             ArrayList<Object> parenthesisResult = checkParenthesis(cur_expression);
             if (parenthesisResult.get(0).equals("true")) {
-                cur_expression = parenthesisResult.get(1);
+                cur_expression = (String) parenthesisResult.get(1);
             }
 
             // Check for exponentiation
             ArrayList<Object> exponentResult = checkExponents(cur_expression);
             if (exponentResult.get(0).equals("true")) {
-                return exponentResult.get(1);
+                String resultString = (String) exponentResult.get(1);
+                int operator_index = resultString.indexOf("^");
+                ArrayList<String> result = new ArrayList<String>();
+                String num1 = resultString.substring(0, operator_index);
+                String num2 = resultString.substring(operator_index + 1, resultString.length());
+                String operator = resultString.charAt(operator_index) + "";
+                result.add(operator);
+                result.add(num1);
+                result.add(num2);
+                result.add(resultString);
+                return result;
             }
 
             // Check for multiplication and division
@@ -68,9 +79,29 @@ public class Translator {
             ArrayList<Object> divisionResult = checkDivision(cur_expression);
             
             if (multiplicationResult.get(0).equals("true")) {
-                cur_expression = multiplicationResult.get(1);
+                String resultString = (String) multiplicationResult.get(1);
+                int operator_index = resultString.indexOf("*");
+                ArrayList<String> result = new ArrayList<String>();
+                String num1 = resultString.substring(0, operator_index);
+                String num2 = resultString.substring(operator_index + 1, resultString.length());
+                String operator = resultString.charAt(operator_index) + "";
+                result.add(operator);
+                result.add(num1);
+                result.add(num2);
+                result.add(resultString);
+                return result;
             } else if (divisionResult.get(0).equals("true")) {
-                cur_expression = divisionResult.get(1);
+                String resultString = (String) divisionResult.get(1);
+                int operator_index = resultString.indexOf("/");
+                ArrayList<String> result = new ArrayList<String>();
+                String num1 = resultString.substring(0, operator_index);
+                String num2 = resultString.substring(operator_index + 1, resultString.length());
+                String operator = resultString.charAt(operator_index) + "";
+                result.add(operator);
+                result.add(num1);
+                result.add(num2);
+                result.add(resultString);
+                return result;
             }
 
             // Check for addition and subtraction
@@ -78,9 +109,29 @@ public class Translator {
             ArrayList<Object> subtractionResult = checkSubtraction(cur_expression);
 
             if (additionResult.get(0).equals("true")) {
-                cur_expression = additionResult.get(1);
+                String resultString = (String) additionResult.get(1);
+                int operator_index = resultString.indexOf("");
+                ArrayList<String> result = new ArrayList<String>();
+                String num1 = resultString.substring(0, operator_index);
+                String num2 = resultString.substring(operator_index + 1, resultString.length());
+                String operator = resultString.charAt(operator_index) + "";
+                result.add(operator);
+                result.add(num1);
+                result.add(num2);
+                result.add(resultString);
+                return result;
             } else if (subtractionResult.get(0).equals("true")) {
-                cur_expression = subtractionResult.get(1);
+                String resultString = (String) subtractionResult.get(1);
+                int operator_index = resultString.indexOf("");
+                ArrayList<String> result = new ArrayList<String>();
+                String num1 = resultString.substring(0, operator_index);
+                String num2 = resultString.substring(operator_index + 1, resultString.length());
+                String operator = resultString.charAt(operator_index) + "";
+                result.add(operator);
+                result.add(num1);
+                result.add(num2);
+                result.add(resultString);
+                return result;
             }
 
             // No more operations to perform
@@ -95,7 +146,12 @@ public class Translator {
         }
 
         // If no operations were found, return an empty string
-        return "";
+        ArrayList<String> blank = new ArrayList <String>();
+        blank.add("");
+        blank.add("");
+        blank.add("");
+        blank.add("");
+        return blank;
     
     }
 
