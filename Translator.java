@@ -53,13 +53,13 @@ public class Translator {
         // parse will convert expression string into list of components
         while (true) {
             // Check for parentheses
-            ArrayList<Object> parenthesisResult = checkParenthesis(cur_expression);
+            ArrayList<String> parenthesisResult = checkParenthesis(cur_expression);
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = (String) parenthesisResult.get(1);
             }
 
             // Check for exponentiation
-            ArrayList<Object> exponentResult = checkExponents(cur_expression);
+            ArrayList<String> exponentResult = checkExponents(cur_expression);
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
                 int operator_index = resultString.indexOf("^");
@@ -75,8 +75,8 @@ public class Translator {
             }
 
             // Check for multiplication and division
-            ArrayList<Object> multiplicationResult = checkMultiplication(cur_expression);
-            ArrayList<Object> divisionResult = checkDivision(cur_expression);
+            ArrayList<String> multiplicationResult = checkMultiplication(cur_expression);
+            ArrayList<String> divisionResult = checkDivision(cur_expression);
             
             if (multiplicationResult.get(0).equals("true")) {
                 String resultString = (String) multiplicationResult.get(1);
@@ -105,16 +105,18 @@ public class Translator {
             }
 
             // Check for addition and subtraction
-            ArrayList<Object> additionResult = checkAddition(cur_expression);
-            ArrayList<Object> subtractionResult = checkSubtraction(cur_expression);
+            ArrayList<String> additionResult = checkAddition(cur_expression);
+            ArrayList<String> subtractionResult = checkSubtraction(cur_expression);
 
             if (additionResult.get(0).equals("true")) {
                 String resultString = (String) additionResult.get(1);
-                int operator_index = resultString.indexOf("");
+                int operator_index = resultString.indexOf("+");
+                //System.out.println(operator_index);
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
                 String operator = resultString.charAt(operator_index) + "";
+                //System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
@@ -122,7 +124,7 @@ public class Translator {
                 return result;
             } else if (subtractionResult.get(0).equals("true")) {
                 String resultString = (String) subtractionResult.get(1);
-                int operator_index = resultString.indexOf("");
+                int operator_index = resultString.indexOf("-");
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
@@ -157,14 +159,14 @@ public class Translator {
 
     // PEMDAS Stuff
 
-    public ArrayList<Object> checkParenthesis(String currentExpresion) {
+    public ArrayList<String> checkParenthesis(String currentExpresion) {
 
         // checkParanthesis will check for paranthesis in the current expression and return an array with a boolean and string (result)
         // If there is a paranthesis, the result will return [True, <the portion of the expression containing the paranthesis>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpresion.contains("(")) {
@@ -173,21 +175,21 @@ public class Translator {
         else {
             String chunk=currentExpresion;
             chunk=chunk.substring(chunk.lastIndexOf("(")+1, chunk.indexOf(")"));
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
         
     }
 
-    public ArrayList<Object> checkExponents(String currentExpression) {
+    public ArrayList<String> checkExponents(String currentExpression) {
 
         // checkExponents will check for exponents in the current expression and return an array with a boolean and string (result)
         // If there is an exponent, the result will return [True, <the portion of the expression containing the exponent>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpression.contains("^")) {
@@ -219,21 +221,21 @@ public class Translator {
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
 
     }
 
-    public ArrayList<Object> checkMultiplication(String currentExpression) {
+    public ArrayList<String> checkMultiplication(String currentExpression) {
 
         // checkMultiplication will check for multiplication in the current expression and return an array with a boolean and string (result)
         // If there is multiplication, the result will return [True, <the portion of the expression containing the multiplication>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpression.contains("*")) {
@@ -265,20 +267,20 @@ public class Translator {
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
     }
 
-    public ArrayList<Object> checkDivision(String currentExpression) {
+    public ArrayList<String> checkDivision(String currentExpression) {
 
         // checkDivision will check for division in the current expression and return an array with a boolean and string (result)
         // If there is division, the result will return [True, <the portion of the expression containing the division>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpression.contains("/")) {
@@ -310,21 +312,21 @@ public class Translator {
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
 
     }
 
-    public ArrayList<Object> checkAddition(String currentExpression) {
+    public ArrayList<String> checkAddition(String currentExpression) {
 
         // checkAddition will check for addition in the current expression and   return an array with a boolean and string (result)
         // If there is addition, the result will return [True, <the portion of the expression containing the addition>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpression.contains("+")) {
@@ -357,21 +359,21 @@ public class Translator {
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
 
     }
 
-    public ArrayList<Object> checkSubtraction(String currentExpression) {
+    public ArrayList<String> checkSubtraction(String currentExpression) {
 
         // checkSubtraction will check for subtraction in the current expression and return an array with a boolean and string (result)
         // If there is subtraction, the result will return [True, <the portion of the expression containing the subtraction>]
         // If there isn't, the result will return [False, ""]
 
-        ArrayList<Object> result = new ArrayList<Object>();
-        result.add(false);
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
         result.add("");
 
         if (!currentExpression.contains("-")) {
@@ -403,7 +405,7 @@ public class Translator {
             }
             
             chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, true);
+            result.set(0, "true");
             result.set(1,chunk);
             return result;
         }
