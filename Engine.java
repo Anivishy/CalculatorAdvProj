@@ -51,7 +51,7 @@ public class Engine {
         }
 
         else if (getOperator().equals("^")) {
-            result=addNums();
+            result=powerNums();
         }
 
         return result;

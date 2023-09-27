@@ -24,12 +24,13 @@ public class Calculator {
 
         steps.add(expression);
 
-        while (!currentExpression.matches("[0-9]+")) {
+        while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
 
             ArrayList<String> components = translator.parse(currentExpression);
+            System.out.println(components.toString());
             engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
             double result=engine.compute();
-            currentExpression=currentExpression.replaceAll(components.get(3), Double.toString(result));
+            currentExpression=currentExpression.replace(components.get(3), Double.toString(result));
             steps.add(currentExpression);
 
         }
