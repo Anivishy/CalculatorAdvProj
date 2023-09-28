@@ -23,7 +23,7 @@ public class Formatter {
         // formatAndDisplay will run through the steps and display them on the screen
 
         System.out.println("Input: " + steps.get(0));
-        for (int i = 1; i < steps.size() - 2; i++){
+        for (int i = 1; i < steps.size() - 1; i++){
             System.out.println("Step #" + i + ": " + steps.get(i));
         } 
         System.out.println("Answer: " + steps.get(steps.size() - 1));
