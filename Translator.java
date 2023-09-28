@@ -211,7 +211,8 @@ public class Translator {
         }
         else {
             String chunk=currentExpresion;
-            chunk=chunk.substring(chunk.lastIndexOf("(")+1, chunk.indexOf(")"));
+            String ending=chunk.substring(chunk.lastIndexOf("(")+1);
+            chunk=chunk.substring(chunk.lastIndexOf("(")+1, ending.indexOf(")")+chunk.lastIndexOf("(")+1);
             result.set(0, "true");
             result.set(1,chunk);
             return result;
@@ -331,7 +332,7 @@ public class Translator {
             int frontIndex=0;
             int backIndex=0;
 
-            for (int i=chunk.indexOf("*")-1; i>=0; i--) {
+            for (int i=chunk.indexOf("/")-1; i>=0; i--) {
                 if (operationsList.contains(chunk.charAt(i)+"")) {
                     frontIndex=i+1;
                     break;
@@ -339,8 +340,8 @@ public class Translator {
             }
 
             for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("*")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("*")+1);
+                if (chunk.substring(chunk.indexOf("/")+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf("/")+1);
                     break;
                 }
             }
