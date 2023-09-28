@@ -38,9 +38,10 @@ public class Translator {
 
     public Integer countOperators(String expression){
         int count = 0;
+        //expression.charAt(1);
         for (int i = 0; i < expression.length(); i++){
-            if (expression.charAt(i) + "" == "+" || expression.charAt(i) + "" == "-" || expression.charAt(i) + "" == "*" || 
-            expression.charAt(i) + "" == "/" || expression.charAt(i) + "" == "^"){
+            if ((expression.charAt(i) + "").equals("+") || (expression.charAt(i) + "").equals("-") || (expression.charAt(i) + "").equals("/") || 
+            (expression.charAt(i) + "").equals("*") || (expression.charAt(i) + "").equals("^")){
                 count ++;
             }
         }
@@ -54,8 +55,14 @@ public class Translator {
         while (true) {
             // Check for parentheses
             ArrayList<String> parenthesisResult = checkParenthesis(cur_expression);
+            Boolean hasPara = false;
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = (String) parenthesisResult.get(1);
+                if (countOperators(cur_expression) > 1)
+                    hasPara = false;
+                else{
+                    hasPara = true;
+                }                
             }
 
             // Check for exponentiation
@@ -70,7 +77,13 @@ public class Translator {
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
-                result.add(resultString);
+                if (hasPara){
+                    resultString = "(" + resultString + ")";
+                    result.add(resultString);
+                }
+                else{
+                    result.add(resultString);
+                }
                 return result;
             }
 
@@ -88,7 +101,13 @@ public class Translator {
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
-                result.add(resultString);
+                if (hasPara){
+                    resultString = "(" + resultString + ")";
+                    result.add(resultString);
+                }
+                else{
+                    result.add(resultString);
+                }
                 return result;
             } else if (divisionResult.get(0).equals("true")) {
                 String resultString = (String) divisionResult.get(1);
@@ -100,7 +119,13 @@ public class Translator {
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
-                result.add(resultString);
+                if (hasPara){
+                    resultString = "(" + resultString + ")";
+                    result.add(resultString);
+                }
+                else{
+                    result.add(resultString);
+                }
                 return result;
             }
 
@@ -120,7 +145,13 @@ public class Translator {
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
-                result.add(resultString);
+                if (hasPara){
+                    resultString = "(" + resultString + ")";
+                    result.add(resultString);
+                }
+                else{
+                    result.add(resultString);
+                }
                 return result;
             } else if (subtractionResult.get(0).equals("true")) {
                 String resultString = (String) subtractionResult.get(1);
@@ -132,7 +163,13 @@ public class Translator {
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
-                result.add(resultString);
+                if (hasPara){
+                    resultString = "(" + resultString + ")";
+                    result.add(resultString);
+                }
+                else{
+                    result.add(resultString);
+                }
                 return result;
             }
 
