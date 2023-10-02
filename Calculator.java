@@ -19,6 +19,9 @@ public class Calculator {
         System.out.println("Enter an expression to compute or type 'q' to quit: ");
         String expression=scanner.nextLine();
 
+        //remove all whitespace form input string
+        expression.replace("\\s", "");
+
         String currentExpression=expression;
         Translator translator = new Translator(expression);
 
