@@ -19,6 +19,8 @@ public class Calculator {
         System.out.println("Enter an expression to compute or type 'q' to quit: ");
         String expression=scanner.nextLine();
 
+        String ans = "";
+
         //remove all whitespace form input string
         expression.replace("\\s", "");
 
@@ -37,7 +39,8 @@ public class Calculator {
             steps.add(currentExpression);
 
         }
-
+        
+        ans = steps.get(steps.size() - 1);
         formatter.formatAndDisplay(steps);
 
         // Testing out Translator PEMDAS functions here
