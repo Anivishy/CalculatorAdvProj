@@ -37,31 +37,6 @@ public class Calculator {
 
         formatter.formatAndDisplay(steps);
 
-        // Testing out Translator PEMDAS functions here
-
-        /** 
-        ArrayList<Object> checkPar = translator.checkParenthesis(expression);
-        System.out.println("Check Parenthesis: " + checkPar.toString() + "\n");
-
-        ArrayList<String> checkExp = translator.checkExponents(expression);
-        System.out.println("Check Exponents: " + checkExp.toString() + "\n");
-        
-        ArrayList<String> checkMult = translator.checkMultiplication(expression);
-        System.out.println("Check Multiplication: " + checkMult.toString() + "\n");
-
-        ArrayList<String> checkDiv = translator.checkDivision(expression);
-        System.out.println("Check Division: " + checkDiv.toString() + "\n");
-
-        ArrayList<String> checkAdd = translator.checkAddition(expression);
-        System.out.println("Check Addition: " + checkAdd.toString() + "\n");
-
-        ArrayList<String> checkSub = translator.checkSubtraction(expression);
-        System.out.println("Check Subtraction: " + checkSub.toString() + "\n");
-        **/
-       
-    
-
-
     }
     
     
