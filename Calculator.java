@@ -17,21 +17,29 @@ public class Calculator {
         Formatter formatter=new Formatter();
         String ans = "";
 
-        System.out.println("Enter an expression to compute or type '#' to quit: ");
-        String expression=scanner.nextLine();
+        
+
+        Boolean continue_loop = true;
 
         //remove all whitespace form input string
-        expression.replace("\\s", "");
-        for (int i = 1; i < expression.length();  i ++){
-            if (expression.charAt(i) == '(' || expression.charAt(i) == ')'){
-                if (expression.charAt(i - 1) != '+'){
-                    break;
+        
+        while (continue_loop) {            
+            System.out.println("Enter an expression to compute or type '#' to quit: ");
+            String expression=scanner.nextLine();
+
+            expression.replace("\\s", "");
+            for (int i = 1; i < expression.length();  i ++){
+                if (expression.charAt(i) == '(' || expression.charAt(i) == ')'){
+                    if (expression.charAt(i - 1) != '+'){
+                        break;
+                    }
                 }
             }
-        }
-        while (true) {
-            if (expression == "#"){
-                break;
+
+            System.out.print(expression);
+
+            if (expression .equals("#")){
+                continue_loop = false;
             }
 
             else{
@@ -53,6 +61,7 @@ public class Calculator {
 
                 ans = steps.get(steps.size() - 1);
                 formatter.formatAndDisplay(steps);
+                steps.clear();
 
                 // Testing out Translator PEMDAS functions here
 
