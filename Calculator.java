@@ -16,7 +16,8 @@ public class Calculator {
         Engine engine=new Engine();
         Formatter formatter=new Formatter();
         String ans = "";
-
+        //used for handling implied multiplication
+        String updatedString = "";
         
 
         Boolean continue_loop = true;
@@ -29,21 +30,25 @@ public class Calculator {
 
             expression.replace("\\s", "");
             for (int i = 1; i < expression.length();  i ++){
-                if (expression.charAt(i) == '(' || expression.charAt(i) == ')'){
-                    if (expression.charAt(i - 1) != '+'){
-                        break;
+                if (expression.charAt(i) == '('){
+                    String prev_char = expression.charAt(i - 1) + "";
+                    if (!(prev_char.equals("+")) || !(prev_char.equals("-")) || !(prev_char.equals("*")) || !(prev_char.equals("/")) || !(prev_char.equals("^"))){
+                        updatedString += expression.substring(0, i);
+                        updatedString += "*";
+                        updatedString += expression.substring(i);
+                        System.out.println(updatedString);
                     }
                 }
             }
 
-            System.out.print(expression);
+            //System.out.print(expression);
 
-            if (expression .equals("#")){
+            if (expression.equals("#")){
                 continue_loop = false;
             }
 
             else{
-                String currentExpression=expression;
+                String currentExpression=updatedString;
                 Translator translator = new Translator(expression);
 
                 steps.add(expression);
