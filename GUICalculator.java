@@ -18,6 +18,7 @@ public class GUICalculator {
       Font font1 = new Font("SansSerif", Font.BOLD, 70);
       Font font2 = new Font("SansSerif", Font.ITALIC, 20);
       Font font3 = new Font("SansSerif", Font.PLAIN, 30);
+      Font font4 = new Font("SansSerif", Font.PLAIN, 17);
 
       JFrame f=new JFrame("Calculator");  
       JTextField textBox=new JTextField();  
@@ -74,7 +75,7 @@ public class GUICalculator {
 
       JButton dotButton=new JButton(".");
       dotButton.setFont(font3);
-      dotButton.setBounds((int)(screenWidth*0.04),screenHeight-260,120,50);  
+      dotButton.setBounds((int)(screenWidth*0.04),screenHeight-260,80,50);  
       dotButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println(". button was pressed");
@@ -83,7 +84,7 @@ public class GUICalculator {
       });
 
       JButton negButton=new JButton("(-)");  
-      negButton.setBounds((int)(screenWidth*0.15),screenHeight-260,120,50);  
+      negButton.setBounds((int)(screenWidth*0.115),screenHeight-260,80,50);  
       negButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("Negative button was pressed");
@@ -92,7 +93,7 @@ public class GUICalculator {
       });
 
       JButton zeroButton=new JButton("0");  
-      zeroButton.setBounds((int)(screenWidth*0.26),screenHeight-260,120,50);  
+      zeroButton.setBounds((int)(screenWidth*0.19),screenHeight-260,80,50);  
       zeroButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("0 button was pressed");
@@ -100,12 +101,55 @@ public class GUICalculator {
           }
       });
 
+      JButton piButton=new JButton("π");  
+      piButton.setBounds((int)(screenWidth*0.265),screenHeight-260,80,50);  
+      piButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("π button was pressed");
+            textBox.setText(textBox.getText()+"π");
+          }
+      });
 
+      JButton sinButton=new JButton("sin");  
+      sinButton.setBounds((int)(screenWidth*0.34),screenHeight-260,80,50);  
+      sinButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("sin button was pressed");
+            textBox.setText(textBox.getText()+"sin(");
+          }
+      });
 
+      JButton cosButton=new JButton("cos");  
+      cosButton.setBounds((int)(screenWidth*0.415),screenHeight-260,80,50);  
+      cosButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("cos button was pressed");
+            textBox.setText(textBox.getText()+"cos(");
+          }
+      });
 
+      JButton tanButton=new JButton("tan");  
+      tanButton.setBounds((int)(screenWidth*0.49),screenHeight-260,80,50);  
+      tanButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("tan button was pressed");
+            textBox.setText(textBox.getText()+"tan(");
+          }
+      });
+
+      JButton secondButton=new JButton("2nd");  
+      secondButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
+      secondButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("2nd button was pressed");
+
+            // Implement 2nd button logic here
+
+          }
+      });
 
       JButton oneButton=new JButton("1");  
-      oneButton.setBounds((int)(screenWidth*0.04),screenHeight-320,120,50);  
+      oneButton.setBounds((int)(screenWidth*0.04),screenHeight-320,80,50);  
       oneButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("1 button was pressed");
@@ -114,7 +158,7 @@ public class GUICalculator {
       });
 
       JButton twoButton=new JButton("2");  
-      twoButton.setBounds((int)(screenWidth*0.15),screenHeight-320,120,50);  
+      twoButton.setBounds((int)(screenWidth*0.115),screenHeight-320,80,50);  
       twoButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("2 button was pressed");
@@ -123,7 +167,7 @@ public class GUICalculator {
       });
 
       JButton threeButton=new JButton("3");  
-      threeButton.setBounds((int)(screenWidth*0.26),screenHeight-320,120,50);  
+      threeButton.setBounds((int)(screenWidth*0.19),screenHeight-320,80,50);  
       threeButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("3 button was pressed");
@@ -131,8 +175,57 @@ public class GUICalculator {
           }
       });
 
+      JButton openParanthesisButton=new JButton("(");  
+      openParanthesisButton.setBounds((int)(screenWidth*0.265),screenHeight-320,80,50);  
+      openParanthesisButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("( button was pressed");
+            textBox.setText(textBox.getText()+"(");
+          }
+      });
+
+      JButton closedParanthesisButton=new JButton(")");  
+      closedParanthesisButton.setBounds((int)(screenWidth*0.34),screenHeight-320,80,50);  
+      closedParanthesisButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println(") button was pressed");
+            textBox.setText(textBox.getText()+")");
+          }
+      });
+
+      JButton powerButton=new JButton("^");  
+      powerButton.setBounds((int)(screenWidth*0.415),screenHeight-320,80,50);  
+      powerButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("^ button was pressed");
+            textBox.setText(textBox.getText()+"^");
+          }
+      });
+
+      JButton inverseButton=new JButton("x^-1");  
+      inverseButton.setBounds((int)(screenWidth*0.49),screenHeight-320,80,50);  
+      inverseButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("x^-1 button was pressed");
+            textBox.setText(textBox.getText()+"^-1");
+          }
+      });
+
+      JButton mathButton=new JButton("math");  
+      mathButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
+      mathButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("math button was pressed");
+
+            // implement math button logic here
+            
+          }
+      });
+
+      
+
       JButton fourButton=new JButton("4");  
-      fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,120,50);  
+      fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
       fourButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("4 button was pressed");
@@ -141,7 +234,7 @@ public class GUICalculator {
       });
 
       JButton fiveButton=new JButton("5");  
-      fiveButton.setBounds((int)(screenWidth*0.15),screenHeight-380,120,50);  
+      fiveButton.setBounds((int)(screenWidth*0.115),screenHeight-380,80,50);  
       fiveButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("5 button was pressed");
@@ -150,7 +243,7 @@ public class GUICalculator {
       });
 
       JButton sixButton=new JButton("6");  
-      sixButton.setBounds((int)(screenWidth*0.26),screenHeight-380,120,50);  
+      sixButton.setBounds((int)(screenWidth*0.19),screenHeight-380,80,50);  
       sixButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("6 button was pressed");
@@ -158,8 +251,59 @@ public class GUICalculator {
           }
       });
 
+      JButton eToTheXButton=new JButton("e^x");  
+      eToTheXButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
+      eToTheXButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("e^x button was pressed");
+            textBox.setText(textBox.getText()+"e^");
+          }
+      });
+
+      JButton xSquaredButton=new JButton("x^2");  
+      xSquaredButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
+      xSquaredButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("x^2 button was pressed");
+            textBox.setText(textBox.getText()+"^2");
+          }
+      });
+
+      JButton multButton=new JButton("x");
+      multButton.setFont(font4);  
+      multButton.setBounds((int)(screenWidth*0.415),screenHeight-380,80,50);  
+      multButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("* button was pressed");
+            textBox.setText(textBox.getText()+"*");
+          }
+      });
+
+      JButton divButton=new JButton("/");
+      divButton.setFont(font4);  
+      divButton.setBounds((int)(screenWidth*0.49),screenHeight-380,80,50);  
+      divButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("/ button was pressed");
+            textBox.setText(textBox.getText()+"/");
+          }
+      });
+
+      JButton delButton=new JButton("del");
+      delButton.setBounds((int)(screenWidth*0.565),screenHeight-380,80,50);  
+      delButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("del button was pressed");
+            textBox.setText(textBox.getText().substring(0, textBox.getText().length()-1));
+          }
+      });
+      
+      
+
+
+
       JButton sevenButton=new JButton("7");  
-      sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,120,50);  
+      sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
       sevenButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("7 button was pressed");
@@ -168,7 +312,7 @@ public class GUICalculator {
       });
 
       JButton eightButton=new JButton("8");  
-      eightButton.setBounds((int)(screenWidth*0.15),screenHeight-440,120,50);  
+      eightButton.setBounds((int)(screenWidth*0.115),screenHeight-440,80,50);  
       eightButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("8 button was pressed");
@@ -177,13 +321,63 @@ public class GUICalculator {
       });
 
       JButton nineButton=new JButton("9");  
-      nineButton.setBounds((int)(screenWidth*0.26),screenHeight-440,120,50);  
+      nineButton.setBounds((int)(screenWidth*0.19),screenHeight-440,80,50);  
       nineButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             System.out.println("9 button was pressed");
             textBox.setText(textBox.getText()+"9");
           }
       });
+
+      JButton logButton=new JButton("log");  
+      logButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
+      logButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("log button was pressed");
+            textBox.setText(textBox.getText()+"log(");
+          }
+      });
+
+      JButton lnButton=new JButton("ln");  
+      lnButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
+      lnButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("ln button was pressed");
+            textBox.setText(textBox.getText()+"ln(");
+          }
+      });
+
+      JButton plusButton=new JButton("+");
+      plusButton.setFont(font4);
+      plusButton.setBounds((int)(screenWidth*0.415),screenHeight-440,80,50);  
+      plusButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("+ button was pressed");
+            textBox.setText(textBox.getText()+"+");
+          }
+      });
+
+      JButton minusButton=new JButton("-");
+      minusButton.setFont(font4);
+      minusButton.setBounds((int)(screenWidth*0.49),screenHeight-440,80,50);  
+      minusButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("- button was pressed");
+            textBox.setText(textBox.getText()+"-");
+          }
+      });
+
+      JButton modeButton=new JButton("mode");
+      modeButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      modeButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            System.out.println("mode button was pressed");
+            
+            // Implement settings button logic here
+
+          }
+      });
+      
 
 
 
@@ -207,16 +401,39 @@ public class GUICalculator {
       f.add(dotButton);
       f.add(negButton);
       f.add(zeroButton);
+      f.add(piButton);
+      f.add(sinButton);
+      f.add(cosButton);
+      f.add(tanButton);
 
       f.add(oneButton);
       f.add(twoButton);
       f.add(threeButton);
+      f.add(openParanthesisButton);
+      f.add(closedParanthesisButton);
+      f.add(powerButton);
+      f.add(inverseButton);
+      f.add(secondButton);
+
+
       f.add(fourButton);
       f.add(fiveButton);
       f.add(sixButton);
+      f.add(eToTheXButton);
+      f.add(xSquaredButton);
+      f.add(multButton);
+      f.add(divButton);
+      f.add(mathButton);
+
       f.add(sevenButton);
       f.add(eightButton);
       f.add(nineButton);
+      f.add(logButton);
+      f.add(lnButton);
+      f.add(plusButton);
+      f.add(minusButton);
+      f.add(delButton);
+      f.add(modeButton);
 
       f.add(textBox);
       f.add(steps);
