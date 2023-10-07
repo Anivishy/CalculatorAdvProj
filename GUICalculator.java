@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import javax.swing.*;
 
@@ -12,6 +13,9 @@ public class GUICalculator {
     private static final int screenWidth=1200;
     private static final int screenHeight=800;
     private final static String newline = "\n";
+ 
+    private static Engine engine=new Engine();
+    private static Formatter formatter=new Formatter();
 
     public static void drawScreen() {
 
@@ -40,9 +44,10 @@ public class GUICalculator {
       submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);  
       submitButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
+           
             System.out.println("Submit button was pressed");
-            textBox.setText(textBox.getText()+"+1");
-            System.out.println(textBox.getText());
+            runCalc(textBox.getText());
+          
           }
       });
 
@@ -379,20 +384,6 @@ public class GUICalculator {
       });
       
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       f.add(submitButton);
       f.add(graphButton);
       f.add(clearButton);
@@ -443,7 +434,12 @@ public class GUICalculator {
     
     }
 
-  
+    public static void runCalc(String expression) {
+
+     
+      // implement logic here
+
+    }
 
     public static void main(String[] arguments) {
       drawScreen();
