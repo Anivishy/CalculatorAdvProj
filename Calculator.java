@@ -30,6 +30,7 @@ public class Calculator {
             expression.replace("\\s", "");
             for (int i = 1; i < expression.length();  i ++){
                 if (expression.charAt(i) == '('){
+                    System.out.println("______________________________");
                     String prev_char = expression.charAt(i - 1) + "";
                     if (!(prev_char.equals("+")) || !(prev_char.equals("-")) || !(prev_char.equals("*")) || !(prev_char.equals("/")) || !(prev_char.equals("^"))){
                         updatedString += expression.substring(0, i);
@@ -37,6 +38,10 @@ public class Calculator {
                         updatedString += expression.substring(i);
                         System.out.println(updatedString);
                     }
+                }
+
+                else{
+                    updatedString = expression;
                 }
             }
 
