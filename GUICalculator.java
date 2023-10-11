@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+
 import javax.swing.*;
 
 
@@ -19,7 +20,7 @@ public class GUICalculator {
 
     public static void drawScreen() {
 
-      Font font1 = new Font("SansSerif", Font.BOLD, 70);
+      Font font1 = new Font("SansSerif", Font.BOLD, 50);
       Font font2 = new Font("SansSerif", Font.ITALIC, 20);
       Font font3 = new Font("SansSerif", Font.PLAIN, 30);
       Font font4 = new Font("SansSerif", Font.PLAIN, 17);
@@ -31,10 +32,11 @@ public class GUICalculator {
       f.setSize(screenWidth,screenHeight);  
       
       textBox.setFont(font1);
-      textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.25));
+    
+      //textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.3));
 
       JScrollPane scrollPaneMain = new JScrollPane(textBox);
-      scrollPaneMain.setBounds(50,50,(int)(screenWidth*0.6),(int)(screenHeight*0.25));
+      scrollPaneMain.setBounds(50,50,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
       
       f.add(scrollPaneMain);
 
@@ -57,7 +59,11 @@ public class GUICalculator {
           public void actionPerformed(ActionEvent e){
            
             System.out.println("Submit button was pressed");
-            runCalc(textBox.getText());
+            ArrayList<String> steps=Calculator.compute(textBox.getText());
+            String answer=steps.get(steps.size() - 1);
+
+            textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"..............................................."+"\n");
+           
           
           }
       });
@@ -435,12 +441,7 @@ public class GUICalculator {
     
     }
 
-    public static void runCalc(String expression) {
-
-     
-      // implement logic here
-
-    }
+    
 
     public static void main(String[] arguments) {
       drawScreen();

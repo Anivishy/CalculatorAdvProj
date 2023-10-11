@@ -8,6 +8,73 @@ public class Calculator {
 
     // Implement Calculator functionality here
 
+    public static ArrayList<String> compute(String expression) {
+
+        ArrayList<String> steps = new ArrayList<String>();
+
+        Engine engine=new Engine();
+   
+        //used for handling implied multiplication
+        String updatedString = "";
+        
+        Boolean modified = false;
+
+        //remove all whitespace form input string
+        
+        modified = false;
+        updatedString = "";
+        expression = expression.replace("\\s", "");
+        for (int i = 1; i < expression.length();  i ++){
+            if (expression.charAt(i) == '('){
+                String prev_char = expression.charAt(i - 1) + "";
+                if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^"))){
+                    updatedString = "";
+                    updatedString += expression.substring(0, i);
+                    updatedString += "*";
+                    updatedString += expression.substring(i);
+                    expression = updatedString;
+                    modified = true;
+                }
+            }
+
+            else if (!modified){
+                //updatedString = expression;
+                expression = expression;
+            }                
+        }
+
+        for (int i = 1; i < expression.length(); i++){
+            if (expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1))){
+                updatedString = "";
+                updatedString += expression.substring(0, i);
+                updatedString += "+";
+                updatedString += expression.substring(i);
+                expression = updatedString;
+
+            }
+        }
+
+        String currentExpression=expression;
+        Translator translator = new Translator(expression);
+
+        steps.add(expression);
+
+        while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
+
+            ArrayList<String> components = translator.parse(currentExpression);
+            //System.out.println(components.toString());
+            engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
+            double result=engine.compute();
+            currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
+            steps.add(currentExpression);
+
+        }
+
+        return steps;
+        
+        
+    }
+
     public static void main(String[] args) {
         ArrayList<String> steps = new ArrayList<String>();
 
@@ -75,7 +142,7 @@ public class Calculator {
                 while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
 
                     ArrayList<String> components = translator.parse(currentExpression);
-                    System.out.println(components.toString());
+                    //System.out.println(components.toString());
                     engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
                     double result=engine.compute();
                     currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
