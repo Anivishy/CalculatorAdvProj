@@ -40,7 +40,7 @@ public class Translator {
         int count = 0;
         //expression.charAt(1);
         for (int i = 0; i < expression.length(); i++){
-            if ((expression.charAt(i) + "").equals("+") || (expression.charAt(i) + "").equals("-") || (expression.charAt(i) + "").equals("/") || 
+            if ((expression.charAt(i) + "").equals("+") || (expression.charAt(i) + "").equals("/") || 
             (expression.charAt(i) + "").equals("*") || (expression.charAt(i) + "").equals("^")){
                 count ++;
             }
@@ -70,6 +70,7 @@ public class Translator {
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
                 int operator_index = resultString.indexOf("^");
+                System.out.print(resultString);
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
@@ -94,6 +95,8 @@ public class Translator {
             if (multiplicationResult.get(0).equals("true")) {
                 String resultString = (String) multiplicationResult.get(1);
                 int operator_index = resultString.indexOf("*");
+                System.out.println(resultString);
+                System.out.println(operator_index);
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
@@ -136,12 +139,11 @@ public class Translator {
             if (additionResult.get(0).equals("true")) {
                 String resultString = (String) additionResult.get(1);
                 int operator_index = resultString.indexOf("+");
-                //System.out.println(operator_index);
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
                 String operator = resultString.charAt(operator_index) + "";
-                //System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
+                System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
@@ -153,25 +155,27 @@ public class Translator {
                     result.add(resultString);
                 }
                 return result;
-            } else if (subtractionResult.get(0).equals("true")) {
-                String resultString = (String) subtractionResult.get(1);
-                int operator_index = resultString.indexOf("-");
-                ArrayList<String> result = new ArrayList<String>();
-                String num1 = resultString.substring(0, operator_index);
-                String num2 = resultString.substring(operator_index + 1, resultString.length());
-                String operator = resultString.charAt(operator_index) + "";
-                result.add(operator);
-                result.add(num1);
-                result.add(num2);
-                if (hasPara){
-                    resultString = "(" + resultString + ")";
-                    result.add(resultString);
-                }
-                else{
-                    result.add(resultString);
-                }
-                return result;
-            }
+            } 
+            
+            // else if (subtractionResult.get(0).equals("true")) {
+            //     String resultString = (String) subtractionResult.get(1);
+            //     int operator_index = resultString.indexOf("-");
+            //     ArrayList<String> result = new ArrayList<String>();
+            //     String num1 = resultString.substring(0, operator_index);
+            //     String num2 = resultString.substring(operator_index + 1, resultString.length());
+            //     String operator = resultString.charAt(operator_index) + "";
+            //     result.add(operator);
+            //     result.add(num1);
+            //     result.add(num2);
+            //     if (hasPara){
+            //         resultString = "(" + resultString + ")";
+            //         result.add(resultString);
+            //     }
+            //     else{
+            //         result.add(resultString);
+            //     }
+            //     return result;
+            // }
 
             // No more operations to perform
             if (!parenthesisResult.get(0).equals("true") &&
@@ -236,7 +240,7 @@ public class Translator {
         else {
             String chunk=currentExpression;
             
-            String[] operations={"+", "-", "*", "/", "^", ")"};
+            String[] operations={"+", "*", "/", "^", ")"};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;
@@ -280,9 +284,8 @@ public class Translator {
             return result;
         }
         else {
-            String chunk=currentExpression;
-            
-            String[] operations={"+", "-", "*", "/", "^", ")"};
+            String chunk=currentExpression;            
+            String[] operations={"+", "*", "/", "^", ")", "("};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;
@@ -327,7 +330,7 @@ public class Translator {
         else {
             String chunk=currentExpression;
             
-            String[] operations={"+", "-", "*", "/", "^", ")"};
+            String[] operations={"+", "*", "/", "^", ")", "("};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;
@@ -373,7 +376,7 @@ public class Translator {
         else {
             String chunk=currentExpression;
             
-            String[] operations={"+", "-", "*", "/", "^", ")"};
+            String[] operations={"+", "*", "/", "^", ")", "("};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;
@@ -420,7 +423,7 @@ public class Translator {
         else {
             String chunk=currentExpression;
             
-            String[] operations={"+", "-", "*", "/", "^", ")"};
+            String[] operations={"+", "-", "*", "/", "^", ")", "("};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;

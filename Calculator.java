@@ -27,26 +27,37 @@ public class Calculator {
         while (continue_loop) {            
             System.out.println("Enter an expression to compute or type '#' to quit: ");
             String expression=scanner.nextLine();
-
-            expression.replace("\\s", "");
+            modified = false;
+            updatedString = "";
+            expression = expression.replace("\\s", "");
             for (int i = 1; i < expression.length();  i ++){
                 if (expression.charAt(i) == '('){
                     String prev_char = expression.charAt(i - 1) + "";
-                    if (!(prev_char.equals("+")) || !(prev_char.equals("-")) || !(prev_char.equals("*")) || !(prev_char.equals("/")) || !(prev_char.equals("^"))){
+                    if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^"))){
                         updatedString = "";
                         updatedString += expression.substring(0, i);
                         updatedString += "*";
                         updatedString += expression.substring(i);
-                        System.out.println(updatedString);
+                        expression = updatedString;
                         modified = true;
                     }
                 }
 
                 else if (!modified){
-                    updatedString = expression;
-                }
+                    //updatedString = expression;
+                    expression = expression;
+                }                
+            }
 
-                
+            for (int i = 1; i < expression.length(); i++){
+                if (expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1))){
+                    updatedString = "";
+                    updatedString += expression.substring(0, i);
+                    updatedString += "+";
+                    updatedString += expression.substring(i);
+                    expression = updatedString;
+
+                }
             }
 
             //System.out.print(expression);
@@ -56,7 +67,7 @@ public class Calculator {
             }
 
             else{
-                String currentExpression=updatedString;
+                String currentExpression=expression;
                 Translator translator = new Translator(expression);
 
                 steps.add(expression);
@@ -67,8 +78,7 @@ public class Calculator {
                     System.out.println(components.toString());
                     engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
                     double result=engine.compute();
-                    currentExpression=currentExpression.replace(components.get(3), Double.toString(result));
-                    System.out.println(currentExpression);
+                    currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
                     steps.add(currentExpression);
 
                 }
