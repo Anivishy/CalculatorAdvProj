@@ -25,17 +25,28 @@ public class GUICalculator {
       Font font4 = new Font("SansSerif", Font.PLAIN, 17);
 
       JFrame f=new JFrame("Calculator");  
-      JTextField textBox=new JTextField();  
-
+      JTextArea textBox=new JTextArea();
+      JTextArea steps = new JTextArea();
+      
+      f.setSize(screenWidth,screenHeight);  
+      
       textBox.setFont(font1);
       textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.25));
+
+      JScrollPane scrollPaneMain = new JScrollPane(textBox);
+      scrollPaneMain.setBounds(50,50,(int)(screenWidth*0.6),(int)(screenHeight*0.25));
       
-      
-      JTextField steps=new JTextField();  
+      f.add(scrollPaneMain);
 
       steps.setFont(font2);
       steps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
 
+      JScrollPane scrollPaneSteps = new JScrollPane(steps);
+      scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+
+      f.add(scrollPaneSteps);
+
+      
       // BUTTONS
 
       // Bottom row (row 1)
@@ -227,8 +238,6 @@ public class GUICalculator {
           }
       });
 
-      
-
       JButton fourButton=new JButton("4");  
       fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
       fourButton.addActionListener(new ActionListener(){  
@@ -303,10 +312,6 @@ public class GUICalculator {
           }
       });
       
-      
-
-
-
       JButton sevenButton=new JButton("7");  
       sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
       sevenButton.addActionListener(new ActionListener(){  
@@ -406,7 +411,6 @@ public class GUICalculator {
       f.add(inverseButton);
       f.add(secondButton);
 
-
       f.add(fourButton);
       f.add(fiveButton);
       f.add(sixButton);
@@ -426,9 +430,6 @@ public class GUICalculator {
       f.add(delButton);
       f.add(modeButton);
 
-      f.add(textBox);
-      f.add(steps);
-      f.setSize(screenWidth,screenHeight);  
       f.setLayout(null);  
       f.setVisible(true);
     
