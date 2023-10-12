@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
+import javax.lang.model.element.Element;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Utilities;
 
 
 public class GUICalculator {
@@ -18,7 +21,12 @@ public class GUICalculator {
     private static Engine engine=new Engine();
     private static Formatter formatter=new Formatter();
 
+    
+      
+    
+
     public static void drawScreen() {
+      
 
       Font font1 = new Font("SansSerif", Font.BOLD, 50);
       Font font2 = new Font("SansSerif", Font.ITALIC, 20);
@@ -54,15 +62,23 @@ public class GUICalculator {
       // Bottom row (row 1)
 
       JButton submitButton=new JButton("=");  
-      submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);  
+      submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
+
       submitButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-           
-            System.out.println("Submit button was pressed");
-            ArrayList<String> steps=Calculator.compute(textBox.getText());
-            String answer=steps.get(steps.size() - 1);
 
-            textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"..............................................."+"\n");
+            int currentIndex=textBox.getText().lastIndexOf("\n");
+            String expression=textBox.getText().substring(currentIndex+1);
+
+            System.out.println("Submit button was pressed");
+           
+            
+            ArrayList<String> steps=Calculator.compute(expression);
+
+
+            String answer=steps.get(steps.size() - 1);
+            
+            textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
            
           
           }
