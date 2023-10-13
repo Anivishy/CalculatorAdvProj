@@ -28,7 +28,7 @@ public class GUICalculator {
     public static void drawScreen() {
       
 
-      Font font1 = new Font("SansSerif", Font.BOLD, 50);
+      Font font1 = new Font("SansSerif", Font.PLAIN, 50);
       Font font2 = new Font("SansSerif", Font.ITALIC, 20);
       Font font3 = new Font("SansSerif", Font.PLAIN, 30);
       Font font4 = new Font("SansSerif", Font.PLAIN, 17);
@@ -50,6 +50,10 @@ public class GUICalculator {
 
       steps.setFont(font2);
       steps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+      steps.setEditable(false);
+      steps.setText("               STEPS" + "\n" + "_____________________  \n");
+      
+
 
       JScrollPane scrollPaneSteps = new JScrollPane(steps);
       scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
@@ -71,15 +75,32 @@ public class GUICalculator {
             String expression=textBox.getText().substring(currentIndex+1);
 
             System.out.println("Submit button was pressed");
-           
             
-            ArrayList<String> steps=Calculator.compute(expression);
+            // Updating the main answer text box
+            try {
+              ArrayList<String> result=Calculator.compute(expression);
+              String answer=result.get(result.size() - 1);
 
+              textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
+              //textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"_______________________________________________"+"\n");
+              
+              // Updating steps box
 
-            String answer=steps.get(steps.size() - 1);
+              steps.setText(steps.getText() + " Input: " + result.get(0) + "\n");
+              for (int i = 1; i < result.size() - 1; i++){
+
+                steps.setText(steps.getText() + " Step #" + i + ": " + result.get(i) + "\n");
+              } 
+              steps.setText(steps.getText() + " Answer: " + result.get(result.size() - 1) + "\n");
+              steps.setText(steps.getText() + "_____________________ \n");
+              //steps.setText(steps.getText() + ".......................................... \n");
+            }
+            catch (Exception error){
+              textBox.setText(" \n     INVALID EXPRESSION");
+            }
             
-            textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
-           
+            
+            
           
           }
       });
@@ -98,6 +119,7 @@ public class GUICalculator {
           public void actionPerformed(ActionEvent e){
             System.out.println("Clear button was pressed");
             textBox.setText("");
+            steps.setText("               STEPS" + "\n" + "_____________________  \n");
           }
       });
 
