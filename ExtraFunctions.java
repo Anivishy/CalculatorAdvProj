@@ -10,6 +10,11 @@ public class ExtraFunctions {
         return expression;
     }
 
+    public String replaceE(String expression){
+        expression = expression.replaceAll("e", Double.toString(Math.exp(1.0)));
+        return expression;
+    }
+
     
 }
 

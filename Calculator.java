@@ -30,6 +30,7 @@ public class Calculator {
 
         //Remove special chars
         expression = extra.replacePi(expression);
+        expression = extra.replaceE(expression);
 
         System.out.println(expression);
 
