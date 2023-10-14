@@ -95,8 +95,7 @@ public class Translator {
             if (multiplicationResult.get(0).equals("true")) {
                 String resultString = (String) multiplicationResult.get(1);
                 int operator_index = resultString.indexOf("*");
-                System.out.println(resultString);
-                System.out.println(operator_index);
+             
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
@@ -143,7 +142,7 @@ public class Translator {
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
                 String operator = resultString.charAt(operator_index) + "";
-                System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
+                //System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);

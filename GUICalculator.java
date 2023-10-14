@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.lang.model.element.Element;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Utilities;
 
 
 public class GUICalculator {
@@ -17,36 +21,86 @@ public class GUICalculator {
     private static Engine engine=new Engine();
     private static Formatter formatter=new Formatter();
 
-    public static void drawScreen() {
+    
+      
+    
 
-      Font font1 = new Font("SansSerif", Font.BOLD, 70);
+    public static void drawScreen() {
+      
+
+      Font font1 = new Font("SansSerif", Font.PLAIN, 50);
       Font font2 = new Font("SansSerif", Font.ITALIC, 20);
       Font font3 = new Font("SansSerif", Font.PLAIN, 30);
       Font font4 = new Font("SansSerif", Font.PLAIN, 17);
 
       JFrame f=new JFrame("Calculator");  
-      JTextField textBox=new JTextField();  
-
+      JTextArea textBox=new JTextArea();
+      JTextArea steps = new JTextArea();
+      
+      f.setSize(screenWidth,screenHeight);  
+      
       textBox.setFont(font1);
-      textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.25));
+    
+      //textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.3));
+
+      JScrollPane scrollPaneMain = new JScrollPane(textBox);
+      scrollPaneMain.setBounds(50,50,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
       
-      
-      JTextField steps=new JTextField();  
+      f.add(scrollPaneMain);
 
       steps.setFont(font2);
       steps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+      steps.setEditable(false);
+      steps.setText("               STEPS" + "\n" + "_____________________  \n");
+      
 
+
+      JScrollPane scrollPaneSteps = new JScrollPane(steps);
+      scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+
+      f.add(scrollPaneSteps);
+
+      
       // BUTTONS
 
       // Bottom row (row 1)
 
       JButton submitButton=new JButton("=");  
-      submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);  
+      submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
+
       submitButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-           
+
+            int currentIndex=textBox.getText().lastIndexOf("\n");
+            String expression=textBox.getText().substring(currentIndex+1);
+
             System.out.println("Submit button was pressed");
-            runCalc(textBox.getText());
+            
+            // Updating the main answer text box
+            try {
+              ArrayList<String> result=Calculator.compute(expression);
+              String answer=result.get(result.size() - 1);
+
+              textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
+              //textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"_______________________________________________"+"\n");
+              
+              // Updating steps box
+
+              steps.setText(steps.getText() + " Input: " + result.get(0) + "\n");
+              for (int i = 1; i < result.size() - 1; i++){
+
+                steps.setText(steps.getText() + " Step #" + i + ": " + result.get(i) + "\n");
+              } 
+              steps.setText(steps.getText() + " Answer: " + result.get(result.size() - 1) + "\n");
+              steps.setText(steps.getText() + "_____________________ \n");
+              //steps.setText(steps.getText() + ".......................................... \n");
+            }
+            catch (Exception error){
+              textBox.setText(" \n     INVALID EXPRESSION");
+            }
+            
+            
+            
           
           }
       });
@@ -65,6 +119,7 @@ public class GUICalculator {
           public void actionPerformed(ActionEvent e){
             System.out.println("Clear button was pressed");
             textBox.setText("");
+            steps.setText("               STEPS" + "\n" + "_____________________  \n");
           }
       });
 
@@ -227,8 +282,6 @@ public class GUICalculator {
           }
       });
 
-      
-
       JButton fourButton=new JButton("4");  
       fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
       fourButton.addActionListener(new ActionListener(){  
@@ -303,10 +356,6 @@ public class GUICalculator {
           }
       });
       
-      
-
-
-
       JButton sevenButton=new JButton("7");  
       sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
       sevenButton.addActionListener(new ActionListener(){  
@@ -406,7 +455,6 @@ public class GUICalculator {
       f.add(inverseButton);
       f.add(secondButton);
 
-
       f.add(fourButton);
       f.add(fiveButton);
       f.add(sixButton);
@@ -426,20 +474,12 @@ public class GUICalculator {
       f.add(delButton);
       f.add(modeButton);
 
-      f.add(textBox);
-      f.add(steps);
-      f.setSize(screenWidth,screenHeight);  
       f.setLayout(null);  
       f.setVisible(true);
     
     }
 
-    public static void runCalc(String expression) {
-
-     
-      // implement logic here
-
-    }
+    
 
     public static void main(String[] arguments) {
       drawScreen();
