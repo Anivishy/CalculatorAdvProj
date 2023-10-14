@@ -23,12 +23,23 @@ public class Calculator {
         Boolean modified = false;
 
         //remove all whitespace form input string
+
+        
         
         while (continue_loop) {            
             System.out.println("Enter an expression to compute or type '#' to quit: ");
             String expression=scanner.nextLine();
             modified = false;
             updatedString = "";
+
+            // while(expression.contains("(")){
+            //     String checkString = expression.substring(expression.indexOf("("), expression.indexOf(")"));
+            //     if (checkString.contains("+") || checkString.contains("*") || checkString.contains("/") || checkString.contains("^")){
+            //         ;
+            //     }
+                
+            // }
+
             expression = expression.replace("\\s", "");
             for (int i = 1; i < expression.length();  i ++){
                 if (expression.charAt(i) == '('){
@@ -73,6 +84,7 @@ public class Calculator {
                 steps.add(expression);
 
                 while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
+
 
                     ArrayList<String> components = translator.parse(currentExpression);
                     System.out.println(components.toString());
