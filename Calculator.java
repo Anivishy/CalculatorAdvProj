@@ -13,17 +13,26 @@ public class Calculator {
         ArrayList<String> steps = new ArrayList<String>();
 
         Engine engine=new Engine();
+
+        ExtraFunctions extra = new ExtraFunctions();
    
         //used for handling implied multiplication
         String updatedString = "";
         
-        Boolean modified = false;
+        //Boolean modified = false;
 
         //remove all whitespace form input string
         
-        modified = false;
+        //modified = false;
         updatedString = "";
+        //Remove Spacing
         expression = expression.replace("\\s", "");
+
+        //Remove special chars
+        expression = extra.replacePi(expression);
+
+        System.out.println(expression);
+
         for (int i = 1; i < expression.length();  i ++){
             if (expression.charAt(i) == '('){
                 String prev_char = expression.charAt(i - 1) + "";
@@ -33,14 +42,14 @@ public class Calculator {
                     updatedString += "*";
                     updatedString += expression.substring(i);
                     expression = updatedString;
-                    modified = true;
+                    //modified = true;
                 }
             }
 
-            else if (!modified){
-                //updatedString = expression;
-                expression = expression;
-            }                
+            // else if (!modified){
+            //     //updatedString = expression;
+            //     expression = expression;
+            // }                
         }
 
         for (int i = 1; i < expression.length(); i++){
