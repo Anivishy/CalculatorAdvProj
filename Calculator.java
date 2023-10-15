@@ -32,27 +32,11 @@ public class Calculator {
         expression = extra.replacePi(expression);
         expression = extra.replaceE(expression);
 
-        System.out.println(expression);
+        //implied multiplication
+        expression = extra.impliedMulti(expression);
 
-        for (int i = 1; i < expression.length();  i ++){
-            if (expression.charAt(i) == '('){
-                String prev_char = expression.charAt(i - 1) + "";
-                if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^"))){
-                    updatedString = "";
-                    updatedString += expression.substring(0, i);
-                    updatedString += "*";
-                    updatedString += expression.substring(i);
-                    expression = updatedString;
-                    //modified = true;
-                }
-            }
-
-            // else if (!modified){
-            //     //updatedString = expression;
-            //     expression = expression;
-            // }                
-        }
-
+        //negative 
+        
         for (int i = 1; i < expression.length(); i++){
             if (expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1))){
                 updatedString = "";
