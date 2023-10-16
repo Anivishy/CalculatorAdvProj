@@ -13,36 +13,30 @@ public class Calculator {
         ArrayList<String> steps = new ArrayList<String>();
 
         Engine engine=new Engine();
+
+        ExtraFunctions extra = new ExtraFunctions();
    
         //used for handling implied multiplication
         String updatedString = "";
         
-        Boolean modified = false;
+        //Boolean modified = false;
 
         //remove all whitespace form input string
         
-        modified = false;
+        //modified = false;
         updatedString = "";
+        //Remove Spacing
         expression = expression.replace("\\s", "");
-        for (int i = 1; i < expression.length();  i ++){
-            if (expression.charAt(i) == '('){
-                String prev_char = expression.charAt(i - 1) + "";
-                if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^"))){
-                    updatedString = "";
-                    updatedString += expression.substring(0, i);
-                    updatedString += "*";
-                    updatedString += expression.substring(i);
-                    expression = updatedString;
-                    modified = true;
-                }
-            }
 
-            else if (!modified){
-                //updatedString = expression;
-                expression = expression;
-            }                
-        }
+        //Remove special chars
+        expression = extra.replacePi(expression);
+        expression = extra.replaceE(expression);
 
+        //implied multiplication
+        expression = extra.impliedMulti(expression);
+
+        //negative 
+        
         for (int i = 1; i < expression.length(); i++){
             if (expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1))){
                 updatedString = "";
@@ -90,12 +84,23 @@ public class Calculator {
         Boolean modified = false;
 
         //remove all whitespace form input string
+
+        
         
         while (continue_loop) {            
             System.out.println("Enter an expression to compute or type '#' to quit: ");
             String expression=scanner.nextLine();
             modified = false;
             updatedString = "";
+
+            // while(expression.contains("(")){
+            //     String checkString = expression.substring(expression.indexOf("("), expression.indexOf(")"));
+            //     if (checkString.contains("+") || checkString.contains("*") || checkString.contains("/") || checkString.contains("^")){
+            //         ;
+            //     }
+                
+            // }
+
             expression = expression.replace("\\s", "");
             for (int i = 1; i < expression.length();  i ++){
                 if (expression.charAt(i) == '('){
@@ -140,6 +145,7 @@ public class Calculator {
                 steps.add(expression);
 
                 while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
+
 
                     ArrayList<String> components = translator.parse(currentExpression);
                     //System.out.println(components.toString());
