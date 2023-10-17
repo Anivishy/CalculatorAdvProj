@@ -66,7 +66,8 @@ public class Translator {
             }
 
             // Check for exponentiation
-            ArrayList<String> exponentResult = checkExponents(cur_expression);
+            //ArrayList<String> exponentResult = checkExponents(cur_expression);
+            ArrayList<String> exponentResult = checkEMDAS(cur_expression, "^");
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
                 int operator_index = resultString.indexOf("^");
@@ -89,8 +90,11 @@ public class Translator {
             }
 
             // Check for multiplication and division
-            ArrayList<String> multiplicationResult = checkMultiplication(cur_expression);
-            ArrayList<String> divisionResult = checkDivision(cur_expression);
+            //ArrayList<String> multiplicationResult = checkMultiplication(cur_expression);
+            //ArrayList<String> divisionResult = checkDivision(cur_expression);
+
+            ArrayList<String> multiplicationResult = checkEMDAS(cur_expression, "*");
+            ArrayList<String> divisionResult = checkEMDAS(cur_expression, "/");
             
             if (multiplicationResult.get(0).equals("true")) {
                 String resultString = (String) multiplicationResult.get(1);
@@ -132,8 +136,11 @@ public class Translator {
             }
 
             // Check for addition and subtraction
-            ArrayList<String> additionResult = checkAddition(cur_expression);
-            ArrayList<String> subtractionResult = checkSubtraction(cur_expression);
+            //ArrayList<String> additionResult = checkAddition(cur_expression);
+            //ArrayList<String> subtractionResult = checkSubtraction(cur_expression);
+
+            ArrayList<String> additionResult = checkEMDAS(cur_expression, "+");
+            ArrayList<String> subtractionResult = checkEMDAS(cur_expression, "-");
 
             if (additionResult.get(0).equals("true")) {
                 String resultString = (String) additionResult.get(1);
@@ -156,26 +163,6 @@ public class Translator {
                 return result;
             } 
             
-            // else if (subtractionResult.get(0).equals("true")) {
-            //     String resultString = (String) subtractionResult.get(1);
-            //     int operator_index = resultString.indexOf("-");
-            //     ArrayList<String> result = new ArrayList<String>();
-            //     String num1 = resultString.substring(0, operator_index);
-            //     String num2 = resultString.substring(operator_index + 1, resultString.length());
-            //     String operator = resultString.charAt(operator_index) + "";
-            //     result.add(operator);
-            //     result.add(num1);
-            //     result.add(num2);
-            //     if (hasPara){
-            //         resultString = "(" + resultString + ")";
-            //         result.add(resultString);
-            //     }
-            //     else{
-            //         result.add(resultString);
-            //     }
-            //     return result;
-            // }
-
             // No more operations to perform
             if (!parenthesisResult.get(0).equals("true") &&
                 !exponentResult.get(0).equals("true") &&
@@ -223,6 +210,46 @@ public class Translator {
         
     }
 
+    public ArrayList<String> checkEMDAS(String currentExpression, String key) {
+        ArrayList<String> result = new ArrayList<String>();
+        result.add("false");
+        result.add("");
+
+        if (!currentExpression.contains(key)) {
+            return result;
+        }
+        else {
+            String chunk=currentExpression;            
+            String[] operations={"+", "*", "/", "^", ")", "("};
+            List operationsList = Arrays.asList(operations);
+            int frontIndex=0;
+            int backIndex=0;
+
+            for (int i=chunk.indexOf(key)-1; i>=0; i--) {
+                if (operationsList.contains(chunk.charAt(i)+"")) {
+                    frontIndex=i+1;
+                    break;
+                }
+            }
+
+            for (String i:operations) {
+                if (chunk.substring(chunk.indexOf(key)+1).contains(i)) {
+                    backIndex=chunk.indexOf(i, chunk.indexOf(key)+1);
+                    break;
+                }
+            }
+            if (backIndex==0) {
+                backIndex=chunk.length();
+            }
+            
+            chunk=chunk.substring(frontIndex, backIndex);
+            result.set(0, "true");
+            result.set(1,chunk);
+            return result;
+        }
+    }
+
+    /** 
     public ArrayList<String> checkExponents(String currentExpression) {
 
         // checkExponents will check for exponents in the current expression and return an array with a boolean and string (result)
@@ -239,7 +266,7 @@ public class Translator {
         else {
             String chunk=currentExpression;
             
-            String[] operations={"+", "*", "/", "^", ")"};
+            String[] operations={"+", "*", "/", "^", "(", ")"};
             List operationsList = Arrays.asList(operations);
             int frontIndex=0;
             int backIndex=0;
@@ -449,7 +476,9 @@ public class Translator {
             result.set(1,chunk);
             return result;
         }
+        
 
     }
+    **/
 
 }
