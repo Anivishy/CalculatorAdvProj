@@ -40,9 +40,13 @@ public class GUICalculator {
     static JFrame f;
 
     static JButton[] buttonsDefault;
+    static JButton[] buttonsGraphing;
     static JButton[] buttonsStat;
     static JButton[] buttonsExtd;
     static JButton[] buttonsSettings;
+
+    static JButton[] currentButtons;
+  
 
     private static final Font font1 = new Font("SansSerif", Font.PLAIN, 50);
     private static final Font font2 = new Font("SansSerif", Font.ITALIC, 20);
@@ -52,6 +56,7 @@ public class GUICalculator {
 
 
     public static void drawScreen() {
+      
 
       f=new JFrame("Calculator");
       Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\aksha\\Downloads\\Clash-Royale-emblem.png");
@@ -133,15 +138,12 @@ public class GUICalculator {
       graphButton.setBounds((int)(screenWidth*0.34),screenHeight-200,170,50);  
       graphButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            //modeBox.setText(mode);
-
-            if (mode==mode.DEFAULT) {
-              changeMode(graphButton, mode.GRAPHING, "Default");
+            if (mode==mode.GRAPHING) {
+              changeMode(Mode.DEFAULT, graphButton, "Graphing");
             }
             else {
-              changeMode(graphButton, mode.DEFAULT, "Graphing");
+              changeMode(Mode.GRAPHING, graphButton, "Default");
             }
- 
           }
       });
 
@@ -226,12 +228,6 @@ public class GUICalculator {
       statButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
 
-            if (mode==mode.DEFAULT) {
-              changeMode(statButton, mode.STAT, "default");
-            }
-            else {
-              changeMode(statButton, mode.DEFAULT, "stat");
-            }
           }
       });
 
@@ -296,12 +292,7 @@ public class GUICalculator {
       extdButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             
-            if (mode==mode.DEFAULT) {
-              changeMode(extdButton, mode.EXTENDED, "default");
-            }
-            else {
-              changeMode(extdButton, mode.DEFAULT, "extd");
-            }
+        
             
           }
       });
@@ -435,12 +426,7 @@ public class GUICalculator {
       settingsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             
-            if (mode==mode.DEFAULT) {
-              changeMode(settingsButton, mode.SETTINGS, "default");
-            }
-            else {
-              changeMode(settingsButton, mode.DEFAULT, "settings");
-            }
+            
 
           }
       });
@@ -450,28 +436,81 @@ public class GUICalculator {
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
         fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, extdButton, sevenButton, eightButton,
         nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
+      
+      buttonsExtd=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
+      
+      buttonsGraphing=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+
+      currentButtons=buttonsDefault;
 
       f.add(modeBox);
-      addButtons(buttonsDefault);
+      for (JButton b:buttonsDefault) {
+        f.add(b);
+      }
       f.setLayout(null);  
       f.setVisible(true);
     
     }
 
+    public static void changeMode(Mode newMode, JButton oldButton, String newText) {
+      for (JButton button:currentButtons) {
+        button.setVisible(false);
+      }
 
-    public static void changeMode(JButton button, Mode newMode, String newText) {
-      
-      mode=newMode;
-      String currentModeText=(button.getText().charAt(0) + "").toUpperCase() + button.getText().substring(1) + " Mode";
-      button.setText(newText);
-      modeBox.setText(currentModeText);
-      f.add(button);
+      if (newMode==Mode.DEFAULT) {
+        
+        changeMode(oldButton,newMode, newText, buttonsDefault);
+        currentButtons=buttonsDefault;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+      }
+
+      else if (newMode==Mode.EXTENDED) {
+        
+      }
+
+      else if (newMode==Mode.GRAPHING) {
+        //mode=Mode.GRAPHING;
+        for (JButton b:buttonsGraphing) {
+          f.add(b);
+        }
+        
+        changeMode(graphButton, mode.GRAPHING, newText, buttonsGraphing);
+        currentButtons=buttonsGraphing;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+            
+      }
+
+      else if (newMode==Mode.SETTINGS) {
+        
+      }
+
+      else if (newMode==Mode.STAT) {
+        
+      }
+
     }
-    
-    public static void addButtons(JButton[] buttons) {
+
+    public static void changeMode(JButton button, Mode newMode, String newText, JButton[] buttons) {
       for (JButton b:buttons) {
         f.add(b);
       }
+      mode=newMode;
+      String newModeText=(newMode.name().charAt(0) + "").toUpperCase() + (newMode.name().substring(1)).toLowerCase() + " Mode";
+      button.setText(newText);
+      modeBox.setText(newModeText);
+      f.add(button);
     }
 
     public static void main(String[] arguments) {
