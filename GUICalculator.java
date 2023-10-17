@@ -113,7 +113,6 @@ public class GUICalculator {
               String answer=result.get(result.size() - 1);
 
               textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
-              //textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"_______________________________________________"+"\n");
               
               // Updating steps box
 
@@ -227,7 +226,12 @@ public class GUICalculator {
       statButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
       statButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-
+            if (mode==mode.STAT) {
+              changeMode(Mode.DEFAULT, statButton, "Stat");
+            }
+            else {
+              changeMode(Mode.STAT, statButton, "Default");
+            }
           }
       });
 
@@ -291,9 +295,12 @@ public class GUICalculator {
       extdButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
       extdButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            
-        
-            
+            if (mode==mode.EXTENDED) {
+              changeMode(Mode.DEFAULT, extdButton, "Extd");
+            }
+            else {
+              changeMode(Mode.EXTENDED, extdButton, "Default");
+            }
           }
       });
 
@@ -329,6 +336,17 @@ public class GUICalculator {
           }
       });
 
+      // Only for extd mode
+
+      JButton absoluteValueButton=new JButton("|");  
+      absoluteValueButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
+      absoluteValueButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"|");
+          }
+      });
+      absoluteValueButton.setVisible(false);
+
       JButton xSquaredButton=new JButton("x^2");  
       xSquaredButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
       xSquaredButton.addActionListener(new ActionListener(){  
@@ -336,6 +354,17 @@ public class GUICalculator {
             textBox.setText(textBox.getText()+"^2");
           }
       });
+
+      JButton sqRootButton=new JButton("√(");  
+      sqRootButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
+      sqRootButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"√(");
+          }
+      });
+      sqRootButton.setVisible(false);
+
+
 
       JButton multButton=new JButton("x");
       multButton.setFont(font4);  
@@ -395,6 +424,18 @@ public class GUICalculator {
           }
       });
 
+      // Only for extd mode
+
+      JButton factorialButton=new JButton("!");  
+      factorialButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
+      factorialButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"!");
+          }
+      });
+      factorialButton.setVisible(false);
+
+
       JButton lnButton=new JButton("ln");  
       lnButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
       lnButton.addActionListener(new ActionListener(){  
@@ -402,6 +443,17 @@ public class GUICalculator {
             textBox.setText(textBox.getText()+"ln(");
           }
       });
+
+      JButton randomButton=new JButton("rand");  
+      randomButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
+      randomButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"rand(min,max)");
+          }
+      });
+      randomButton.setVisible(false);
+
+
 
       JButton plusButton=new JButton("+");
       plusButton.setFont(font4);
@@ -425,11 +477,16 @@ public class GUICalculator {
       settingsButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
       settingsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            
-            
-
+            if (mode==mode.SETTINGS) {
+              changeMode(Mode.DEFAULT, settingsButton, "Settings");
+            }
+            else {
+              changeMode(Mode.SETTINGS, settingsButton, "Default");
+            }
           }
       });
+
+
 
       buttonsDefault=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
@@ -438,16 +495,28 @@ public class GUICalculator {
         nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
       
       buttonsExtd=new JButton[] {
-        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton,
+        submitButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
-        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
-        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
+        fourButton, fiveButton, sixButton, absoluteValueButton, sqRootButton, multButton, divButton, extdButton, sevenButton, eightButton,
+        nineButton, factorialButton, randomButton, plusButton, minusButton, delButton, settingsButton};
       
       buttonsGraphing=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
         fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
         nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+      
+      buttonsStat=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+      
+      buttonsSettings=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, extdButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
 
       currentButtons=buttonsDefault;
 
@@ -475,7 +544,11 @@ public class GUICalculator {
       }
 
       else if (newMode==Mode.EXTENDED) {
-        
+        changeMode(oldButton,newMode, newText, buttonsExtd);
+        currentButtons=buttonsExtd;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
       }
 
       else if (newMode==Mode.GRAPHING) {
@@ -493,11 +566,19 @@ public class GUICalculator {
       }
 
       else if (newMode==Mode.SETTINGS) {
-        
+        changeMode(oldButton,newMode, newText, buttonsSettings);
+        currentButtons=buttonsSettings;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
       }
 
       else if (newMode==Mode.STAT) {
-        
+        changeMode(oldButton,newMode, newText, buttonsStat);
+        currentButtons=buttonsStat;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
       }
 
     }
