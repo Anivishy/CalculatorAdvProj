@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -14,37 +15,71 @@ import javax.swing.text.Utilities;
 
 public class GUICalculator {
 
-    private static final int screenWidth=1200;
-    private static final int screenHeight=800;
+    private static int screenWidth=1200;
+    private static int screenHeight=800;
     private final static String newline = "\n";
- 
-    private static Engine engine=new Engine();
-    private static Formatter formatter=new Formatter();
-
-    
       
+    private enum Mode {
+      DEFAULT,
+      EXTENDED,
+      GRAPHING,
+      STAT,
+      SETTINGS
+    }
+
+    private static Mode mode=Mode.DEFAULT;
     
+    private static int index=0;
+
+    static JButton graphButton;
+    static JButton extdButton;
+    static JButton statButton;
+    static JButton settingsButton;
+
+    static JTextArea modeBox;
+    static JFrame f;
+
+    static JButton[] buttonsDefault;
+    static JButton[] buttonsGraphing;
+    static JButton[] buttonsStat;
+    static JButton[] buttonsExtd;
+    static JButton[] buttonsSettings;
+
+    static JButton[] currentButtons;
+  
+
+    private static final Font font1 = new Font("SansSerif", Font.PLAIN, 50);
+    private static final Font font2 = new Font("SansSerif", Font.ITALIC, 20);
+    private static final Font font3 = new Font("SansSerif", Font.PLAIN, 30);
+    private static final Font font4 = new Font("SansSerif", Font.PLAIN, 17);
+    private static final Font font5 = new Font("SansSerif", Font.BOLD, 17);
+
 
     public static void drawScreen() {
       
 
-      Font font1 = new Font("SansSerif", Font.PLAIN, 50);
-      Font font2 = new Font("SansSerif", Font.ITALIC, 20);
-      Font font3 = new Font("SansSerif", Font.PLAIN, 30);
-      Font font4 = new Font("SansSerif", Font.PLAIN, 17);
-
-      JFrame f=new JFrame("Calculator");  
+      f=new JFrame("Calculator");
+      Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\aksha\\Downloads\\Clash-Royale-emblem.png");
+        
+      f.setIconImage(icon);
+       
       JTextArea textBox=new JTextArea();
       JTextArea steps = new JTextArea();
+
+      modeBox=new JTextArea();
+      modeBox.setText("Default Mode");
       
       f.setSize(screenWidth,screenHeight);  
       
       textBox.setFont(font1);
-    
-      //textBox.setBounds(50,50, (int)(screenWidth*0.6),(int)(screenHeight*0.3));
+
+      modeBox.setFont(font5);
+      modeBox.setSize(300, 50);
+      modeBox.setBounds(50, 20, 200, 30);
+      modeBox.setEditable(false);
 
       JScrollPane scrollPaneMain = new JScrollPane(textBox);
-      scrollPaneMain.setBounds(50,50,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
+      scrollPaneMain.setBounds(50,70,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
       
       f.add(scrollPaneMain);
 
@@ -53,8 +88,6 @@ public class GUICalculator {
       steps.setEditable(false);
       steps.setText("               STEPS" + "\n" + "_____________________  \n");
       
-
-
       JScrollPane scrollPaneSteps = new JScrollPane(steps);
       scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
 
@@ -73,8 +106,6 @@ public class GUICalculator {
 
             int currentIndex=textBox.getText().lastIndexOf("\n");
             String expression=textBox.getText().substring(currentIndex+1);
-
-            System.out.println("Submit button was pressed");
             
             // Updating the main answer text box
             try {
@@ -82,7 +113,6 @@ public class GUICalculator {
               String answer=result.get(result.size() - 1);
 
               textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
-              //textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"_______________________________________________"+"\n");
               
               // Updating steps box
 
@@ -99,17 +129,20 @@ public class GUICalculator {
               textBox.setText(" \n     INVALID EXPRESSION");
             }
             
-            
-            
-          
           }
       });
 
-      JButton graphButton=new JButton("Graph");  
+
+      graphButton=new JButton("Graph");  
       graphButton.setBounds((int)(screenWidth*0.34),screenHeight-200,170,50);  
       graphButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("Graph button was pressed");
+            if (mode==mode.GRAPHING) {
+              changeMode(Mode.DEFAULT, graphButton, "Graphing");
+            }
+            else {
+              changeMode(Mode.GRAPHING, graphButton, "Default");
+            }
           }
       });
 
@@ -117,7 +150,6 @@ public class GUICalculator {
       clearButton.setBounds((int)(screenWidth*0.19),screenHeight-200,170,50);  
       clearButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("Clear button was pressed");
             textBox.setText("");
             steps.setText("               STEPS" + "\n" + "_____________________  \n");
           }
@@ -127,7 +159,7 @@ public class GUICalculator {
       ansButton.setBounds((int)(screenWidth*0.04),screenHeight-200,170,50);  
       ansButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("Ans button was pressed");
+            // implement logic here
           }
       });
 
@@ -138,7 +170,6 @@ public class GUICalculator {
       dotButton.setBounds((int)(screenWidth*0.04),screenHeight-260,80,50);  
       dotButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println(". button was pressed");
             textBox.setText(textBox.getText()+".");
           }
       });
@@ -147,7 +178,6 @@ public class GUICalculator {
       negButton.setBounds((int)(screenWidth*0.115),screenHeight-260,80,50);  
       negButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("Negative button was pressed");
             textBox.setText(textBox.getText()+"-");
           }
       });
@@ -156,7 +186,6 @@ public class GUICalculator {
       zeroButton.setBounds((int)(screenWidth*0.19),screenHeight-260,80,50);  
       zeroButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("0 button was pressed");
             textBox.setText(textBox.getText()+"0");
           }
       });
@@ -165,7 +194,6 @@ public class GUICalculator {
       piButton.setBounds((int)(screenWidth*0.265),screenHeight-260,80,50);  
       piButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("π button was pressed");
             textBox.setText(textBox.getText()+"π");
           }
       });
@@ -174,7 +202,6 @@ public class GUICalculator {
       sinButton.setBounds((int)(screenWidth*0.34),screenHeight-260,80,50);  
       sinButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("sin button was pressed");
             textBox.setText(textBox.getText()+"sin(");
           }
       });
@@ -183,7 +210,6 @@ public class GUICalculator {
       cosButton.setBounds((int)(screenWidth*0.415),screenHeight-260,80,50);  
       cosButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("cos button was pressed");
             textBox.setText(textBox.getText()+"cos(");
           }
       });
@@ -192,19 +218,20 @@ public class GUICalculator {
       tanButton.setBounds((int)(screenWidth*0.49),screenHeight-260,80,50);  
       tanButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("tan button was pressed");
             textBox.setText(textBox.getText()+"tan(");
           }
       });
 
-      JButton secondButton=new JButton("2nd");  
-      secondButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
-      secondButton.addActionListener(new ActionListener(){  
+      statButton=new JButton("Stat");  
+      statButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
+      statButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("2nd button was pressed");
-
-            // Implement 2nd button logic here
-
+            if (mode==mode.STAT) {
+              changeMode(Mode.DEFAULT, statButton, "Stat");
+            }
+            else {
+              changeMode(Mode.STAT, statButton, "Default");
+            }
           }
       });
 
@@ -212,7 +239,6 @@ public class GUICalculator {
       oneButton.setBounds((int)(screenWidth*0.04),screenHeight-320,80,50);  
       oneButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("1 button was pressed");
             textBox.setText(textBox.getText()+"1");
           }
       });
@@ -221,7 +247,6 @@ public class GUICalculator {
       twoButton.setBounds((int)(screenWidth*0.115),screenHeight-320,80,50);  
       twoButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("2 button was pressed");
             textBox.setText(textBox.getText()+"2");
           }
       });
@@ -230,7 +255,6 @@ public class GUICalculator {
       threeButton.setBounds((int)(screenWidth*0.19),screenHeight-320,80,50);  
       threeButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("3 button was pressed");
             textBox.setText(textBox.getText()+"3");
           }
       });
@@ -239,7 +263,6 @@ public class GUICalculator {
       openParanthesisButton.setBounds((int)(screenWidth*0.265),screenHeight-320,80,50);  
       openParanthesisButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("( button was pressed");
             textBox.setText(textBox.getText()+"(");
           }
       });
@@ -248,7 +271,6 @@ public class GUICalculator {
       closedParanthesisButton.setBounds((int)(screenWidth*0.34),screenHeight-320,80,50);  
       closedParanthesisButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println(") button was pressed");
             textBox.setText(textBox.getText()+")");
           }
       });
@@ -257,7 +279,6 @@ public class GUICalculator {
       powerButton.setBounds((int)(screenWidth*0.415),screenHeight-320,80,50);  
       powerButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("^ button was pressed");
             textBox.setText(textBox.getText()+"^");
           }
       });
@@ -266,19 +287,20 @@ public class GUICalculator {
       inverseButton.setBounds((int)(screenWidth*0.49),screenHeight-320,80,50);  
       inverseButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("x^-1 button was pressed");
             textBox.setText(textBox.getText()+"^-1");
           }
       });
 
-      JButton mathButton=new JButton("math");  
-      mathButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
-      mathButton.addActionListener(new ActionListener(){  
+      extdButton=new JButton("extd");  
+      extdButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
+      extdButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("math button was pressed");
-
-            // implement math button logic here
-            
+            if (mode==mode.EXTENDED) {
+              changeMode(Mode.DEFAULT, extdButton, "Extd");
+            }
+            else {
+              changeMode(Mode.EXTENDED, extdButton, "Default");
+            }
           }
       });
 
@@ -286,7 +308,6 @@ public class GUICalculator {
       fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
       fourButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("4 button was pressed");
             textBox.setText(textBox.getText()+"4");
           }
       });
@@ -295,7 +316,6 @@ public class GUICalculator {
       fiveButton.setBounds((int)(screenWidth*0.115),screenHeight-380,80,50);  
       fiveButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("5 button was pressed");
             textBox.setText(textBox.getText()+"5");
           }
       });
@@ -304,7 +324,6 @@ public class GUICalculator {
       sixButton.setBounds((int)(screenWidth*0.19),screenHeight-380,80,50);  
       sixButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("6 button was pressed");
             textBox.setText(textBox.getText()+"6");
           }
       });
@@ -313,26 +332,45 @@ public class GUICalculator {
       eToTheXButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
       eToTheXButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("e^x button was pressed");
             textBox.setText(textBox.getText()+"e^");
           }
       });
+
+      // Only for extd mode
+
+      JButton absoluteValueButton=new JButton("|");  
+      absoluteValueButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
+      absoluteValueButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"|");
+          }
+      });
+      absoluteValueButton.setVisible(false);
 
       JButton xSquaredButton=new JButton("x^2");  
       xSquaredButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
       xSquaredButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("x^2 button was pressed");
             textBox.setText(textBox.getText()+"^2");
           }
       });
+
+      JButton sqRootButton=new JButton("√(");  
+      sqRootButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
+      sqRootButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"√(");
+          }
+      });
+      sqRootButton.setVisible(false);
+
+
 
       JButton multButton=new JButton("x");
       multButton.setFont(font4);  
       multButton.setBounds((int)(screenWidth*0.415),screenHeight-380,80,50);  
       multButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("* button was pressed");
             textBox.setText(textBox.getText()+"*");
           }
       });
@@ -342,7 +380,6 @@ public class GUICalculator {
       divButton.setBounds((int)(screenWidth*0.49),screenHeight-380,80,50);  
       divButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("/ button was pressed");
             textBox.setText(textBox.getText()+"/");
           }
       });
@@ -351,7 +388,6 @@ public class GUICalculator {
       delButton.setBounds((int)(screenWidth*0.565),screenHeight-380,80,50);  
       delButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("del button was pressed");
             textBox.setText(textBox.getText().substring(0, textBox.getText().length()-1));
           }
       });
@@ -360,7 +396,6 @@ public class GUICalculator {
       sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
       sevenButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("7 button was pressed");
             textBox.setText(textBox.getText()+"7");
           }
       });
@@ -369,7 +404,6 @@ public class GUICalculator {
       eightButton.setBounds((int)(screenWidth*0.115),screenHeight-440,80,50);  
       eightButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("8 button was pressed");
             textBox.setText(textBox.getText()+"8");
           }
       });
@@ -378,7 +412,6 @@ public class GUICalculator {
       nineButton.setBounds((int)(screenWidth*0.19),screenHeight-440,80,50);  
       nineButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("9 button was pressed");
             textBox.setText(textBox.getText()+"9");
           }
       });
@@ -387,26 +420,46 @@ public class GUICalculator {
       logButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
       logButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("log button was pressed");
             textBox.setText(textBox.getText()+"log(");
           }
       });
+
+      // Only for extd mode
+
+      JButton factorialButton=new JButton("!");  
+      factorialButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
+      factorialButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"!");
+          }
+      });
+      factorialButton.setVisible(false);
+
 
       JButton lnButton=new JButton("ln");  
       lnButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
       lnButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("ln button was pressed");
             textBox.setText(textBox.getText()+"ln(");
           }
       });
+
+      JButton randomButton=new JButton("rand");  
+      randomButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
+      randomButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"rand(min,max)");
+          }
+      });
+      randomButton.setVisible(false);
+
+
 
       JButton plusButton=new JButton("+");
       plusButton.setFont(font4);
       plusButton.setBounds((int)(screenWidth*0.415),screenHeight-440,80,50);  
       plusButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("+ button was pressed");
             textBox.setText(textBox.getText()+"+");
           }
       });
@@ -416,76 +469,138 @@ public class GUICalculator {
       minusButton.setBounds((int)(screenWidth*0.49),screenHeight-440,80,50);  
       minusButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("- button was pressed");
             textBox.setText(textBox.getText()+"-");
           }
       });
 
-      JButton modeButton=new JButton("mode");
-      modeButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
-      modeButton.addActionListener(new ActionListener(){  
+      settingsButton=new JButton("settings");
+      settingsButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      settingsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            System.out.println("mode button was pressed");
-            
-            // Implement settings button logic here
-
+            if (mode==mode.SETTINGS) {
+              changeMode(Mode.DEFAULT, settingsButton, "Settings");
+            }
+            else {
+              changeMode(Mode.SETTINGS, settingsButton, "Default");
+            }
           }
       });
+
+
+
+      buttonsDefault=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, extdButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
       
+      buttonsExtd=new JButton[] {
+        submitButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
+        fourButton, fiveButton, sixButton, absoluteValueButton, sqRootButton, multButton, divButton, extdButton, sevenButton, eightButton,
+        nineButton, factorialButton, randomButton, plusButton, minusButton, delButton, settingsButton};
+      
+      buttonsGraphing=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+      
+      buttonsStat=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+      
+      buttonsSettings=new JButton[] {
+        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, extdButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
 
-      f.add(submitButton);
-      f.add(graphButton);
-      f.add(clearButton);
-      f.add(ansButton);
+      currentButtons=buttonsDefault;
 
-      f.add(dotButton);
-      f.add(negButton);
-      f.add(zeroButton);
-      f.add(piButton);
-      f.add(sinButton);
-      f.add(cosButton);
-      f.add(tanButton);
-
-      f.add(oneButton);
-      f.add(twoButton);
-      f.add(threeButton);
-      f.add(openParanthesisButton);
-      f.add(closedParanthesisButton);
-      f.add(powerButton);
-      f.add(inverseButton);
-      f.add(secondButton);
-
-      f.add(fourButton);
-      f.add(fiveButton);
-      f.add(sixButton);
-      f.add(eToTheXButton);
-      f.add(xSquaredButton);
-      f.add(multButton);
-      f.add(divButton);
-      f.add(mathButton);
-
-      f.add(sevenButton);
-      f.add(eightButton);
-      f.add(nineButton);
-      f.add(logButton);
-      f.add(lnButton);
-      f.add(plusButton);
-      f.add(minusButton);
-      f.add(delButton);
-      f.add(modeButton);
-
+      f.add(modeBox);
+      for (JButton b:buttonsDefault) {
+        f.add(b);
+      }
       f.setLayout(null);  
       f.setVisible(true);
     
     }
 
-    
+    public static void changeMode(Mode newMode, JButton oldButton, String newText) {
+      for (JButton button:currentButtons) {
+        button.setVisible(false);
+      }
+
+      if (newMode==Mode.DEFAULT) {
+        
+        changeMode(oldButton,newMode, newText, buttonsDefault);
+        currentButtons=buttonsDefault;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+      }
+
+      else if (newMode==Mode.EXTENDED) {
+        changeMode(oldButton,newMode, newText, buttonsExtd);
+        currentButtons=buttonsExtd;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+      }
+
+      else if (newMode==Mode.GRAPHING) {
+        //mode=Mode.GRAPHING;
+        for (JButton b:buttonsGraphing) {
+          f.add(b);
+        }
+        
+        changeMode(graphButton, mode.GRAPHING, newText, buttonsGraphing);
+        currentButtons=buttonsGraphing;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+            
+      }
+
+      else if (newMode==Mode.SETTINGS) {
+        changeMode(oldButton,newMode, newText, buttonsSettings);
+        currentButtons=buttonsSettings;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+      }
+
+      else if (newMode==Mode.STAT) {
+        changeMode(oldButton,newMode, newText, buttonsStat);
+        currentButtons=buttonsStat;
+        for (JButton button:currentButtons) {
+          button.setVisible(true);
+        }
+      }
+
+    }
+
+    public static void changeMode(JButton button, Mode newMode, String newText, JButton[] buttons) {
+      for (JButton b:buttons) {
+        f.add(b);
+      }
+      mode=newMode;
+      String newModeText=(newMode.name().charAt(0) + "").toUpperCase() + (newMode.name().substring(1)).toLowerCase() + " Mode";
+      button.setText(newText);
+      modeBox.setText(newModeText);
+      f.add(button);
+    }
 
     public static void main(String[] arguments) {
+      
       drawScreen();
-    
- 
-  }
+      
+    }
+
+
 
 
 }
