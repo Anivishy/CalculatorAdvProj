@@ -42,7 +42,7 @@ public class Calculator {
         //trig
          expression = extra.simplifySin(expression);
          expression = extra.simplifyCos(expression);
-         //expression = extra.simplifyTan(expression);
+         expression = extra.simplifyTan(expression);
 
         //implied multiplication
         expression = extra.impliedMulti(expression);
