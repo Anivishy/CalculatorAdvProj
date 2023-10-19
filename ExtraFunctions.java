@@ -35,7 +35,7 @@ public class ExtraFunctions {
                     expression = updatedString;
                 }
             }
-        } 
+        }
         return expression;   
     }
 

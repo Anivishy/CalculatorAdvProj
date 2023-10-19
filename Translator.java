@@ -56,6 +56,7 @@ public class Translator {
             // Check for parentheses
             ArrayList<String> parenthesisResult = checkParenthesis(cur_expression);
             Boolean hasPara = false;
+            System.out.print(parenthesisResult);
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = (String) parenthesisResult.get(1);
                 if (countOperators(cur_expression) > 1)
@@ -64,6 +65,8 @@ public class Translator {
                     hasPara = true;
                 }                
             }
+
+            System.out.println(hasPara);
 
             // Check for exponentiation
             //ArrayList<String> exponentResult = checkExponents(cur_expression);
@@ -162,6 +165,17 @@ public class Translator {
                 }
                 return result;
             } 
+          
+
+            else if (hasPara){
+                System.out.println("TEST");
+                ArrayList<String> result = new ArrayList<String>();
+                result.add("+");
+                result.add((String) parenthesisResult.get(1));
+                result.add("0");
+                result.add("(" + (String) parenthesisResult.get(1) + ")");
+                return result;
+            }
             
             // No more operations to perform
             if (!parenthesisResult.get(0).equals("true") &&
@@ -203,8 +217,12 @@ public class Translator {
             String chunk=currentExpresion;
             String ending=chunk.substring(chunk.lastIndexOf("(")+1);
             chunk=chunk.substring(chunk.lastIndexOf("(")+1, ending.indexOf(")")+chunk.lastIndexOf("(")+1);
+            // if (!(chunk.contains("+")) && !(chunk.contains("/")) && !(chunk.contains("*")) && !(chunk.contains("("))){
+            //     chunk += "+ 0";
+            // }
             result.set(0, "true");
             result.set(1,chunk);
+            System.out.println("Chunk: " + chunk);
             return result;
         }
         
