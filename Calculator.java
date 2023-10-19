@@ -36,7 +36,8 @@ public class Calculator {
         //simplify logs, ln sqrt, etc.
         //System.out.println(expression);
         expression = extra.simplifyLog(expression);
-        System.out.println(expression);
+        expression = extra.simplifyLn(expression);
+        //System.out.println(expression);
 
         //implied multiplication
         expression = extra.impliedMulti(expression);
