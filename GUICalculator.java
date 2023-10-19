@@ -48,7 +48,7 @@ public class GUICalculator {
     static JButton[] currentButtons;
   
 
-    private static final Font font1 = new Font("SansSerif", Font.PLAIN, 50);
+    private static final Font font1 = new Font("SansSerif", Font.PLAIN, 40);
     private static final Font font2 = new Font("SansSerif", Font.ITALIC, 20);
     private static final Font font3 = new Font("SansSerif", Font.PLAIN, 30);
     private static final Font font4 = new Font("SansSerif", Font.PLAIN, 17);
@@ -112,7 +112,7 @@ public class GUICalculator {
               ArrayList<String> result=Calculator.compute(expression);
               String answer=result.get(result.size() - 1);
 
-              textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"................................................"+"\n");
+              textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"............................................................."+"\n");
               
               // Updating steps box
 
@@ -132,6 +132,15 @@ public class GUICalculator {
           }
       });
 
+      JButton submitGraphButton=new JButton("Graph");  
+      submitGraphButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
+
+      submitGraphButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+
+          }
+      });
+      submitGraphButton.setVisible(false);
 
       graphButton=new JButton("Graph");  
       graphButton.setBounds((int)(screenWidth*0.34),screenHeight-200,170,50);  
@@ -141,7 +150,7 @@ public class GUICalculator {
               changeMode(Mode.DEFAULT, graphButton, "Graphing");
             }
             else {
-              changeMode(Mode.GRAPHING, graphButton, "Default");
+              changeMode(Mode.GRAPHING, graphButton, "back");
             }
           }
       });
@@ -198,6 +207,15 @@ public class GUICalculator {
           }
       });
 
+      JButton yEqualsButton=new JButton("y=");  
+      yEqualsButton.setBounds((int)(screenWidth*0.265),screenHeight-260,80,50);  
+      yEqualsButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"y=");
+          }
+      });
+      yEqualsButton.setVisible(false);
+
       JButton sinButton=new JButton("sin");  
       sinButton.setBounds((int)(screenWidth*0.34),screenHeight-260,80,50);  
       sinButton.addActionListener(new ActionListener(){  
@@ -205,7 +223,7 @@ public class GUICalculator {
             textBox.setText(textBox.getText()+"sin(");
           }
       });
-
+     
       JButton cosButton=new JButton("cos");  
       cosButton.setBounds((int)(screenWidth*0.415),screenHeight-260,80,50);  
       cosButton.addActionListener(new ActionListener(){  
@@ -222,7 +240,7 @@ public class GUICalculator {
           }
       });
 
-      statButton=new JButton("Stat");  
+      statButton=new JButton("stat");  
       statButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
       statButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
@@ -230,7 +248,7 @@ public class GUICalculator {
               changeMode(Mode.DEFAULT, statButton, "Stat");
             }
             else {
-              changeMode(Mode.STAT, statButton, "Default");
+              changeMode(Mode.STAT, statButton, "back");
             }
           }
       });
@@ -299,10 +317,19 @@ public class GUICalculator {
               changeMode(Mode.DEFAULT, extdButton, "Extd");
             }
             else {
-              changeMode(Mode.EXTENDED, extdButton, "Default");
+              changeMode(Mode.EXTENDED, extdButton, "back");
             }
           }
       });
+
+      JButton windowButton=new JButton("window");  
+      windowButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
+      windowButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText() + "window(minX, maxX, minY, maxY)");
+          }
+      });
+      windowButton.setVisible(false);
 
       JButton fourButton=new JButton("4");  
       fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
@@ -366,7 +393,7 @@ public class GUICalculator {
 
 
 
-      JButton multButton=new JButton("x");
+      JButton multButton=new JButton("*");
       multButton.setFont(font4);  
       multButton.setBounds((int)(screenWidth*0.415),screenHeight-380,80,50);  
       multButton.addActionListener(new ActionListener(){  
@@ -391,6 +418,8 @@ public class GUICalculator {
             textBox.setText(textBox.getText().substring(0, textBox.getText().length()-1));
           }
       });
+
+      
       
       JButton sevenButton=new JButton("7");  
       sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
@@ -435,7 +464,6 @@ public class GUICalculator {
       });
       factorialButton.setVisible(false);
 
-
       JButton lnButton=new JButton("ln");  
       lnButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
       lnButton.addActionListener(new ActionListener(){  
@@ -452,8 +480,6 @@ public class GUICalculator {
           }
       });
       randomButton.setVisible(false);
-
-
 
       JButton plusButton=new JButton("+");
       plusButton.setFont(font4);
@@ -481,12 +507,19 @@ public class GUICalculator {
               changeMode(Mode.DEFAULT, settingsButton, "Settings");
             }
             else {
-              changeMode(Mode.SETTINGS, settingsButton, "Default");
+              changeMode(Mode.SETTINGS, settingsButton, "back");
             }
           }
       });
 
-
+      JButton xButton=new JButton("x");
+      xButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      xButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"x");
+          }
+      });
+      xButton.setVisible(false);
 
       buttonsDefault=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
@@ -501,10 +534,10 @@ public class GUICalculator {
         nineButton, factorialButton, randomButton, plusButton, minusButton, delButton, settingsButton};
       
       buttonsGraphing=new JButton[] {
-        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
-        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
-        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
-        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+        submitGraphButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, yEqualsButton,
+        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, 
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, windowButton, sevenButton, eightButton,
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, xButton};
       
       buttonsStat=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
@@ -599,8 +632,5 @@ public class GUICalculator {
       drawScreen();
       
     }
-
-
-
 
 }
