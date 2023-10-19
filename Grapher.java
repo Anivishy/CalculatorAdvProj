@@ -16,16 +16,61 @@ public class Grapher extends JFrame{
 
     private static final int screenWidth=1200;
     private static final int screenHeight=800;
+    private static final int numberOfPoints=1000;
 
-    public Grapher(){
+    // window=[[xMin, xMax], [yMin, yMax]]
+    private static double[][] window;
+    private static double[][] graphCoords;
+    private static double[][] plotPoints;
+
+    public Grapher(double[][] window){
         JPanel panel=new JPanel();
         getContentPane().add(panel);
         setSize(450,450);
 
+        this.window=window;
+        this.graphCoords=new double[numberOfPoints][2];
+        this.plotPoints=new double[numberOfPoints][2];
+
     }
 
-   
+    public void changeWindow(double[][] newWindow) {
+        this.window=newWindow;
+    }
 
+    public static void graph(String equation) {
+
+    }
+
+    public void getPoints(String equation) {
+        int index=0;
+        for (double xValue=0; xValue<screenWidth; xValue+=((Grapher.window[0][1]-this.window[0][0])/numberOfPoints)) {
+            
+            String equationSubstitute=equation.replaceAll("x", "(" + String.valueOf(xValue) + ")");
+            ArrayList<String> result=Calculator.compute(equationSubstitute);
+            Double yValue=Double.parseDouble(result.get(result.size() - 1));
+            graphCoords[index][0]=xValue;
+            graphCoords[index][1]=yValue;
+            index+=1;
+
+            double plotX=(xValue+((window[0][1]-window[0][0])/2))/(window[0][1]-window[0][0]) * screenWidth;
+            double plotY=(yValue+((window[1][1]-window[1][0])/2))/(window[1][1]-window[1][0]) * screenHeight;
+
+            plotPoints[index][0]=plotX;
+            plotPoints[index][1]=plotY;
+
+            
+
+        }
+        
+        //
+
+        
+            
+        
+    }
+   
+    
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -37,31 +82,14 @@ public class Grapher extends JFrame{
         int leftBound=100;
         int rightBound=500;
         g.drawLine(leftBound, rightBound, leftBound+100, rightBound+100);
-        //g.drawLine(leftBound, rightBound, leftBound, rightBound);
-        /** 
-        double increment=((rightBound-leftBound)/numberOfPoints);
-        for (int i=leftBound; i<rightBound; i+=increment) {
-            x[i-leftBound]=i;
-            y[i-leftBound]=(i-leftBound)*(i-leftBound);
-            g.drawLine(i, (i-leftBound)*(i-leftBound), i+3, (i-leftBound)*(i-leftBound) +3);
-            break;
-        }
-        **/
         
-
-    
-
-        //g.drawPolygon(x, y, 3);
-        //g.draw3DRect(100, 100, 200, 100, true);
-          // fixes the immediate problem.
-        //Graphics2D g2 = (Graphics2D) g;
-        //Line2D lin = new Line2D.Float(100, 100, 250, 260);
-        //g2.draw(lin);
     }
 
     public static void main(String []args){
-        Grapher s=new Grapher();
-        s.setVisible(true);
+        window=new double[][] {{-10.0, 10.0}, {-10.0, 10.0}};
+        Grapher s=new Grapher(window);
+        s.getPoints("2(x+1) + x^2");
+        //s.setVisible(true);
     }
     
 
