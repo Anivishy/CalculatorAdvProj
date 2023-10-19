@@ -38,7 +38,9 @@ public class Calculator {
         expression = extra.simplifyLog(expression);
         expression = extra.simplifyLn(expression);
         expression = extra.simplifySqrt(expression);
-        //System.out.println(expression);
+
+        //trig
+         expression = extra.simplifySin(expression);
 
         //implied multiplication
         expression = extra.impliedMulti(expression);
