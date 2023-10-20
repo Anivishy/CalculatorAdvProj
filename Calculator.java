@@ -66,7 +66,7 @@ public class Calculator {
                 currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
             }
             else{
-                currentExpression=currentExpression.replace(components.get(3), Double.toString(result));
+                currentExpression=currentExpression.replace(components.get(3), String.format("%.6f", result));
             }
 
             steps.add(currentExpression);
