@@ -84,7 +84,7 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("l"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            ArrayList <String> result = Calculator.compute(innerExpression);
+            ArrayList <String> result = Calculator.compute(innerExpression, false);
             finalResult = Double.toString(Math.log10(Double.parseDouble(result.get(result.size() - 1))));
             expression = expression.replace(curLog, finalResult);
         }
@@ -117,7 +117,7 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("l"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            ArrayList <String> result = Calculator.compute(innerExpression);
+            ArrayList <String> result = Calculator.compute(innerExpression, false);
             finalResult = Double.toString(Math.log(Double.parseDouble(result.get(result.size() - 1))));
             expression = expression.replace(curLog, finalResult);
         }
@@ -150,7 +150,7 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("s"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            ArrayList <String> result = Calculator.compute(innerExpression);
+            ArrayList <String> result = Calculator.compute(innerExpression, false);
             finalResult = Double.toString(Math.sqrt(Double.parseDouble(result.get(result.size() - 1))));
             expression = expression.replace(curLog, finalResult);
         }
@@ -184,7 +184,7 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("s"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            ArrayList <String> result = Calculator.compute(innerExpression);
+            ArrayList <String> result = Calculator.compute(innerExpression, false);
             finalResult = Double.toString(Math.sin(Double.parseDouble(result.get(result.size() - 1))));
             expression = expression.replace(curLog, finalResult);
         }
@@ -217,7 +217,7 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("c"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            ArrayList <String> result = Calculator.compute(innerExpression);
+            ArrayList <String> result = Calculator.compute(innerExpression, false);
             finalResult = Double.toString(Math.cos(Double.parseDouble(result.get(result.size() - 1))));
             expression = expression.replace(curLog, finalResult);
         }
@@ -250,7 +250,7 @@ public class ExtraFunctions {
         String curLog = expression.substring(expression.indexOf("t"), finalIndex + 1);
         String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
         String finalResult = "";
-        ArrayList <String> result = Calculator.compute(innerExpression);
+        ArrayList <String> result = Calculator.compute(innerExpression, false);
         finalResult = Double.toString(Math.tan(Double.parseDouble(result.get(result.size() - 1))));
         expression = expression.replace(curLog, finalResult);
     }

@@ -109,7 +109,7 @@ public class GUICalculator {
             
             // Updating the main answer text box
             try {
-              ArrayList<String> result=Calculator.compute(expression);
+              ArrayList<String> result=Calculator.compute(expression, false);
               String answer=result.get(result.size() - 1);
 
               textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"............................................................."+"\n");

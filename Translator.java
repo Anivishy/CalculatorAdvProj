@@ -74,7 +74,7 @@ public class Translator {
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
                 int operator_index = resultString.indexOf("^");
-                System.out.print(resultString);
+                
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
