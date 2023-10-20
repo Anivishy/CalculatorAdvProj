@@ -27,12 +27,12 @@ public class Calculator {
         updatedString = "";
         //Remove Spacing
         expression = expression.replace("\\s", "");
-        System.out.println("Intial expression:" + expression);
+        //System.out.println("Intial expression:" + expression);
 
         //Remove special chars
         expression = extra.replacePi(expression);
         expression = extra.replaceE(expression);
-        System.out.println(expression);
+        //System.out.println(expression);
 
         //simplify logs, ln sqrt, etc.
         //System.out.println(expression);

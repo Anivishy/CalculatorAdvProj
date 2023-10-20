@@ -168,7 +168,7 @@ public class Translator {
           
 
             else if (hasPara){
-                System.out.println("TEST");
+                //System.out.println("TEST");
                 ArrayList<String> result = new ArrayList<String>();
                 result.add("+");
                 result.add((String) parenthesisResult.get(1));
@@ -223,7 +223,7 @@ public class Translator {
             // }
             result.set(0, "true");
             result.set(1,chunk);
-            System.out.println("Chunk: " + chunk);
+            //System.out.println("Chunk: " + chunk);
             return result;
         }
         

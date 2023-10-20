@@ -33,7 +33,7 @@ public class ExtraFunctions {
                     updatedString += expression.substring(0, i);
                     updatedString += "*";
                     updatedString += expression.substring(i);
-                    System.out.println(updatedString);
+                    //System.out.println(updatedString);
                     expression = updatedString;
                 }
             }
@@ -45,12 +45,12 @@ public class ExtraFunctions {
         String updatedString = "";
         for (int i = 1; i < expression.length(); i++){
             if ((expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1)) || (expression.charAt(i) == '-' && expression.charAt(i-1) == ')'))){
-                System.out.println(expression.charAt(i) == '-');
+                //System.out.println(expression.charAt(i) == '-');
                 updatedString = "";
                 updatedString += expression.substring(0, i);
                 updatedString += "+";
                 updatedString += expression.substring(i); 
-                System.out.println(updatedString);
+                //System.out.println(updatedString);
                 expression = updatedString;
 
             }
@@ -62,7 +62,7 @@ public class ExtraFunctions {
     public String simplifyLog(String expression){
         while (expression.contains("log")){
             String tempExpression = expression.substring(expression.indexOf("l"), expression.lastIndexOf(")") + 1);
-            System.out.print(tempExpression);
+            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -95,7 +95,7 @@ public class ExtraFunctions {
     public String simplifyLn(String expression){
         while (expression.contains("ln")){
             String tempExpression = expression.substring(expression.indexOf("l"), expression.lastIndexOf(")") + 1);
-            System.out.print(tempExpression);
+            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -128,7 +128,7 @@ public class ExtraFunctions {
     public String simplifySqrt(String expression){
         while (expression.contains("sqrt")){
             String tempExpression = expression.substring(expression.indexOf("s"), expression.lastIndexOf(")") + 1);
-            System.out.print(tempExpression);
+            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -162,7 +162,7 @@ public class ExtraFunctions {
     public String simplifySin(String expression){
         while (expression.contains("sin")){
             String tempExpression = expression.substring(expression.indexOf("s"), expression.lastIndexOf(")") + 1);
-            System.out.print(tempExpression);
+            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -195,7 +195,7 @@ public class ExtraFunctions {
     public String simplifyCos(String expression){
         while (expression.contains("cos")){
             String tempExpression = expression.substring(expression.indexOf("c"), expression.lastIndexOf(")") + 1);
-            System.out.print(tempExpression);
+            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -228,7 +228,7 @@ public class ExtraFunctions {
     public String simplifyTan(String expression){
     while (expression.contains("tan")){
         String tempExpression = expression.substring(expression.indexOf("t"), expression.lastIndexOf(")") + 1);
-        System.out.print(tempExpression);
+        //System.out.print(tempExpression);
         Integer finalIndex = 0;
         Integer paraCount = 0;
         Boolean paraDetect = false;
