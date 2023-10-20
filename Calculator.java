@@ -62,7 +62,7 @@ public class Calculator {
             //System.out.println(components.toString());
             engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
             double result=engine.compute();
-            if (!(grpahing)){
+            if (!(graphing)){
                 currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
             }
             else{
