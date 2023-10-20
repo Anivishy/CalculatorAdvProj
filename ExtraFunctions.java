@@ -44,11 +44,13 @@ public class ExtraFunctions {
     public String updateNegatives(String expression){
         String updatedString = "";
         for (int i = 1; i < expression.length(); i++){
-            if (expression.charAt(i) == '-' && (Character.isDigit(expression.charAt(i - 1))) || expression.charAt(i-1) == ')'){
+            if ((expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1)) || (expression.charAt(i) == '-' && expression.charAt(i-1) == ')'))){
+                System.out.println(expression.charAt(i) == '-');
                 updatedString = "";
                 updatedString += expression.substring(0, i);
                 updatedString += "+";
-                updatedString += expression.substring(i);
+                updatedString += expression.substring(i); 
+                System.out.println(updatedString);
                 expression = updatedString;
 
             }
