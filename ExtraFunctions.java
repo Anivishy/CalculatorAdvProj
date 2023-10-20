@@ -9,8 +9,10 @@ public class ExtraFunctions {
     //Updating universal constants
 
     public String replacePi(String expression){
-        expression = expression.replaceAll("π", Double.toString(Math.PI));
-        expression = expression.replaceAll("pi", Double.toString(Math.PI));
+        //String piValue = String.format("%.2f", Double.toString(Math.PI));
+        //System.out.print(piValue);
+        expression = expression.replaceAll("π", String.format("%.2f", Math.PI));
+        expression = expression.replaceAll("pi", String.format("%.2f", Math.PI));
         return expression;
     }
 
@@ -42,7 +44,7 @@ public class ExtraFunctions {
     public String updateNegatives(String expression){
         String updatedString = "";
         for (int i = 1; i < expression.length(); i++){
-            if (expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1))){
+            if (expression.charAt(i) == '-' && (Character.isDigit(expression.charAt(i - 1))) || expression.charAt(i-1) == ')'){
                 updatedString = "";
                 updatedString += expression.substring(0, i);
                 updatedString += "+";

@@ -56,7 +56,7 @@ public class Translator {
             // Check for parentheses
             ArrayList<String> parenthesisResult = checkParenthesis(cur_expression);
             Boolean hasPara = false;
-            System.out.print(parenthesisResult);
+            //System.out.print(parenthesisResult);
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = (String) parenthesisResult.get(1);
                 if (countOperators(cur_expression) > 1)
@@ -66,7 +66,7 @@ public class Translator {
                 }                
             }
 
-            System.out.println(hasPara);
+            //System.out.println(hasPara);
 
             // Check for exponentiation
             //ArrayList<String> exponentResult = checkExponents(cur_expression);
@@ -213,6 +213,7 @@ public class Translator {
         if (!currentExpresion.contains("(")) {
             return result;
         }
+
         else {
             String chunk=currentExpresion;
             String ending=chunk.substring(chunk.lastIndexOf("(")+1);
