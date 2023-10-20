@@ -27,7 +27,7 @@ public class Calculator {
         updatedString = "";
         //Remove Spacing
         expression = expression.replace("\\s", "");
-        //System.out.println("Intial expression:" + expression);
+        System.out.println("Intial expression:" + expression);
 
         //Remove special chars
         expression = extra.replacePi(expression);
@@ -36,14 +36,14 @@ public class Calculator {
 
         //simplify logs, ln sqrt, etc.
         //System.out.println(expression);
-        expression = extra.simplifyLog(expression);
-        expression = extra.simplifyLn(expression);
-        expression = extra.simplifySqrt(expression);
+        expression = extra.simplifyLog(expression, graphing);
+        expression = extra.simplifyLn(expression, graphing);
+        expression = extra.simplifySqrt(expression, graphing);
 
         //trig
-         expression = extra.simplifySin(expression);
-         expression = extra.simplifyCos(expression);
-         expression = extra.simplifyTan(expression);
+         expression = extra.simplifySin(expression, graphing);
+         expression = extra.simplifyCos(expression, graphing);
+         expression = extra.simplifyTan(expression, graphing);
 
         //implied multiplication
         expression = extra.impliedMulti(expression);
