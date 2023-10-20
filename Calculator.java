@@ -8,7 +8,7 @@ public class Calculator {
 
     // Implement Calculator functionality here
 
-    public static ArrayList<String> compute(String expression) {
+    public static ArrayList<String> compute(String expression, Boolean grpahing) {
 
         ArrayList<String> steps = new ArrayList<String>();
 
@@ -62,7 +62,13 @@ public class Calculator {
             //System.out.println(components.toString());
             engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
             double result=engine.compute();
-            currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
+            if (!(grpahing)){
+                currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
+            }
+            else{
+                currentExpression=currentExpression.replace(components.get(3), Double.toString(result));
+            }
+
             steps.add(currentExpression);
         }
 
