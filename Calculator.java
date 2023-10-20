@@ -8,7 +8,7 @@ public class Calculator {
 
     // Implement Calculator functionality here
 
-    public static ArrayList<String> compute(String expression, Boolean grpahing) {
+    public static ArrayList<String> compute(String expression, Boolean graphing) {
 
         ArrayList<String> steps = new ArrayList<String>();
 
