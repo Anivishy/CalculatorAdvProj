@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
+import java.awt.geom.Line2D;
 import javax.lang.model.element.Element;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -35,6 +35,7 @@ public class GUICalculator {
     static JButton extdButton;
     static JButton statButton;
     static JButton settingsButton;
+    static JButton clearButton;
 
     static JTextArea modeBox;
     static JFrame f;
@@ -137,7 +138,9 @@ public class GUICalculator {
 
       submitGraphButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-
+            int currentIndex=textBox.getText().lastIndexOf("\n");
+            String equation=textBox.getText().substring(currentIndex+3);
+            Grapher.createAndShowGui(equation);
           }
       });
       submitGraphButton.setVisible(false);
@@ -155,8 +158,13 @@ public class GUICalculator {
           }
       });
 
-      JButton clearButton=new JButton("C");  
-      clearButton.setBounds((int)(screenWidth*0.19),screenHeight-200,170,50);  
+      clearButton=new JButton("C");
+      int widthPos=(int)(screenWidth*0.19);
+      if (mode==Mode.EXTENDED) {
+        widthPos=(int)(screenWidth*0.115);
+      }
+      
+      clearButton.setBounds(widthPos,screenHeight-200,170,50);  
       clearButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText("");
@@ -403,7 +411,6 @@ public class GUICalculator {
       });
 
       JButton divButton=new JButton("/");
-      divButton.setFont(font4);  
       divButton.setBounds((int)(screenWidth*0.49),screenHeight-380,80,50);  
       divButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
@@ -499,6 +506,15 @@ public class GUICalculator {
           }
       });
 
+      JButton xCubedButton=new JButton("x^3");  
+      xCubedButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      xCubedButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"^3");
+          }
+      });
+      xCubedButton.setVisible(false);
+
       settingsButton=new JButton("settings");
       settingsButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
       settingsButton.addActionListener(new ActionListener(){  
@@ -528,10 +544,10 @@ public class GUICalculator {
         nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
       
       buttonsExtd=new JButton[] {
-        submitButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton,
+        submitButton, clearButton, ansButton, dotButton, negButton, zeroButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton,
         fourButton, fiveButton, sixButton, absoluteValueButton, sqRootButton, multButton, divButton, extdButton, sevenButton, eightButton,
-        nineButton, factorialButton, randomButton, plusButton, minusButton, delButton, settingsButton};
+        nineButton, factorialButton, randomButton, plusButton, minusButton, delButton, xCubedButton};
       
       buttonsGraphing=new JButton[] {
         submitGraphButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, yEqualsButton,
@@ -572,6 +588,9 @@ public class GUICalculator {
         changeMode(oldButton,newMode, newText, buttonsDefault);
         currentButtons=buttonsDefault;
         for (JButton button:currentButtons) {
+          if (button==clearButton) {
+            button.setBounds((int)(screenWidth*0.19),screenHeight-200,170,50);
+          }
           button.setVisible(true);
         }
       }
@@ -580,6 +599,10 @@ public class GUICalculator {
         changeMode(oldButton,newMode, newText, buttonsExtd);
         currentButtons=buttonsExtd;
         for (JButton button:currentButtons) {
+          if (button==clearButton) {
+            button.setBounds((int)(screenWidth*0.265),screenHeight-200,170,50);
+          }
+          
           button.setVisible(true);
         }
       }
