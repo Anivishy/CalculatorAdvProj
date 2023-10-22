@@ -36,6 +36,8 @@ public class GUICalculator {
     static JButton statButton;
     static JButton settingsButton;
     static JButton clearButton;
+    static JButton submitGraphButton;
+    static JButton submitButton;
 
     static JTextArea modeBox;
     static JFrame f;
@@ -47,14 +49,22 @@ public class GUICalculator {
     static JButton[] buttonsSettings;
 
     static JButton[] currentButtons;
-  
+    static JButton[] changedButtons;
+    static JButton[] bigButtons;
+    
+    static JScrollPane scrollPaneMain;
+    static JScrollPane scrollPaneSteps;
+
+    static JTextArea textBox;
 
     private static final Font font1 = new Font("SansSerif", Font.PLAIN, 40);
     private static final Font font2 = new Font("SansSerif", Font.ITALIC, 20);
     private static final Font font3 = new Font("SansSerif", Font.PLAIN, 30);
     private static final Font font4 = new Font("SansSerif", Font.PLAIN, 17);
     private static final Font font5 = new Font("SansSerif", Font.BOLD, 17);
+    //private static final Font font6 = new Font("SansSerif", Font.PLAIN, 20);
 
+    private static String currentColorScheme="dark-gold";
 
     public static void drawScreen() {
       
@@ -64,11 +74,13 @@ public class GUICalculator {
         
       f.setIconImage(icon);
        
-      JTextArea textBox=new JTextArea();
+      textBox=new JTextArea();
+      textBox.setText(" ");
       JTextArea steps = new JTextArea();
 
       modeBox=new JTextArea();
-      modeBox.setText("Default Mode");
+      modeBox.setText("    Default Mode");
+      
       
       f.setSize(screenWidth,screenHeight);  
       
@@ -79,7 +91,7 @@ public class GUICalculator {
       modeBox.setBounds(50, 20, 200, 30);
       modeBox.setEditable(false);
 
-      JScrollPane scrollPaneMain = new JScrollPane(textBox);
+      scrollPaneMain = new JScrollPane(textBox);
       scrollPaneMain.setBounds(50,70,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
       
       f.add(scrollPaneMain);
@@ -89,17 +101,17 @@ public class GUICalculator {
       steps.setEditable(false);
       steps.setText("               STEPS" + "\n" + "_____________________  \n");
       
-      JScrollPane scrollPaneSteps = new JScrollPane(steps);
+      scrollPaneSteps = new JScrollPane(steps);
       scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
 
       f.add(scrollPaneSteps);
-
+      
       
       // BUTTONS
 
       // Bottom row (row 1)
 
-      JButton submitButton=new JButton("=");  
+      submitButton=new JButton("=");  
       submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
 
       submitButton.addActionListener(new ActionListener(){  
@@ -113,7 +125,7 @@ public class GUICalculator {
               ArrayList<String> result=Calculator.compute(expression, false);
               String answer=result.get(result.size() - 1);
 
-              textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"............................................................."+"\n");
+              textBox.setText(textBox.getText()+"=\n " + answer+"\n"+"............................................................."+"\n ");
               
               // Updating steps box
 
@@ -133,7 +145,7 @@ public class GUICalculator {
           }
       });
 
-      JButton submitGraphButton=new JButton("Graph");  
+      submitGraphButton=new JButton("Graph");  
       submitGraphButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
 
       submitGraphButton.addActionListener(new ActionListener(){  
@@ -192,7 +204,7 @@ public class GUICalculator {
       });
 
       JButton negButton=new JButton("(-)");  
-      negButton.setBounds((int)(screenWidth*0.115),screenHeight-260,80,50);  
+      negButton.setBounds((int)(screenWidth*0.19),screenHeight-260,80,50);  
       negButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText()+"-");
@@ -200,7 +212,7 @@ public class GUICalculator {
       });
 
       JButton zeroButton=new JButton("0");  
-      zeroButton.setBounds((int)(screenWidth*0.19),screenHeight-260,80,50);  
+      zeroButton.setBounds((int)(screenWidth*0.115),screenHeight-260,80,50);  
       zeroButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText()+"0");
@@ -216,7 +228,7 @@ public class GUICalculator {
       });
 
       JButton yEqualsButton=new JButton("y=");  
-      yEqualsButton.setBounds((int)(screenWidth*0.265),screenHeight-260,80,50);  
+      yEqualsButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);;  
       yEqualsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText()+"y=");
@@ -520,7 +532,7 @@ public class GUICalculator {
       settingsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             if (mode==mode.SETTINGS) {
-              changeMode(Mode.DEFAULT, settingsButton, "Settings");
+              changeMode(Mode.DEFAULT, settingsButton, "settings");
             }
             else {
               changeMode(Mode.SETTINGS, settingsButton, "back");
@@ -537,6 +549,48 @@ public class GUICalculator {
       });
       xButton.setVisible(false);
 
+      JButton darkModeRedButton=new JButton("Dark Mode- Red");  
+      darkModeRedButton.setBounds((int)(screenWidth*0.04),screenHeight-380,240,50);  
+      darkModeRedButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText() + "Color Scheme Changed! \n ............................................................. \n");
+            switchDarkMode(Config.red);
+          }
+      });
+      darkModeRedButton.setVisible(false);
+
+      JButton darkModeGoldButton=new JButton("Dark Mode- Gold");  
+      darkModeGoldButton.setBounds((int)(screenWidth*0.35),screenHeight-380,240,50);  
+      darkModeGoldButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText() + "Color Scheme Changed! \n ............................................................. \n");
+            switchDarkMode(Config.gold);
+          }
+      });
+      darkModeGoldButton.setVisible(false);
+
+      JButton lightModeBlueButton=new JButton("Light Mode- Blue");  
+      lightModeBlueButton.setBounds((int)(screenWidth*0.04),screenHeight-320,240,50);  
+      lightModeBlueButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText() + "  Color Scheme Changed! \n ............................................................. \n  ");
+            switchLightMode(Config.lightBlue);
+          }
+      });
+      lightModeBlueButton.setVisible(false);
+
+      JButton lightModePurpleButton=new JButton("Light Mode- Purple");  
+      lightModePurpleButton.setBounds((int)(screenWidth*0.35),screenHeight-320,240,50);  
+      lightModePurpleButton.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText() + "  Color Scheme Changed! \n ............................................................. \n  ");
+            switchLightMode(Config.purple);
+          }
+      });
+      lightModePurpleButton.setVisible(false);
+
+
+
       buttonsDefault=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
@@ -552,7 +606,7 @@ public class GUICalculator {
       buttonsGraphing=new JButton[] {
         submitGraphButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, yEqualsButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, 
-        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, windowButton, sevenButton, eightButton,
+        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
         nineButton, logButton, lnButton, plusButton, minusButton, delButton, xButton};
       
       buttonsStat=new JButton[] {
@@ -562,10 +616,11 @@ public class GUICalculator {
         nineButton, logButton, lnButton, plusButton, minusButton, delButton};
       
       buttonsSettings=new JButton[] {
-        submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
-        oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton, 
-        fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, extdButton, sevenButton, eightButton,
-        nineButton, logButton, lnButton, plusButton, minusButton, delButton, settingsButton};
+        delButton, settingsButton, darkModeRedButton, clearButton, darkModeGoldButton, lightModeBlueButton, lightModePurpleButton};
+      
+      changedButtons=new JButton[] {
+        plusButton, minusButton, multButton, divButton, powerButton, inverseButton, darkModeRedButton, ansButton, clearButton, graphButton, darkModeGoldButton, lightModeBlueButton, lightModePurpleButton
+      };
 
       currentButtons=buttonsDefault;
 
@@ -575,10 +630,12 @@ public class GUICalculator {
       }
       f.setLayout(null);  
       f.setVisible(true);
+      switchDarkMode(Config.gold);
     
     }
 
     public static void changeMode(Mode newMode, JButton oldButton, String newText) {
+      
       for (JButton button:currentButtons) {
         button.setVisible(false);
       }
@@ -590,6 +647,7 @@ public class GUICalculator {
         for (JButton button:currentButtons) {
           if (button==clearButton) {
             button.setBounds((int)(screenWidth*0.19),screenHeight-200,170,50);
+            
           }
           button.setVisible(true);
         }
@@ -637,18 +695,119 @@ public class GUICalculator {
         }
       }
 
+      if (currentColorScheme.equals("dark-gold")) {
+        switchDarkMode(Config.gold);
+      }
+
+      if (currentColorScheme.equals("dark-red")) {
+        switchDarkMode(Config.red);
+      }
+
+      if (currentColorScheme.equals("light-blue")) {
+        switchLightMode(Config.lightBlue);
+      }
+
+      if (currentColorScheme.equals("light-purple")) {
+        switchLightMode(Config.purple);
+      }
+
+      
+      //switchDarkModeGold();
     }
 
     public static void changeMode(JButton button, Mode newMode, String newText, JButton[] buttons) {
       for (JButton b:buttons) {
         f.add(b);
       }
+      
       mode=newMode;
       String newModeText=(newMode.name().charAt(0) + "").toUpperCase() + (newMode.name().substring(1)).toLowerCase() + " Mode";
       button.setText(newText);
       modeBox.setText(newModeText);
       f.add(button);
     }
+
+    
+
+    public static void switchDarkMode(Color color) {
+      if (color==Config.gold) {
+        currentColorScheme="dark-gold";
+      }
+
+      if (color==Config.red) {
+        currentColorScheme="dark-red";
+      }
+
+
+
+      f.getContentPane().setBackground(Color.darkGray);
+      scrollPaneMain.getViewport().getView().setBackground(Color.lightGray);
+      scrollPaneMain.getViewport().getView().setForeground(Color.darkGray);
+
+      scrollPaneSteps.getViewport().getView().setBackground(Color.lightGray);
+      scrollPaneSteps.getViewport().getView().setForeground(Color.darkGray);
+
+      modeBox.setBackground(Config.lightGrey);
+
+      for (JButton b:currentButtons) {
+        b.setBackground(Config.grey);
+        b.setForeground(Config.white);
+      }
+      
+      for (JButton b:changedButtons) {
+        b.setBackground(color);
+        b.setForeground(Config.white);
+      }
+
+      submitGraphButton.setBackground(Config.green);
+      submitButton.setBackground(Config.green);
+
+    }
+
+    public static void switchLightMode(Color color) {
+
+      if (color==Config.lightBlue) {
+        currentColorScheme="light-blue";
+      }
+
+      if (color==Config.purple) {
+        currentColorScheme="light-purple";
+      }
+
+      f.getContentPane().setBackground(Config.smoke);
+      scrollPaneMain.getViewport().getView().setBackground(Config.aliceBlue);
+      scrollPaneMain.getViewport().getView().setForeground(Color.DARK_GRAY);
+
+      scrollPaneSteps.getViewport().getView().setBackground(Config.aliceBlue);
+      scrollPaneSteps.getViewport().getView().setForeground(Color.DARK_GRAY);
+
+      modeBox.setBackground(Config.lightGrey);
+
+      for (JButton b:currentButtons) {
+        b.setBackground(Config.steelBlue);
+        b.setForeground(Config.white);
+      }
+      
+      for (JButton b:changedButtons) {
+        if (currentColorScheme.equals("light-blue")) {
+          b.setBackground(Config.otherLightBlue);
+        }
+        else {
+          b.setBackground(Config.mediumPurple);
+        }
+      
+        b.setForeground(Config.white);
+      }
+
+      submitGraphButton.setBackground(color);
+      submitButton.setBackground(color);
+
+    }
+
+
+
+
+    
 
     public static void main(String[] arguments) {
       

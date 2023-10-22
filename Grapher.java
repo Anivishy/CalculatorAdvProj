@@ -44,13 +44,13 @@ public class Grapher extends JPanel{
       
       Grapher mainPanel = new Grapher(equation);
 
-      JFrame frame = new JFrame("DrawGraph");
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.getContentPane().add(mainPanel);
-      frame.pack();
-      frame.setLocationByPlatform(true);
-      frame.setSize(screenWidthDimension, screenHeightDimension);
-      frame.setVisible(true);
+      JFrame frameGraph = new JFrame("DrawGraph");
+      //frameGraph.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frameGraph.getContentPane().add(mainPanel);
+      frameGraph.pack();
+      frameGraph.setLocationByPlatform(true);
+      frameGraph.setSize(screenWidthDimension, screenHeightDimension);
+      frameGraph.setVisible(true);
       
    }
    
