@@ -316,8 +316,8 @@ public class ExtraFunctions {
         ArrayList<Double> l1 = new ArrayList<Double>();
         Double curNum = 0.0;
         if (expression.contains("l1")){
-            expression = expression.replace("l1","");
-            expression = expression.replace("\\s", "");
+            expression = expression.substring(expression.indexOf("("), expression.indexOf(")") + 1);
+            System.out.println(expression);
             while (!(expression.substring(expression.indexOf("(") + 1, expression.indexOf(")")).equals(""))){
                 if (expression.contains(",")){
                     curNum = Double.parseDouble(expression.substring(1, expression.indexOf(",")));

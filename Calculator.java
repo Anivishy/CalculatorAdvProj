@@ -20,7 +20,6 @@ public class Calculator {
 
         //Statistics Lists
         ArrayList<Double> l1 = new ArrayList<Double>();
-        ArrayList<Double> l2 = new ArrayList<Double>();
         
         //Boolean modified = false;
 
