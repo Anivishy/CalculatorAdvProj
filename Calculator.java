@@ -48,6 +48,7 @@ public class Calculator {
 
         //Extra
         expression = extra.randNum(expression);
+        expression = extra.absValue(expression, graphing);
 
         //implied multiplication
         expression = extra.impliedMulti(expression);
