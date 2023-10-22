@@ -45,7 +45,6 @@ public class Translator {
                 count ++;
             }
         }
-
         return count;
     }
 
@@ -66,10 +65,9 @@ public class Translator {
                 }                
             }
 
-            //System.out.println(hasPara);
 
             // Check for exponentiation
-            //ArrayList<String> exponentResult = checkExponents(cur_expression);
+            
             ArrayList<String> exponentResult = checkEMDAS(cur_expression, "^");
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
@@ -93,8 +91,6 @@ public class Translator {
             }
 
             // Check for multiplication and division
-            //ArrayList<String> multiplicationResult = checkMultiplication(cur_expression);
-            //ArrayList<String> divisionResult = checkDivision(cur_expression);
 
             ArrayList<String> multiplicationResult = checkEMDAS(cur_expression, "*");
             ArrayList<String> divisionResult = checkEMDAS(cur_expression, "/");
@@ -139,9 +135,7 @@ public class Translator {
             }
 
             // Check for addition and subtraction
-            //ArrayList<String> additionResult = checkAddition(cur_expression);
-            //ArrayList<String> subtractionResult = checkSubtraction(cur_expression);
-
+    
             ArrayList<String> additionResult = checkEMDAS(cur_expression, "+");
             ArrayList<String> subtractionResult = checkEMDAS(cur_expression, "-");
 
@@ -152,7 +146,7 @@ public class Translator {
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
                 String operator = resultString.charAt(operator_index) + "";
-                //System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
+
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
@@ -168,7 +162,7 @@ public class Translator {
           
 
             else if (hasPara){
-                //System.out.println("TEST");
+                
                 ArrayList<String> result = new ArrayList<String>();
                 result.add("+");
                 result.add((String) parenthesisResult.get(1));
@@ -267,237 +261,5 @@ public class Translator {
             return result;
         }
     }
-
-    /** 
-    public ArrayList<String> checkExponents(String currentExpression) {
-
-        // checkExponents will check for exponents in the current expression and return an array with a boolean and string (result)
-        // If there is an exponent, the result will return [True, <the portion of the expression containing the exponent>]
-        // If there isn't, the result will return [False, ""]
-
-        ArrayList<String> result = new ArrayList<String>();
-        result.add("false");
-        result.add("");
-
-        if (!currentExpression.contains("^")) {
-            return result;
-        }
-        else {
-            String chunk=currentExpression;
-            
-            String[] operations={"+", "*", "/", "^", "(", ")"};
-            List operationsList = Arrays.asList(operations);
-            int frontIndex=0;
-            int backIndex=0;
-
-            for (int i=chunk.indexOf("^")-1; i>=0; i--) {
-                if (operationsList.contains(chunk.charAt(i) + "")) {
-                    frontIndex=i+1;
-                    break;
-                }
-            }
-
-            for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("^")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("^")+1);
-                    break;
-                }
-            }
-            if (backIndex==0) {
-                backIndex=chunk.length();
-            }
-            
-            chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, "true");
-            result.set(1,chunk);
-            return result;
-        }
-
-    }
-
-    public ArrayList<String> checkMultiplication(String currentExpression) {
-
-        // checkMultiplication will check for multiplication in the current expression and return an array with a boolean and string (result)
-        // If there is multiplication, the result will return [True, <the portion of the expression containing the multiplication>]
-        // If there isn't, the result will return [False, ""]
-
-        ArrayList<String> result = new ArrayList<String>();
-        result.add("false");
-        result.add("");
-
-        if (!currentExpression.contains("*")) {
-            return result;
-        }
-        else {
-            String chunk=currentExpression;            
-            String[] operations={"+", "*", "/", "^", ")", "("};
-            List operationsList = Arrays.asList(operations);
-            int frontIndex=0;
-            int backIndex=0;
-
-            for (int i=chunk.indexOf("*")-1; i>=0; i--) {
-                if (operationsList.contains(chunk.charAt(i)+"")) {
-                    frontIndex=i+1;
-                    break;
-                }
-            }
-
-            for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("*")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("*")+1);
-                    break;
-                }
-            }
-            if (backIndex==0) {
-                backIndex=chunk.length();
-            }
-            
-            chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, "true");
-            result.set(1,chunk);
-            return result;
-        }
-    }
-
-    public ArrayList<String> checkDivision(String currentExpression) {
-
-        // checkDivision will check for division in the current expression and return an array with a boolean and string (result)
-        // If there is division, the result will return [True, <the portion of the expression containing the division>]
-        // If there isn't, the result will return [False, ""]
-
-        ArrayList<String> result = new ArrayList<String>();
-        result.add("false");
-        result.add("");
-
-        if (!currentExpression.contains("/")) {
-            return result;
-        }
-        else {
-            String chunk=currentExpression;
-            
-            String[] operations={"+", "*", "/", "^", ")", "("};
-            List operationsList = Arrays.asList(operations);
-            int frontIndex=0;
-            int backIndex=0;
-
-            for (int i=chunk.indexOf("/")-1; i>=0; i--) {
-                if (operationsList.contains(chunk.charAt(i)+"")) {
-                    frontIndex=i+1;
-                    break;
-                }
-            }
-
-            for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("/")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("/")+1);
-                    break;
-                }
-            }
-            if (backIndex==0) {
-                backIndex=chunk.length();
-            }
-            
-            chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, "true");
-            result.set(1,chunk);
-            return result;
-        }
-
-    }
-
-    public ArrayList<String> checkAddition(String currentExpression) {
-
-        // checkAddition will check for addition in the current expression and   return an array with a boolean and string (result)
-        // If there is addition, the result will return [True, <the portion of the expression containing the addition>]
-        // If there isn't, the result will return [False, ""]
-
-        ArrayList<String> result = new ArrayList<String>();
-        result.add("false");
-        result.add("");
-
-        if (!currentExpression.contains("+")) {
-            return result;
-        }
-        else {
-            String chunk=currentExpression;
-            
-            String[] operations={"+", "*", "/", "^", ")", "("};
-            List operationsList = Arrays.asList(operations);
-            int frontIndex=0;
-            int backIndex=0;
-
-            for (int i=chunk.indexOf("+")-1; i>=0; i--) {
-                if (operationsList.contains(chunk.charAt(i)+"")) {
-                    frontIndex=i+1;
-                    break;
-                }
-            }
-
-            for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("+")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("+")+1);
-                    break;
-                }
-            }
-            if (backIndex==0) {
-                backIndex=chunk.length();
-
-            }
-            
-            chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, "true");
-            result.set(1,chunk);
-            return result;
-        }
-
-    }
-
-    public ArrayList<String> checkSubtraction(String currentExpression) {
-
-        // checkSubtraction will check for subtraction in the current expression and return an array with a boolean and string (result)
-        // If there is subtraction, the result will return [True, <the portion of the expression containing the subtraction>]
-        // If there isn't, the result will return [False, ""]
-
-        ArrayList<String> result = new ArrayList<String>();
-        result.add("false");
-        result.add("");
-
-        if (!currentExpression.contains("-")) {
-            return result;
-        }
-        else {
-            String chunk=currentExpression;
-            
-            String[] operations={"+", "-", "*", "/", "^", ")", "("};
-            List operationsList = Arrays.asList(operations);
-            int frontIndex=0;
-            int backIndex=0;
-
-            for (int i=chunk.indexOf("-")-1; i>=0; i--) {
-                if (operationsList.contains(chunk.charAt(i)+"")) {
-                    frontIndex=i+1;
-                    break;
-                }
-            }
-
-            for (String i:operations) {
-                if (chunk.substring(chunk.indexOf("-")+1).contains(i)) {
-                    backIndex=chunk.indexOf(i, chunk.indexOf("-")+1);
-                    break;
-                }
-            }
-            if (backIndex==0) {
-                backIndex=chunk.length();
-            }
-            
-            chunk=chunk.substring(frontIndex, backIndex);
-            result.set(0, "true");
-            result.set(1,chunk);
-            return result;
-        }
-        
-
-    }
-    **/
 
 }
