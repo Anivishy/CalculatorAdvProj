@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.*;
 
 
 public class Calculator {
@@ -7,6 +8,7 @@ public class Calculator {
     // Calculator will serve as a main class of sorts. This is where we will create our objects, call methods, etc.
 
     // Implement Calculator functionality here
+    //private string ans = "";
 
     public static ArrayList<String> compute(String expression, Boolean graphing) {
 
@@ -19,6 +21,9 @@ public class Calculator {
         //used for handling implied multiplication
         String updatedString = "";
 
+        //Statistics Lists
+        ArrayList<Double> l1 = new ArrayList<Double>();
+        ArrayList<Double> l2 = new ArrayList<Double>();
         
         //Boolean modified = false;
 
@@ -38,8 +43,7 @@ public class Calculator {
         //simplify logs, ln sqrt, etc.
         //System.out.println(expression);
         expression = extra.simplifyLog(expression, graphing);
-        expression = extra.simplifyLn(expression, graphing);
-        expression = extra.simplifySqrt(expression, graphing);
+        expression = extra.simplifyLn(expression, graphing);        
 
         //trig
          expression = extra.simplifySin(expression, graphing);
@@ -49,40 +53,81 @@ public class Calculator {
         //Extra
         expression = extra.randNum(expression);
         expression = extra.absValue(expression, graphing);
+        expression = extra.simplifySqrt(expression, graphing);
 
-        //implied multiplication
-        expression = extra.impliedMulti(expression);
+        //stat
+        l1 = extra.listOne(expression);
+        System.out.println(l1);
 
-        
+        if (!(l1.isEmpty())){
+            String min = "";
+            String max = "";
+            String range = "";
+            Double temp = 0.0;
+            String totalSum = "";
+            String mean = "";
+            String result = "";
+            Collections.sort(l1);
 
-        //negative 
-        expression = extra.updateNegatives(expression);
-
-
-        String currentExpression=expression;
-
-        steps.add(expression);
-
-        while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
-            //expression = extra.updateNegatives(expression);
-            ArrayList<String> components = translator.parse(currentExpression);
-            //System.out.println(components.toString());
-            engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
-            double result=engine.compute();
-            if (!(graphing)){
-                currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
+            min = Double.toString(l1.get(0));
+            max = Double.toString(l1.get(l1.size() - 1));
+            range = Double.toString(l1.get(l1.size() - 1) - l1.get(0));
+            for (int i = 0; i < l1.size(); i++){
+                temp += l1.get(i);
             }
-            else{
-                currentExpression=currentExpression.replace(components.get(3), String.format("%.20f", result));
-            }
+            totalSum = Double.toString(temp);
+            mean = Double.toString(temp / l1.size());
 
-            steps.add(currentExpression);
+            result = "Minimum Number:" + min + "\n" + 
+                     "Maximum Number:" + max + "\n" + 
+                     "Range: " + range + "\n" + 
+                     "Total: " + totalSum + "\n" +
+                     "Average: " + mean + "\n";
+
+            steps.add(result);
+            return steps;
         }
 
-        return steps;
+        else {
+            //implied multiplication
+            expression = extra.impliedMulti(expression);
+
+            
+
+            //negative 
+            expression = extra.updateNegatives(expression);
+
+
+            String currentExpression=expression;
+
+            steps.add(expression);
+
+            while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
+                //expression = extra.updateNegatives(expression);
+                ArrayList<String> components = translator.parse(currentExpression);
+                //System.out.println(components.toString());
+                engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
+                double result=engine.compute();
+                if (!(graphing)){
+                    currentExpression=currentExpression.replace(components.get(3), String.format("%.2f", result));
+                }
+                else{
+                    currentExpression=currentExpression.replace(components.get(3), String.format("%.20f", result));
+                }
+
+                steps.add(currentExpression);
+            }
+
+            //ans = steps.get(steps.size() - 1);
+            return steps;
+        }
         
         
     }
+
+    // public String getAns(){
+    //     return ans;
+    // }
 
 }
 

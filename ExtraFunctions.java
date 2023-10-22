@@ -330,6 +330,31 @@ public class ExtraFunctions {
         return expression;
     }
 
+    // Statistics
+    public ArrayList listOne(String expression){
+        ArrayList<Double> l1 = new ArrayList<Double>();
+        Double curNum = 0.0;
+        if (expression.contains("l1")){
+            expression = expression.replace("l1", "");
+            while (!(expression.substring(expression.indexOf("(") + 1, expression.indexOf(")")).equals(""))){
+                if (expression.contains(",")){
+                    System.out.println(expression.substring(1, expression.indexOf(",")));
+                    curNum = Double.parseDouble(expression.substring(1, expression.indexOf(",")));
+                    expression = expression.replace(Double.toString(curNum) + ",", "");
+                }
+                else{
+                    curNum = Double.parseDouble(expression.substring(1, expression.indexOf(")")));
+                    System.out.println(curNum);
+                    expression = expression.replace(Double.toString(curNum), "");
+                }
+                System.out.println(expression);
+                l1.add(curNum);
+            }
+        }
+
+        return l1;
+    }
+
 }
 
 

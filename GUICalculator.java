@@ -112,7 +112,6 @@ public class GUICalculator {
             try {
               ArrayList<String> result=Calculator.compute(expression, false);
               String answer=result.get(result.size() - 1);
-
               textBox.setText(textBox.getText()+"=\n" + answer+"\n"+"............................................................."+"\n");
               
               // Updating steps box
@@ -536,6 +535,18 @@ public class GUICalculator {
           }
       });
       xButton.setVisible(false);
+     
+      //stat buttons
+
+      JButton l1Button=new JButton("Enter List");  
+      l1Button.setBounds((int)(screenWidth*0.265),screenHeight-260,350,50);  
+      l1Button.addActionListener(new ActionListener(){  
+          public void actionPerformed(ActionEvent e){
+            textBox.setText(textBox.getText()+"l1(num1,num2,... (doubles only))");
+          }
+      });
+      l1Button.setVisible(false);
+
 
       buttonsDefault=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
@@ -559,7 +570,7 @@ public class GUICalculator {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton,
         oneButton, twoButton, threeButton, openParanthesisButton, closedParanthesisButton, powerButton, inverseButton, statButton,
         fourButton, fiveButton, sixButton, eToTheXButton, xSquaredButton, multButton, divButton, sevenButton, eightButton,
-        nineButton, logButton, lnButton, plusButton, minusButton, delButton};
+        nineButton, logButton, lnButton, plusButton, minusButton, delButton, l1Button};
       
       buttonsSettings=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
