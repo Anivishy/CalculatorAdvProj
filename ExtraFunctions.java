@@ -9,8 +9,6 @@ public class ExtraFunctions {
     //Updating universal constants
 
     public String replacePi(String expression){
-        //String piValue = String.format("%.2f", Double.toString(Math.PI));
-        //System.out.print(piValue);
         expression = expression.replaceAll("π", String.format("%.2f", Math.PI));
         expression = expression.replaceAll("pi", String.format("%.2f", Math.PI));
         return expression;
@@ -33,7 +31,6 @@ public class ExtraFunctions {
                     updatedString += expression.substring(0, i);
                     updatedString += "*";
                     updatedString += expression.substring(i);
-                    //System.out.println(updatedString);
                     expression = updatedString;
                 }
             }
@@ -45,12 +42,10 @@ public class ExtraFunctions {
         String updatedString = "";
         for (int i = 1; i < expression.length(); i++){
             if ((expression.charAt(i) == '-' && Character.isDigit(expression.charAt(i - 1)) || (expression.charAt(i) == '-' && expression.charAt(i-1) == ')'))){
-                //System.out.println(expression.charAt(i) == '-');
                 updatedString = "";
                 updatedString += expression.substring(0, i);
                 updatedString += "+";
                 updatedString += expression.substring(i); 
-                //System.out.println(updatedString);
                 expression = updatedString;
 
             }
@@ -61,8 +56,7 @@ public class ExtraFunctions {
     //log, ln, and square root
     public String simplifyLog(String expression, Boolean graphing){
         while (expression.contains("log")){
-            String tempExpression = expression.substring(expression.indexOf("l"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
+            String tempExpression = expression.substring(expression.indexOf("l"), expression.lastIndexOf(")") + 1);;
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -84,11 +78,8 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("l"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             String finalResult = "";
-            System.out.println(innerExpression);
             ArrayList <String> result = Calculator.compute(innerExpression, graphing);
-            System.out.println(result);
             finalResult = Double.toString(Math.log10(Double.parseDouble(result.get(result.size() - 1))));
-            System.out.println(finalResult);
             expression = expression.replace(curLog, finalResult);
         }
         
@@ -98,7 +89,6 @@ public class ExtraFunctions {
     public String simplifyLn(String expression, Boolean graphing){
         while (expression.contains("ln")){
             String tempExpression = expression.substring(expression.indexOf("l"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -131,7 +121,6 @@ public class ExtraFunctions {
     public String simplifySqrt(String expression, Boolean graphing){
         while (expression.contains("sqrt")){
             String tempExpression = expression.substring(expression.indexOf("s"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -165,7 +154,6 @@ public class ExtraFunctions {
     public String simplifySin(String expression, Boolean graphing){
         while (expression.contains("sin")){
             String tempExpression = expression.substring(expression.indexOf("s"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -198,7 +186,6 @@ public class ExtraFunctions {
     public String simplifyCos(String expression, Boolean graphing){
         while (expression.contains("cos")){
             String tempExpression = expression.substring(expression.indexOf("c"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -231,7 +218,6 @@ public class ExtraFunctions {
     public String simplifyTan(String expression, Boolean graphing){
     while (expression.contains("tan")){
         String tempExpression = expression.substring(expression.indexOf("t"), expression.lastIndexOf(")") + 1);
-        //System.out.print(tempExpression);
         Integer finalIndex = 0;
         Integer paraCount = 0;
         Boolean paraDetect = false;
@@ -264,7 +250,6 @@ public class ExtraFunctions {
     public String randNum(String expression){
         while (expression.contains("rand")){
             String tempExpression = expression.substring(expression.indexOf("r"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -286,12 +271,9 @@ public class ExtraFunctions {
             String curLog = expression.substring(expression.indexOf("r"), finalIndex + 1);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
             Double min = Double.parseDouble(innerExpression.substring(0, innerExpression.indexOf(',')));
-            System.out.println(min);
             Double max = Double.parseDouble(innerExpression.substring(innerExpression.indexOf(',') + 1));
-            System.out.println(max);
             String finalResult = Double.toString((Math.random() * (max - min)) + min);
             expression = expression.replace(curLog, finalResult);
-            System.out.println(expression);
         }
     
         return expression;
@@ -300,7 +282,6 @@ public class ExtraFunctions {
     public String absValue(String expression, Boolean graphing){
         while (expression.contains("abs")){
             String tempExpression = expression.substring(expression.indexOf("a"), expression.lastIndexOf(")") + 1);
-            //System.out.print(tempExpression);
             Integer finalIndex = 0;
             Integer paraCount = 0;
             Boolean paraDetect = false;
@@ -335,19 +316,17 @@ public class ExtraFunctions {
         ArrayList<Double> l1 = new ArrayList<Double>();
         Double curNum = 0.0;
         if (expression.contains("l1")){
-            expression = expression.replace("l1", "");
+            expression = expression.replace("l1","");
+            expression = expression.replace("\\s", "");
             while (!(expression.substring(expression.indexOf("(") + 1, expression.indexOf(")")).equals(""))){
                 if (expression.contains(",")){
-                    System.out.println(expression.substring(1, expression.indexOf(",")));
                     curNum = Double.parseDouble(expression.substring(1, expression.indexOf(",")));
                     expression = expression.replace(Double.toString(curNum) + ",", "");
                 }
                 else{
                     curNum = Double.parseDouble(expression.substring(1, expression.indexOf(")")));
-                    System.out.println(curNum);
                     expression = expression.replace(Double.toString(curNum), "");
                 }
-                System.out.println(expression);
                 l1.add(curNum);
             }
         }

@@ -575,7 +575,7 @@ public class GUICalculator {
       l1Button.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-260,350,50);  
       l1Button.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"l1(num1,num2,... (doubles only))");
+            writeToBox("l1(num1,num2,... (doubles only))");
           }
       });
       l1Button.setVisible(false);

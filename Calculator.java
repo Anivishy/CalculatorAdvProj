@@ -43,9 +43,9 @@ public class Calculator {
         expression = extra.simplifyLn(expression, graphing);        
 
         //trig
-         expression = extra.simplifySin(expression, graphing);
-         expression = extra.simplifyCos(expression, graphing);
-         expression = extra.simplifyTan(expression, graphing);
+        expression = extra.simplifySin(expression, graphing);
+        expression = extra.simplifyCos(expression, graphing);
+        expression = extra.simplifyTan(expression, graphing);
 
         //Extra
         expression = extra.randNum(expression);
@@ -114,16 +114,12 @@ public class Calculator {
             steps.add(currentExpression);
         }
 
-            //ans = steps.get(steps.size() - 1);
+            Config.ans = steps.get(steps.size() - 1);
             return steps;
         }
         
         
     }
-
-    // public String getAns(){
-    //     return ans;
-    // }
 
 }
 

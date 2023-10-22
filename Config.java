@@ -39,4 +39,6 @@ public class Config {
 
     public static final int numberOfPoints=1000;
 
+    public static String ans = "";
+
 }
