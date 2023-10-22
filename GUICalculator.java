@@ -165,7 +165,7 @@ public class GUICalculator {
       ansButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-200,170,50);  
       ansButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            
+            writeToBox(Config.ans);
           }
       });
 

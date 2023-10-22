@@ -210,9 +210,6 @@ public class Translator {
             String chunk=currentExpresion;
             String ending=chunk.substring(chunk.lastIndexOf("(")+1);
             chunk=chunk.substring(chunk.lastIndexOf("(")+1, ending.indexOf(")")+chunk.lastIndexOf("(")+1);
-            // if (!(chunk.contains("+")) && !(chunk.contains("/")) && !(chunk.contains("*")) && !(chunk.contains("("))){
-            //     chunk += "+ 0";
-            // }
             result.set(0, "true");
             result.set(1,chunk);
             return result;
