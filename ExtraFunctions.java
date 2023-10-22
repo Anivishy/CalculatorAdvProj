@@ -260,6 +260,76 @@ public class ExtraFunctions {
     
     return expression;
     }
+
+    public String randNum(String expression){
+        while (expression.contains("rand")){
+            String tempExpression = expression.substring(expression.indexOf("r"), expression.lastIndexOf(")") + 1);
+            //System.out.print(tempExpression);
+            Integer finalIndex = 0;
+            Integer paraCount = 0;
+            Boolean paraDetect = false;
+            for (int i = 0; i < tempExpression.length(); i++){
+                if (tempExpression.charAt(i) == '('){
+                    paraCount += 1;
+                    paraDetect = true;
+                }
+                if (tempExpression.charAt(i) == ')'){
+                    paraCount -= 1;
+                }
+                if (paraDetect){
+                    if (paraCount == 0){
+                        finalIndex = i;
+                    }
+                }
+            }
+            
+            String curLog = expression.substring(expression.indexOf("r"), finalIndex + 1);
+            String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
+            Double min = Double.parseDouble(innerExpression.substring(0, innerExpression.indexOf(',')));
+            System.out.println(min);
+            Double max = Double.parseDouble(innerExpression.substring(innerExpression.indexOf(',') + 1));
+            System.out.println(max);
+            String finalResult = Double.toString((Math.random() * (max - min)) + min);
+            expression = expression.replace(curLog, finalResult);
+            System.out.println(expression);
+        }
+    
+        return expression;
+    }
+
+    public String absValue(String expression, Boolean graphing){
+        while (expression.contains("abs")){
+            String tempExpression = expression.substring(expression.indexOf("a"), expression.lastIndexOf(")") + 1);
+            //System.out.print(tempExpression);
+            Integer finalIndex = 0;
+            Integer paraCount = 0;
+            Boolean paraDetect = false;
+            for (int i = 0; i < tempExpression.length(); i++){
+                if (tempExpression.charAt(i) == '('){
+                    paraCount += 1;
+                    paraDetect = true;
+                }
+                if (tempExpression.charAt(i) == ')'){
+                    paraCount -= 1;
+                }
+                if (paraDetect){
+                    if (paraCount == 0){
+                        finalIndex = i;
+                    }
+                }
+            }
+            
+        String curLog = expression.substring(expression.indexOf("a"), finalIndex + 1);
+        String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
+        String finalResult = "";
+        ArrayList <String> result = Calculator.compute(innerExpression, graphing);
+        finalResult = Double.toString(Math.abs(Double.parseDouble(result.get(result.size() - 1))));
+        expression = expression.replace(curLog, finalResult);
+        }
+    
+        return expression;
+    }
+
 }
 
 

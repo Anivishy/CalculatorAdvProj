@@ -385,11 +385,11 @@ public class GUICalculator {
 
       // Only for extd mode
 
-      JButton absoluteValueButton=new JButton("|");  
+      JButton absoluteValueButton=new JButton("abs(");  
       absoluteValueButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
       absoluteValueButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"|");
+            textBox.setText(textBox.getText()+"abs(");
           }
       });
       absoluteValueButton.setVisible(false);
@@ -402,11 +402,11 @@ public class GUICalculator {
           }
       });
 
-      JButton sqRootButton=new JButton("√(");  
+      JButton sqRootButton=new JButton("sqrt(");  
       sqRootButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
       sqRootButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"√(");
+            textBox.setText(textBox.getText()+"sqrt(");
           }
       });
       sqRootButton.setVisible(false);
