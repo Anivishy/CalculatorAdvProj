@@ -18,6 +18,7 @@ public class Calculator {
    
         //used for handling implied multiplication
         String updatedString = "";
+
         
         //Boolean modified = false;
 
@@ -45,8 +46,13 @@ public class Calculator {
          expression = extra.simplifyCos(expression, graphing);
          expression = extra.simplifyTan(expression, graphing);
 
+        //Extra
+        expression = extra.randNum(expression);
+
         //implied multiplication
         expression = extra.impliedMulti(expression);
+
+        
 
         //negative 
         expression = extra.updateNegatives(expression);

@@ -382,11 +382,11 @@ public class GUICalculator {
           }
       });
 
-      JButton sqRootButton=new JButton("√(");  
+      JButton sqRootButton=new JButton("sqrt(");  
       sqRootButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
       sqRootButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"√(");
+            textBox.setText(textBox.getText()+"sqrt(");
           }
       });
       sqRootButton.setVisible(false);
