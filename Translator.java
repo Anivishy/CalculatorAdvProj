@@ -45,7 +45,6 @@ public class Translator {
                 count ++;
             }
         }
-
         return count;
     }
 
@@ -66,10 +65,9 @@ public class Translator {
                 }                
             }
 
-            //System.out.println(hasPara);
 
             // Check for exponentiation
-            //ArrayList<String> exponentResult = checkExponents(cur_expression);
+            
             ArrayList<String> exponentResult = checkEMDAS(cur_expression, "^");
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
@@ -93,8 +91,6 @@ public class Translator {
             }
 
             // Check for multiplication and division
-            //ArrayList<String> multiplicationResult = checkMultiplication(cur_expression);
-            //ArrayList<String> divisionResult = checkDivision(cur_expression);
 
             ArrayList<String> multiplicationResult = checkEMDAS(cur_expression, "*");
             ArrayList<String> divisionResult = checkEMDAS(cur_expression, "/");
@@ -139,9 +135,7 @@ public class Translator {
             }
 
             // Check for addition and subtraction
-            //ArrayList<String> additionResult = checkAddition(cur_expression);
-            //ArrayList<String> subtractionResult = checkSubtraction(cur_expression);
-
+    
             ArrayList<String> additionResult = checkEMDAS(cur_expression, "+");
             ArrayList<String> subtractionResult = checkEMDAS(cur_expression, "-");
 
@@ -152,7 +146,7 @@ public class Translator {
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
                 String operator = resultString.charAt(operator_index) + "";
-                //System.out.println("Num1" + num1 + " num2" + num2 + " operator" + operator);
+
                 result.add(operator);
                 result.add(num1);
                 result.add(num2);
@@ -168,7 +162,7 @@ public class Translator {
           
 
             else if (hasPara){
-                //System.out.println("TEST");
+                
                 ArrayList<String> result = new ArrayList<String>();
                 result.add("+");
                 result.add((String) parenthesisResult.get(1));

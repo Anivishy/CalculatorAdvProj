@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class Calculator {
 
-    // Calculator will serve as a main class of sorts. This is where we will create our objects, call methods, etc.
-
-    // Implement Calculator functionality here
+    // Calculator will serve as a main class of sorts for the CLI.
 
     public static ArrayList<String> compute(String expression, Boolean graphing) {
 
@@ -24,7 +22,7 @@ public class Calculator {
 
         //remove all whitespace form input string
         
-        //modified = false;
+ 
         updatedString = "";
         //Remove Spacing
         expression = expression.replace("\\s", "");
@@ -64,9 +62,9 @@ public class Calculator {
         steps.add(expression);
 
         while (!currentExpression.matches("-?\\d+(\\.\\d+)?")) {
-            //expression = extra.updateNegatives(expression);
+            
             ArrayList<String> components = translator.parse(currentExpression);
-            //System.out.println(components.toString());
+            
             engine.setExpression(components.get(0), Double.parseDouble(components.get(1)), Double.parseDouble(components.get(2)));
             double result=engine.compute();
             if (!(graphing)){
@@ -75,7 +73,6 @@ public class Calculator {
             else{
                 currentExpression=currentExpression.replace(components.get(3), String.format("%.20f", result));
             }
-
             steps.add(currentExpression);
         }
 

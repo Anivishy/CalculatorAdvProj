@@ -1,24 +1,13 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.awt.geom.Line2D;
-import javax.lang.model.element.Element;
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Utilities;
-
 
 public class GUICalculator {
 
-    private static int screenWidth=1200;
-    private static int screenHeight=800;
-    private final static String newline = "\n";
-      
+    // Initializing enums for different modes  
+  
     private enum Mode {
       DEFAULT,
       EXTENDED,
@@ -27,93 +16,82 @@ public class GUICalculator {
       SETTINGS
     }
 
+    // Establishing current mode as default
+
     private static Mode mode=Mode.DEFAULT;
+
+    // Defining buttons to modify/access outside of main drawScreen function
+
+    private static JButton graphButton;
+    private static JButton extdButton;
+    private static JButton statButton;
+    private static JButton settingsButton;
+    private static JButton clearButton;
+    private static JButton submitGraphButton;
+    private static JButton submitButton;
+    private static JButton delButton;
+
+    private static JTextArea modeBox;
+    private static JFrame f=new JFrame("Calculator");;
+    private static JScrollPane scrollPaneMain;
+    private static JScrollPane scrollPaneSteps;
+    private static JTextArea textBox;
+
+    // Defining Arrays of button categories to store all the buttons for a particular category
+
+    private static JButton[] buttonsDefault;
+    private static JButton[] buttonsGraphing;
+    private static JButton[] buttonsStat;
+    private static JButton[] buttonsExtd;
+    private static JButton[] buttonsSettings;
+
+    private static JButton[] currentButtons;
+    private static JButton[] changedButtons;
     
-    private static int index=0;
-
-    static JButton graphButton;
-    static JButton extdButton;
-    static JButton statButton;
-    static JButton settingsButton;
-    static JButton clearButton;
-    static JButton submitGraphButton;
-    static JButton submitButton;
-
-    static JTextArea modeBox;
-    static JFrame f;
-
-    static JButton[] buttonsDefault;
-    static JButton[] buttonsGraphing;
-    static JButton[] buttonsStat;
-    static JButton[] buttonsExtd;
-    static JButton[] buttonsSettings;
-
-    static JButton[] currentButtons;
-    static JButton[] changedButtons;
-    static JButton[] bigButtons;
-    
-    static JScrollPane scrollPaneMain;
-    static JScrollPane scrollPaneSteps;
-
-    static JTextArea textBox;
-
-    private static final Font font1 = new Font("SansSerif", Font.PLAIN, 40);
-    private static final Font font2 = new Font("SansSerif", Font.ITALIC, 20);
-    private static final Font font3 = new Font("SansSerif", Font.PLAIN, 30);
-    private static final Font font4 = new Font("SansSerif", Font.PLAIN, 17);
-    private static final Font font5 = new Font("SansSerif", Font.BOLD, 17);
-    //private static final Font font6 = new Font("SansSerif", Font.PLAIN, 20);
+    // Initializing current color-scheme
 
     private static String currentColorScheme="dark-gold";
 
     public static void drawScreen() {
-      
-
-      f=new JFrame("Calculator");
-      Image icon = Toolkit.getDefaultToolkit().getImage("C:\\Users\\aksha\\Downloads\\Clash-Royale-emblem.png");
-        
-      f.setIconImage(icon);
        
+      // Defining text boxes to input expression and show steps
+
       textBox=new JTextArea();
       textBox.setText(" ");
       JTextArea steps = new JTextArea();
-
       modeBox=new JTextArea();
       modeBox.setText("    Default Mode");
       
+      f.setSize(Config.screenWidth,Config.screenHeight);  
       
-      f.setSize(screenWidth,screenHeight);  
-      
-      textBox.setFont(font1);
-
-      modeBox.setFont(font5);
+      textBox.setFont(Config.font1);
+      modeBox.setFont(Config.font5);
       modeBox.setSize(300, 50);
       modeBox.setBounds(50, 20, 200, 30);
       modeBox.setEditable(false);
 
       scrollPaneMain = new JScrollPane(textBox);
-      scrollPaneMain.setBounds(50,70,(int)(screenWidth*0.6),(int)(screenHeight*0.325));
+      scrollPaneMain.setBounds(50,70,(int)(Config.screenWidth*0.6),(int)(Config.screenHeight*0.325));
       
       f.add(scrollPaneMain);
 
-      steps.setFont(font2);
-      steps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+      steps.setFont(Config.font2);
+      steps.setBounds((int)(Config.screenWidth*0.7),50, (int)(Config.screenWidth*0.2),(int)(Config.screenHeight*0.8));
       steps.setEditable(false);
       steps.setText("               STEPS" + "\n" + "_____________________  \n");
       
       scrollPaneSteps = new JScrollPane(steps);
-      scrollPaneSteps.setBounds((int)(screenWidth*0.7),50, (int)(screenWidth*0.2),(int)(screenHeight*0.8));
+      scrollPaneSteps.setBounds((int)(Config.screenWidth*0.7),50, (int)(Config.screenWidth*0.2),(int)(Config.screenHeight*0.8));
 
       f.add(scrollPaneSteps);
       
       
-      // BUTTONS
+      // Button initializations
 
-      // Bottom row (row 1)
+      // Defining submit button
 
       submitButton=new JButton("=");  
-      submitButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
-
+      submitButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-200,170,50);
       submitButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
 
@@ -121,6 +99,7 @@ public class GUICalculator {
             String expression=textBox.getText().substring(currentIndex+1);
             
             // Updating the main answer text box
+
             try {
               ArrayList<String> result=Calculator.compute(expression, false);
               String answer=result.get(result.size() - 1);
@@ -136,18 +115,16 @@ public class GUICalculator {
               } 
               steps.setText(steps.getText() + " Answer: " + result.get(result.size() - 1) + "\n");
               steps.setText(steps.getText() + "_____________________ \n");
-              //steps.setText(steps.getText() + ".......................................... \n");
+
             }
             catch (Exception error){
               textBox.setText(" \n     INVALID EXPRESSION");
             }
-            
           }
       });
 
       submitGraphButton=new JButton("Graph");  
-      submitGraphButton.setBounds((int)(screenWidth*0.49),screenHeight-200,170,50);
-
+      submitGraphButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-200,170,50);
       submitGraphButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             int currentIndex=textBox.getText().lastIndexOf("\n");
@@ -158,7 +135,7 @@ public class GUICalculator {
       submitGraphButton.setVisible(false);
 
       graphButton=new JButton("Graph");  
-      graphButton.setBounds((int)(screenWidth*0.34),screenHeight-200,170,50);  
+      graphButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-200,170,50);  
       graphButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             if (mode==mode.GRAPHING) {
@@ -171,12 +148,12 @@ public class GUICalculator {
       });
 
       clearButton=new JButton("C");
-      int widthPos=(int)(screenWidth*0.19);
+      int widthPos=(int)(Config.screenWidth*0.19);
       if (mode==Mode.EXTENDED) {
-        widthPos=(int)(screenWidth*0.115);
+        widthPos=(int)(Config.screenWidth*0.115);
       }
       
-      clearButton.setBounds(widthPos,screenHeight-200,170,50);  
+      clearButton.setBounds(widthPos,Config.screenHeight-200,170,50);  
       clearButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText("");
@@ -185,83 +162,85 @@ public class GUICalculator {
       });
 
       JButton ansButton=new JButton("Ans");  
-      ansButton.setBounds((int)(screenWidth*0.04),screenHeight-200,170,50);  
+      ansButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-200,170,50);  
       ansButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            // implement logic here
+            
           }
       });
 
-      // Row 2
+      // Defining ., (-), and pi buttons
 
       JButton dotButton=new JButton(".");
-      dotButton.setFont(font3);
-      dotButton.setBounds((int)(screenWidth*0.04),screenHeight-260,80,50);  
-      dotButton.addActionListener(new ActionListener(){  
-          public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+".");
-          }
+      dotButton.setFont(Config.font3);
+      dotButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-260,80,50);  
+      dotButton.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent e){ 
+          writeToBox(".");
+        } 
       });
 
       JButton negButton=new JButton("(-)");  
-      negButton.setBounds((int)(screenWidth*0.19),screenHeight-260,80,50);  
+      negButton.setBounds((int)(Config.screenWidth*0.19),Config.screenHeight-260,80,50);  
       negButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"-");
+            writeToBox("-");
           }
       });
 
       JButton zeroButton=new JButton("0");  
-      zeroButton.setBounds((int)(screenWidth*0.115),screenHeight-260,80,50);  
+      zeroButton.setBounds((int)(Config.screenWidth*0.115),Config.screenHeight-260,80,50);  
       zeroButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"0");
+            writeToBox("0");
           }
       });
 
       JButton piButton=new JButton("π");  
-      piButton.setBounds((int)(screenWidth*0.265),screenHeight-260,80,50);  
+      piButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-260,80,50);  
       piButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"π");
+            writeToBox("π");
           }
       });
 
       JButton yEqualsButton=new JButton("y=");  
-      yEqualsButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);;  
+      yEqualsButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-320,80,50);;  
       yEqualsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"y=");
+            writeToBox("y=");
           }
       });
       yEqualsButton.setVisible(false);
 
+      // Defininf trig buttons
+
       JButton sinButton=new JButton("sin");  
-      sinButton.setBounds((int)(screenWidth*0.34),screenHeight-260,80,50);  
+      sinButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-260,80,50);  
       sinButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"sin(");
+            writeToBox("sin(");
           }
       });
      
       JButton cosButton=new JButton("cos");  
-      cosButton.setBounds((int)(screenWidth*0.415),screenHeight-260,80,50);  
+      cosButton.setBounds((int)(Config.screenWidth*0.415),Config.screenHeight-260,80,50);  
       cosButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"cos(");
+            writeToBox("cos(");
           }
       });
 
       JButton tanButton=new JButton("tan");  
-      tanButton.setBounds((int)(screenWidth*0.49),screenHeight-260,80,50);  
+      tanButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-260,80,50);  
       tanButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"tan(");
+            writeToBox("tan(");
           }
       });
 
       statButton=new JButton("stat");  
-      statButton.setBounds((int)(screenWidth*0.565),screenHeight-260,80,50);  
+      statButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-260,80,50);  
       statButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             if (mode==mode.STAT) {
@@ -273,64 +252,68 @@ public class GUICalculator {
           }
       });
 
+      // Defining first set of numbers
+
       JButton oneButton=new JButton("1");  
-      oneButton.setBounds((int)(screenWidth*0.04),screenHeight-320,80,50);  
+      oneButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-320,80,50);  
       oneButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"1");
+            writeToBox("1");
           }
       });
 
       JButton twoButton=new JButton("2");  
-      twoButton.setBounds((int)(screenWidth*0.115),screenHeight-320,80,50);  
+      twoButton.setBounds((int)(Config.screenWidth*0.115),Config.screenHeight-320,80,50);  
       twoButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"2");
+            writeToBox("2");
           }
       });
 
       JButton threeButton=new JButton("3");  
-      threeButton.setBounds((int)(screenWidth*0.19),screenHeight-320,80,50);  
+      threeButton.setBounds((int)(Config.screenWidth*0.19),Config.screenHeight-320,80,50);  
       threeButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"3");
+            writeToBox("3");
           }
       });
 
       JButton openParanthesisButton=new JButton("(");  
-      openParanthesisButton.setBounds((int)(screenWidth*0.265),screenHeight-320,80,50);  
+      openParanthesisButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-320,80,50);  
       openParanthesisButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"(");
+            writeToBox("(");
           }
       });
 
       JButton closedParanthesisButton=new JButton(")");  
-      closedParanthesisButton.setBounds((int)(screenWidth*0.34),screenHeight-320,80,50);  
+      closedParanthesisButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-320,80,50);  
       closedParanthesisButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+")");
+            writeToBox(")");
           }
       });
 
+      // Defining the first few operations
+
       JButton powerButton=new JButton("^");  
-      powerButton.setBounds((int)(screenWidth*0.415),screenHeight-320,80,50);  
+      powerButton.setBounds((int)(Config.screenWidth*0.415),Config.screenHeight-320,80,50);  
       powerButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"^");
+            writeToBox("^");
           }
       });
 
       JButton inverseButton=new JButton("x^-1");  
-      inverseButton.setBounds((int)(screenWidth*0.49),screenHeight-320,80,50);  
+      inverseButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-320,80,50);  
       inverseButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"^-1");
+            writeToBox("^-1");
           }
       });
 
       extdButton=new JButton("extd");  
-      extdButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
+      extdButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-320,80,50);  
       extdButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             if (mode==mode.EXTENDED) {
@@ -342,193 +325,186 @@ public class GUICalculator {
           }
       });
 
-      JButton windowButton=new JButton("window");  
-      windowButton.setBounds((int)(screenWidth*0.565),screenHeight-320,80,50);  
-      windowButton.addActionListener(new ActionListener(){  
-          public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText() + "window(minX, maxX, minY, maxY)");
-          }
-      });
-      windowButton.setVisible(false);
+      // Defining more numbers
 
       JButton fourButton=new JButton("4");  
-      fourButton.setBounds((int)(screenWidth*0.04),screenHeight-380,80,50);  
+      fourButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-380,80,50);  
       fourButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"4");
+            writeToBox("4");
           }
       });
 
       JButton fiveButton=new JButton("5");  
-      fiveButton.setBounds((int)(screenWidth*0.115),screenHeight-380,80,50);  
+      fiveButton.setBounds((int)(Config.screenWidth*0.115),Config.screenHeight-380,80,50);  
       fiveButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"5");
+            writeToBox("5");
           }
       });
 
       JButton sixButton=new JButton("6");  
-      sixButton.setBounds((int)(screenWidth*0.19),screenHeight-380,80,50);  
+      sixButton.setBounds((int)(Config.screenWidth*0.19),Config.screenHeight-380,80,50);  
       sixButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"6");
+            writeToBox("6");
           }
       });
+
+      // Defining more buttons and funcions
 
       JButton eToTheXButton=new JButton("e^x");  
-      eToTheXButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
+      eToTheXButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-380,80,50);  
       eToTheXButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"e^");
+            writeToBox("e^");
           }
       });
 
-      // Only for extd mode
-
       JButton absoluteValueButton=new JButton("abs(");  
-      absoluteValueButton.setBounds((int)(screenWidth*0.265),screenHeight-380,80,50);  
+      absoluteValueButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-380,80,50);  
       absoluteValueButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"abs(");
+            writeToBox("abs(");
           }
       });
       absoluteValueButton.setVisible(false);
 
       JButton xSquaredButton=new JButton("x^2");  
-      xSquaredButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
+      xSquaredButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-380,80,50);  
       xSquaredButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"^2");
+            writeToBox("^2");
           }
       });
 
       JButton sqRootButton=new JButton("sqrt(");  
-      sqRootButton.setBounds((int)(screenWidth*0.34),screenHeight-380,80,50);  
+      sqRootButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-380,80,50);  
       sqRootButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"sqrt(");
+            writeToBox("sqrt(");
           }
       });
       sqRootButton.setVisible(false);
 
-
+      // Defining remainder of operations
 
       JButton multButton=new JButton("*");
-      multButton.setFont(font4);  
-      multButton.setBounds((int)(screenWidth*0.415),screenHeight-380,80,50);  
+      multButton.setFont(Config.font4);  
+      multButton.setBounds((int)(Config.screenWidth*0.415),Config.screenHeight-380,80,50);  
       multButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"*");
+            writeToBox("*");
           }
       });
 
       JButton divButton=new JButton("/");
-      divButton.setBounds((int)(screenWidth*0.49),screenHeight-380,80,50);  
+      divButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-380,80,50);  
       divButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"/");
+            writeToBox("/");
           }
       });
 
       JButton delButton=new JButton("del");
-      delButton.setBounds((int)(screenWidth*0.565),screenHeight-380,80,50);  
+      delButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-380,80,50);  
       delButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText().substring(0, textBox.getText().length()-1));
           }
       });
 
-      
-      
       JButton sevenButton=new JButton("7");  
-      sevenButton.setBounds((int)(screenWidth*0.04),screenHeight-440,80,50);  
+      sevenButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-440,80,50);  
       sevenButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"7");
+            writeToBox("7");
           }
       });
 
       JButton eightButton=new JButton("8");  
-      eightButton.setBounds((int)(screenWidth*0.115),screenHeight-440,80,50);  
+      eightButton.setBounds((int)(Config.screenWidth*0.115),Config.screenHeight-440,80,50);  
       eightButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"8");
+            writeToBox("8");
           }
       });
 
       JButton nineButton=new JButton("9");  
-      nineButton.setBounds((int)(screenWidth*0.19),screenHeight-440,80,50);  
+      nineButton.setBounds((int)(Config.screenWidth*0.19),Config.screenHeight-440,80,50);  
       nineButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"9");
+            writeToBox("9");
           }
       });
 
       JButton logButton=new JButton("log");  
-      logButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
+      logButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-440,80,50);  
       logButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"log(");
+            writeToBox("log(");
           }
       });
 
       // Only for extd mode
 
       JButton factorialButton=new JButton("!");  
-      factorialButton.setBounds((int)(screenWidth*0.265),screenHeight-440,80,50);  
+      factorialButton.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-440,80,50);  
       factorialButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"!");
+            writeToBox("!");
           }
       });
       factorialButton.setVisible(false);
 
       JButton lnButton=new JButton("ln");  
-      lnButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
+      lnButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-440,80,50);  
       lnButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"ln(");
+            writeToBox("ln(");
           }
       });
 
       JButton randomButton=new JButton("rand");  
-      randomButton.setBounds((int)(screenWidth*0.34),screenHeight-440,80,50);  
+      randomButton.setBounds((int)(Config.screenWidth*0.34),Config.screenHeight-440,80,50);  
       randomButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"rand(min,max)");
+            writeToBox("rand(min, max)");
           }
       });
       randomButton.setVisible(false);
 
+      // More operations in the extd more
+
       JButton plusButton=new JButton("+");
-      plusButton.setFont(font4);
-      plusButton.setBounds((int)(screenWidth*0.415),screenHeight-440,80,50);  
+      plusButton.setFont(Config.font4);
+      plusButton.setBounds((int)(Config.screenWidth*0.415),Config.screenHeight-440,80,50);  
       plusButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"+");
+            writeToBox("+");
           }
       });
 
       JButton minusButton=new JButton("-");
-      minusButton.setFont(font4);
-      minusButton.setBounds((int)(screenWidth*0.49),screenHeight-440,80,50);  
+      minusButton.setFont(Config.font4);
+      minusButton.setBounds((int)(Config.screenWidth*0.49),Config.screenHeight-440,80,50);  
       minusButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"-");
+            writeToBox("-");
           }
       });
 
       JButton xCubedButton=new JButton("x^3");  
-      xCubedButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      xCubedButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-440,80,50);  
       xCubedButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"^3");
+            writeToBox("^3");
           }
       });
       xCubedButton.setVisible(false);
 
       settingsButton=new JButton("settings");
-      settingsButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      settingsButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-440,80,50);  
       settingsButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             if (mode==mode.SETTINGS) {
@@ -541,16 +517,18 @@ public class GUICalculator {
       });
 
       JButton xButton=new JButton("x");
-      xButton.setBounds((int)(screenWidth*0.565),screenHeight-440,80,50);  
+      xButton.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-440,80,50);  
       xButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
-            textBox.setText(textBox.getText()+"x");
+            writeToBox("x");
           }
       });
       xButton.setVisible(false);
 
+      // Define change color buttuns for customization
+
       JButton darkModeRedButton=new JButton("Dark Mode- Red");  
-      darkModeRedButton.setBounds((int)(screenWidth*0.04),screenHeight-380,240,50);  
+      darkModeRedButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-380,240,50);  
       darkModeRedButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText() + "Color Scheme Changed! \n ............................................................. \n");
@@ -560,7 +538,7 @@ public class GUICalculator {
       darkModeRedButton.setVisible(false);
 
       JButton darkModeGoldButton=new JButton("Dark Mode- Gold");  
-      darkModeGoldButton.setBounds((int)(screenWidth*0.35),screenHeight-380,240,50);  
+      darkModeGoldButton.setBounds((int)(Config.screenWidth*0.303),Config.screenHeight-380,240,50);  
       darkModeGoldButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText() + "Color Scheme Changed! \n ............................................................. \n");
@@ -570,7 +548,7 @@ public class GUICalculator {
       darkModeGoldButton.setVisible(false);
 
       JButton lightModeBlueButton=new JButton("Light Mode- Blue");  
-      lightModeBlueButton.setBounds((int)(screenWidth*0.04),screenHeight-320,240,50);  
+      lightModeBlueButton.setBounds((int)(Config.screenWidth*0.04),Config.screenHeight-320,240,50);  
       lightModeBlueButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText() + "  Color Scheme Changed! \n ............................................................. \n  ");
@@ -580,7 +558,7 @@ public class GUICalculator {
       lightModeBlueButton.setVisible(false);
 
       JButton lightModePurpleButton=new JButton("Light Mode- Purple");  
-      lightModePurpleButton.setBounds((int)(screenWidth*0.35),screenHeight-320,240,50);  
+      lightModePurpleButton.setBounds((int)(Config.screenWidth*0.303),Config.screenHeight-320,240,50);  
       lightModePurpleButton.addActionListener(new ActionListener(){  
           public void actionPerformed(ActionEvent e){
             textBox.setText(textBox.getText() + "  Color Scheme Changed! \n ............................................................. \n  ");
@@ -589,7 +567,7 @@ public class GUICalculator {
       });
       lightModePurpleButton.setVisible(false);
 
-
+      // Populating arrays with defined buttons for each mode
 
       buttonsDefault=new JButton[] {
         submitButton, graphButton, clearButton, ansButton, dotButton, negButton, zeroButton, piButton, sinButton, cosButton, tanButton,
@@ -631,8 +609,18 @@ public class GUICalculator {
       f.setLayout(null);  
       f.setVisible(true);
       switchDarkMode(Config.gold);
-    
+
+      // End of buttons
+
     }
+
+    // Writes text to text boxes
+
+    public static void writeToBox(String symbol) {
+      textBox.setText(textBox.getText()+symbol);
+    }
+
+    // Modifies the calculator to change its mode
 
     public static void changeMode(Mode newMode, JButton oldButton, String newText) {
       
@@ -640,38 +628,47 @@ public class GUICalculator {
         button.setVisible(false);
       }
 
+      // If the new mode is default, moved buttons have to go back to their original locations
+
       if (newMode==Mode.DEFAULT) {
         
-        changeMode(oldButton,newMode, newText, buttonsDefault);
+        changeModeButtons(oldButton,newMode, newText, buttonsDefault);
+
+        // current set of buttons is changed to fit the new mode
+
         currentButtons=buttonsDefault;
         for (JButton button:currentButtons) {
           if (button==clearButton) {
-            button.setBounds((int)(screenWidth*0.19),screenHeight-200,170,50);
-            
+            button.setBounds((int)(Config.screenWidth*0.19),Config.screenHeight-200,170,50);
+          }
+          if (button==settingsButton) {
+            button.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-440,80,50);
+          }
+
+          if (button==delButton) {
+            button.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-380,80,50);
           }
           button.setVisible(true);
         }
       }
 
       else if (newMode==Mode.EXTENDED) {
-        changeMode(oldButton,newMode, newText, buttonsExtd);
+        changeModeButtons(oldButton,newMode, newText, buttonsExtd);
         currentButtons=buttonsExtd;
         for (JButton button:currentButtons) {
           if (button==clearButton) {
-            button.setBounds((int)(screenWidth*0.265),screenHeight-200,170,50);
+            button.setBounds((int)(Config.screenWidth*0.265),Config.screenHeight-200,170,50);
           }
-          
           button.setVisible(true);
         }
       }
 
       else if (newMode==Mode.GRAPHING) {
-        //mode=Mode.GRAPHING;
         for (JButton b:buttonsGraphing) {
           f.add(b);
         }
         
-        changeMode(graphButton, mode.GRAPHING, newText, buttonsGraphing);
+        changeModeButtons(graphButton, mode.GRAPHING, newText, buttonsGraphing);
         currentButtons=buttonsGraphing;
         for (JButton button:currentButtons) {
           button.setVisible(true);
@@ -680,42 +677,51 @@ public class GUICalculator {
       }
 
       else if (newMode==Mode.SETTINGS) {
-        changeMode(oldButton,newMode, newText, buttonsSettings);
+        changeModeButtons(oldButton,newMode, newText, buttonsSettings);
         currentButtons=buttonsSettings;
         for (JButton button:currentButtons) {
+          if (button==settingsButton) {
+            button.setBounds((int)(Config.screenWidth*0.565),Config.screenHeight-320,80,50);
+          }
+
+          if (button==clearButton) {
+            button.setBounds((int)(Config.screenWidth*0.303),Config.screenHeight-200,240,50);
+          }
+
           button.setVisible(true);
         }
       }
 
       else if (newMode==Mode.STAT) {
-        changeMode(oldButton,newMode, newText, buttonsStat);
+        changeModeButtons(oldButton,newMode, newText, buttonsStat);
         currentButtons=buttonsStat;
         for (JButton button:currentButtons) {
           button.setVisible(true);
         }
       }
 
+      // Calls the appropriate color-scheme function based on a string
+
       if (currentColorScheme.equals("dark-gold")) {
         switchDarkMode(Config.gold);
       }
 
-      if (currentColorScheme.equals("dark-red")) {
+      else if (currentColorScheme.equals("dark-red")) {
         switchDarkMode(Config.red);
       }
 
-      if (currentColorScheme.equals("light-blue")) {
+      else if (currentColorScheme.equals("light-blue")) {
         switchLightMode(Config.lightBlue);
       }
 
-      if (currentColorScheme.equals("light-purple")) {
+      else if (currentColorScheme.equals("light-purple")) {
         switchLightMode(Config.purple);
-      }
-
-      
-      //switchDarkModeGold();
+      }    
     }
 
-    public static void changeMode(JButton button, Mode newMode, String newText, JButton[] buttons) {
+     // Modifies the button names for a particular mode
+
+    public static void changeModeButtons(JButton button, Mode newMode, String newText, JButton[] buttons) {
       for (JButton b:buttons) {
         f.add(b);
       }
@@ -727,7 +733,8 @@ public class GUICalculator {
       f.add(button);
     }
 
-    
+    // Changes the current buttons to a new color for customization
+    // Dark mode has two modes- dark mode gold and dark mode red
 
     public static void switchDarkMode(Color color) {
       if (color==Config.gold) {
@@ -737,8 +744,6 @@ public class GUICalculator {
       if (color==Config.red) {
         currentColorScheme="dark-red";
       }
-
-
 
       f.getContentPane().setBackground(Color.darkGray);
       scrollPaneMain.getViewport().getView().setBackground(Color.lightGray);
@@ -764,6 +769,9 @@ public class GUICalculator {
 
     }
 
+    // Changes the current buttons to a new color for customization
+    // Light mode has two modes- light mode light blue and light mode purple
+    
     public static void switchLightMode(Color color) {
 
       if (color==Config.lightBlue) {
@@ -777,10 +785,8 @@ public class GUICalculator {
       f.getContentPane().setBackground(Config.smoke);
       scrollPaneMain.getViewport().getView().setBackground(Config.aliceBlue);
       scrollPaneMain.getViewport().getView().setForeground(Color.DARK_GRAY);
-
       scrollPaneSteps.getViewport().getView().setBackground(Config.aliceBlue);
       scrollPaneSteps.getViewport().getView().setForeground(Color.DARK_GRAY);
-
       modeBox.setBackground(Config.lightGrey);
 
       for (JButton b:currentButtons) {
@@ -795,19 +801,11 @@ public class GUICalculator {
         else {
           b.setBackground(Config.mediumPurple);
         }
-      
         b.setForeground(Config.white);
       }
-
       submitGraphButton.setBackground(color);
       submitButton.setBackground(color);
-
     }
-
-
-
-
-    
 
     public static void main(String[] arguments) {
       
