@@ -107,14 +107,14 @@ public class GUICalculator {
               textBox.setText(textBox.getText()+"=\n " + answer+"\n"+"............................................................."+"\n ");
               
               // Updating steps box
-
-              steps.setText(steps.getText() + " Input: " + result.get(0) + "\n");
-              for (int i = 1; i < result.size() - 1; i++){
-
-                steps.setText(steps.getText() + " Step #" + i + ": " + result.get(i) + "\n");
-              } 
-              steps.setText(steps.getText() + " Answer: " + result.get(result.size() - 1) + "\n");
-              steps.setText(steps.getText() + "_____________________ \n");
+              if (result.size() > 1){
+                steps.setText(steps.getText() + " Input: " + result.get(0) + "\n");
+                for (int i = 1; i < result.size() - 1; i++){
+                  steps.setText(steps.getText() + " Step #" + i + ": " + result.get(i) + "\n");
+                } 
+                steps.setText(steps.getText() + " Answer: " + result.get(result.size() - 1) + "\n");
+                steps.setText(steps.getText() + "_____________________ \n");
+              }
 
             }
             catch (Exception error){

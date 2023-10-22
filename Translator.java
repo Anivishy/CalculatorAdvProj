@@ -55,7 +55,6 @@ public class Translator {
             // Check for parentheses
             ArrayList<String> parenthesisResult = checkParenthesis(cur_expression);
             Boolean hasPara = false;
-            //System.out.print(parenthesisResult);
             if (parenthesisResult.get(0).equals("true")) {
                 cur_expression = (String) parenthesisResult.get(1);
                 if (countOperators(cur_expression) > 1)
@@ -71,8 +70,7 @@ public class Translator {
             ArrayList<String> exponentResult = checkEMDAS(cur_expression, "^");
             if (exponentResult.get(0).equals("true")) {
                 String resultString = (String) exponentResult.get(1);
-                int operator_index = resultString.indexOf("^");
-                
+                int operator_index = resultString.indexOf("^");                
                 ArrayList<String> result = new ArrayList<String>();
                 String num1 = resultString.substring(0, operator_index);
                 String num2 = resultString.substring(operator_index + 1, resultString.length());
@@ -217,7 +215,6 @@ public class Translator {
             // }
             result.set(0, "true");
             result.set(1,chunk);
-            //System.out.println("Chunk: " + chunk);
             return result;
         }
         

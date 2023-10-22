@@ -30,15 +30,12 @@ public class Calculator {
         updatedString = "";
         //Remove Spacing
         expression = expression.replace("\\s", "");
-        System.out.println("Intial expression:" + expression);
 
         //Remove special chars
         expression = extra.replacePi(expression);
         expression = extra.replaceE(expression);
-        //System.out.println(expression);
 
         //simplify logs, ln sqrt, etc.
-        //System.out.println(expression);
         expression = extra.simplifyLog(expression, graphing);
         expression = extra.simplifyLn(expression, graphing);        
 
@@ -54,7 +51,6 @@ public class Calculator {
 
         //stat
         l1 = extra.listOne(expression);
-        System.out.println(l1);
 
         if (!(l1.isEmpty())){
             String min = "";
@@ -79,7 +75,7 @@ public class Calculator {
                      "Maximum Number:" + max + "\n" + 
                      "Range: " + range + "\n" + 
                      "Total: " + totalSum + "\n" +
-                     "Average: " + mean + "\n";
+                     "Average: " + mean;
 
             steps.add(result);
             return steps;
