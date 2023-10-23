@@ -63,6 +63,10 @@ o	Potential to implement graph analysis features such as finding intercepts, tra
 
 
 Citations:
+- https://www.geeksforgeeks.org/
+- https://www.baeldung.com/
+- https://stackoverflow.com/
+- https://docs.oracle.com/javase/8/docs/technotes/guides/swing/index.html
 
 
 
