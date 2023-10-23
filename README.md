@@ -3,6 +3,14 @@ Advanced Software Projects
 Project #2 Design Doc
 
 Authors: Akshai Srinivasan, Anikait Vishwanathan
+
+_**Updated Documentation**_
+The core functionality of this calculator is for use as a scientific calculator while braking down steps for simplyfying input expressions. 
+
+**Key Features**
+1: PEMDAS: This calculator follows PEMDAS and will simplify expressions in the correct order. It also interprets impluied multiplication and universal constants such as pi and e. 
+	- In additioan to solving expresisons using PEMDAS, the calculator is also able to simplify expressions and break down the steps for the user as it goes through each function. The steps are displayed in a seperate column so that the user is able to follow along
+
 Project Overview:
 	The first elements considered in the design of this project are focused on the minimum requirements in order to have a functional calculator. In order to accomplish this the project was broken down into three major components.
 1.	Engine:
@@ -29,6 +37,8 @@ Special Features:
 3: Graphing Calculator
   -	Works with the GUI to display graphs
 o	Potential to implement graph analysis features such as finding intercepts, tracing values along the graph, and calculus-based calculations such as integrals and derivatives.
+
+
 
 Citations:
 
