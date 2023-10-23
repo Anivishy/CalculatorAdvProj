@@ -5,10 +5,13 @@ Project #2 Design Doc
 Authors: Akshai Srinivasan, Anikait Vishwanathan
 
 _**Updated Documentation**_
+
 The core functionality of this calculator is for use as a scientific calculator while braking down steps for simplyfying input expressions. 
 
 **Key Features**
-1: PEMDAS: This calculator follows PEMDAS and will simplify expressions in the correct order. It also interprets impluied multiplication and universal constants such as pi and e. 
+
+1: PEMDAS | This calculator follows PEMDAS and will simplify expressions in the correct order. It also interprets impluied multiplication and universal constants such as pi and e. 
+
 	- In additioan to solving expresisons using PEMDAS, the calculator is also able to simplify expressions and break down the steps for the user as it goes through each function. The steps are displayed in a seperate column so that the user is able to follow along
 
 Project Overview:
