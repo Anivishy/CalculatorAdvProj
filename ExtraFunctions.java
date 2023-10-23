@@ -9,12 +9,38 @@ public class ExtraFunctions {
     //Updating universal constants
 
     public String replacePi(String expression){
+        for (int i = 1; i < expression.length(); i++){
+            if (expression.charAt(i) == 'π'){
+                String prev_char = expression.charAt(i - 1) + "";
+                String updatedString = "";
+                if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^")) && !(prev_char.equals("("))){
+                    updatedString = "";
+                    updatedString += expression.substring(0, i);
+                    updatedString += "*";
+                    updatedString += expression.substring(i);   
+                    expression = updatedString; 
+                }       
+            }
+        }
         expression = expression.replaceAll("π", String.format("%.2f", Math.PI));
         expression = expression.replaceAll("pi", String.format("%.2f", Math.PI));
         return expression;
     }
 
     public String replaceE(String expression){
+        for (int i = 1; i < expression.length(); i++){
+            if (expression.charAt(i) == 'e'){
+                String prev_char = expression.charAt(i - 1) + "";
+                String updatedString = "";
+                if (!(prev_char.equals("+")) && !(prev_char.equals("-")) && !(prev_char.equals("*")) && !(prev_char.equals("/")) && !(prev_char.equals("^")) && !(prev_char.equals("("))){
+                    updatedString = "";
+                    updatedString += expression.substring(0, i);
+                    updatedString += "*";
+                    updatedString += expression.substring(i);   
+                    expression = updatedString; 
+                }       
+            }
+        }
         expression = expression.replaceAll("e", Double.toString(Math.exp(1.0)));
         return expression;
     }
@@ -140,7 +166,9 @@ public class ExtraFunctions {
             }
             
             String curLog = expression.substring(expression.indexOf("s"), finalIndex + 1);
+            System.out.println(curLog);
             String innerExpression = curLog.substring(curLog.indexOf("(") + 1, curLog.lastIndexOf(")"));
+            System.out.println(innerExpression);
             String finalResult = "";
             ArrayList <String> result = Calculator.compute(innerExpression, graphing);
             finalResult = Double.toString(Math.sqrt(Double.parseDouble(result.get(result.size() - 1))));
