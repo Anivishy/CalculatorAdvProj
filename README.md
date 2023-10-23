@@ -12,7 +12,7 @@ The core functionality of this calculator is for use as a scientific calculator 
 
 1: PEMDAS | This calculator follows PEMDAS and will simplify expressions in the correct order. It also interprets impluied multiplication and universal constants such as pi and e. 
 
-	- In additioan to solving expresisons using PEMDAS, the calculator is also able to simplify expressions and break down the steps for the user as it goes through each function. The steps are displayed in a seperate column so that the user is able to follow along
+- In additioan to solving expresisons using PEMDAS, the calculator is also able to simplify expressions and break down the steps for the user as it goes through each function. The steps are displayed in a seperate column so that the user is able to follow along
 
 Project Overview:
 	The first elements considered in the design of this project are focused on the minimum requirements in order to have a functional calculator. In order to accomplish this the project was broken down into three major components.
