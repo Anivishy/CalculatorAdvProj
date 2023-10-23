@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -360,6 +361,46 @@ public class ExtraFunctions {
         }
 
         return l1;
+    }
+
+    public Double calculateMedian(ArrayList<Double> data) {
+        Collections.sort(data);
+        int size = data.size();
+        if (size % 2 == 0) {
+            int mid1 = size / 2;
+            int mid2 = mid1 - 1;
+            return (data.get(mid1) + data.get(mid2)) / 2.0;
+        } else {
+            return data.get(size / 2);
+        }
+    }
+
+    public Double calculateQ1(ArrayList<Double> data) {
+        Collections.sort(data);
+        int size = data.size();
+        int middle = size / 2;
+        if (size % 2 == 0) {
+            return calculateMedian(new ArrayList<>(data.subList(0, middle)));
+        } else {
+            return calculateMedian(new ArrayList<>(data.subList(0, middle + 1)));
+        }
+    }
+
+    public Double calculateQ3(ArrayList<Double> data) {
+        Collections.sort(data);
+        int size = data.size();
+        int middle = size / 2;
+        if (size % 2 == 0) {
+            return calculateMedian(new ArrayList<>(data.subList(middle, size)));
+        } else {
+            return calculateMedian(new ArrayList<>(data.subList(middle + 1, size)));
+        }
+    }
+
+    public Double calculateIQR(ArrayList<Double> data) {
+        double q1 = calculateQ1(data);
+        double q3 = calculateQ3(data);
+        return q3 - q1;
     }
 
 }

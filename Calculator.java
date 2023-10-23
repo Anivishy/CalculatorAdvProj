@@ -57,6 +57,10 @@ public class Calculator {
             String totalSum = "";
             String mean = "";
             String result = "";
+            String iqr = Double.toString(extra.calculateIQR(l1));
+            String q1 = Double.toString(extra.calculateQ1(l1));
+            String q2 = Double.toString(extra.calculateQ3(l1));
+            String median = Double.toString(extra.calculateMedian(l1));
             Collections.sort(l1);
 
             min = Double.toString(l1.get(0));
@@ -68,11 +72,15 @@ public class Calculator {
             totalSum = Double.toString(temp);
             mean = Double.toString(temp / l1.size());
 
-            result = "Minimum Number:" + min + "\n" + 
-                     "Maximum Number:" + max + "\n" + 
+            result = "Minimum Number: " + min + "\n" + 
+                     "Maximum Number: " + max + "\n" + 
                      "Range: " + range + "\n" + 
-                     "Total: " + totalSum + "\n" +
-                     "Average: " + mean;
+                     "Sum: " + totalSum + "\n" +
+                     "Average: " + mean + "\n" +
+                     "Median: " + median + "\n" +
+                     "Q1: " + q1 + "\n" +
+                     "Q2: " + q2 + "\n" +
+                     "IQR: " + iqr;
 
             steps.add(result);
             return steps;
