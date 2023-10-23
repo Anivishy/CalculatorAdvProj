@@ -14,6 +14,20 @@ The core functionality of this calculator is for use as a scientific calculator 
 
 - In additioan to solving expresisons using PEMDAS, the calculator is also able to simplify expressions and break down the steps for the user as it goes through each function. The steps are displayed in a seperate column so that the user is able to follow along
 
+2: Graphing | The second primary feature of this calculator is graphing, where the user can enter in an expression in terms of x to be plotted on a graph. 
+- Ex: x ^ 2 + 1 or 2x - 5
+- The calculator will then plot the graph of the expression, utalizing thousands of calculated points from the provided expression
+
+3: Extended Mode | In addition to the normal functions provided on the home screen of the calculator, the extended button provides the user with additional options including...
+- Absolute Value
+- Square Root
+- Random Number
+
+4: Stat Button | Enables the user to enter a list of doubles, seperated by commas
+- Calculates the min, max, range, sum, average, IQR, Q1, Q2, and median of the input set of data.
+
+5: Settings/Customization | Allows the user to selecte between 4 different color themes, two in dark mode and two in light mode. 
+
 Project Overview:
 	The first elements considered in the design of this project are focused on the minimum requirements in order to have a functional calculator. In order to accomplish this the project was broken down into three major components.
 1.	Engine:
@@ -25,8 +39,13 @@ Project Overview:
   -	getParenthesis, getExponent, getMultiplication, getDivision, getAddition, getSubtraction: Returns a string expression for each of the specific operations.
     
 3.	Format: Responsible for processing the list of steps to perform the calculation and displaying the information to the console. Will also be responsible for displaying and rendering information to the GUI in future updates.
+- This file was later remmoved, as its functionality was implemented within the GUI file itself.
 
-4.	Calculator: Core calculator file. Will contain the user input loop when run as a console application and will the initialization of the GUI when updated
+5.	Calculator: Core calculator file. Will contain the user input loop when run as a console application and will the initialization of the GUI when updated
+
+7.	GUI: This file was used for implementing all of the buttons for the GUI and their functionality. This file feeds all of the GUI information to the calculator class as a string to be further parsed
+
+9.	Config: Used for global constants and allowing the use of the "ANS" key.
    
 Special Features:
 
